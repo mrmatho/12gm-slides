@@ -1,0 +1,42 @@
+.slidev-layout th {
+    font-weight: bold;
+}
+
+.slidev-layout h1 + p {
+      opacity: 1 !important;
+    }
+
+.slidev-layout .my-auto h1 + p {
+    opacity: 1 !important;
+}
+
+.slidev-layout .markdown-alert {
+    font-size: 0.9rem;
+    background-color: #eff5fd;
+    border-radius: 10px;
+    width: 95%;
+    margin: 10px auto;
+}
+
+.slidev-layout .dark .markdown-alert {
+    background-color: #2a2348;
+}
+
+.slidev-layout strong {
+    font-weight: 800;
+    font-size: 1.1rem;
+    --uno: 'bg-yellow-200 dark:bg-purple-800';
+    padding: 0 4px;
+    border-radius: 3px;
+}
+
+.simple-border {
+    border: 1px solid #838181;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.left-col {
+    border-right: 1px solid #838181;
+}

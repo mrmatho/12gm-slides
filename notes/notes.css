@@ -1,0 +1,345 @@
+/*
+  Shared stylesheet for printable A4 notes templates in notes/*.html.
+  Independent of the Slidev app and its styles.css (which is scoped to
+  .slidev-layout and pulls in Slidev/UnoCSS-specific selectors).
+  Tokens below are intentionally plain black/gray so worksheets print
+  cleanly on any printer or photocopier. Keep radius scale loosely in
+  sync with styles.css if that file's design language changes.
+*/
+
+:root {
+  --ink: #000;
+  --gray-dark: #333;
+  --gray: #555;
+  --gray-light: #999;
+  --dot-color: #aaa;
+  --radius-sm: 5px;
+  --radius-md: 10px;
+  --accent-teal: #3ab9d5; /* screen-only accent, never used in print */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  margin: 0;
+  background: #e9e9e9;
+}
+
+.page {
+  max-width: 210mm;
+  margin: 0 auto;
+  padding: 15mm 12mm;
+  background: #fff;
+}
+
+@media screen {
+  .page {
+    margin: 20px auto;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .worksheet-header h1 {
+    border-left: 4px solid var(--accent-teal);
+    padding-left: 10px;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 15mm 12mm;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .page {
+    box-shadow: none;
+    margin: 0;
+    max-width: none;
+    padding: 0;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* header */
+
+.worksheet-header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+  margin-bottom: 18px;
+}
+
+.worksheet-header .topic-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+}
+
+.worksheet-header h1 {
+  margin: 4px 0 12px;
+  font-size: 1.7rem;
+}
+
+.field-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 0.9rem;
+}
+
+.field {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex: 1 1 auto;
+}
+
+/* sections */
+
+.section {
+  margin-bottom: 22px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.section h2 {
+  font-size: 1.15rem;
+  border-bottom: 1px solid var(--gray-light);
+  padding-bottom: 4px;
+  margin: 0 0 10px;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.section h3 {
+  font-size: 1rem;
+  margin: 14px 0 6px;
+}
+
+.section-note {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin: -4px 0 10px;
+  font-style: italic;
+}
+
+/* vocabulary blocks */
+
+.vocab-block {
+  margin-bottom: 12px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.vocab-term {
+  display: inline-block;
+  font-weight: 700;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 1px 8px;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+}
+
+.vocab-block p {
+  font-size: 0.85rem;
+  margin: 4px 0;
+}
+
+.fill-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.fill-lines.compact {
+  gap: 10px;
+}
+
+.fill-lines .line {
+  border-bottom: 1px solid var(--ink);
+  height: 1px;
+}
+
+/* inline fill-in blanks */
+
+.fill-line {
+  display: inline-block;
+  border-bottom: 1px solid var(--ink);
+  min-width: 3em;
+  height: 1em;
+  vertical-align: bottom;
+}
+
+.fill-line.long {
+  min-width: 8em;
+}
+
+.fill-line.xlong {
+  min-width: 14em;
+}
+
+/* diagram boxes */
+
+.diagram-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 10px 0 16px;
+}
+
+.diagram-box-wrap {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.diagram-box {
+  min-height: 150px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-md);
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+  background-size: 14px 14px;
+  background-position: 7px 7px;
+}
+
+.diagram-box.tall {
+  min-height: 200px;
+}
+
+.diagram-box.small {
+  min-height: 100px;
+}
+
+.diagram-caption {
+  font-size: 0.8rem;
+  color: var(--gray);
+  text-align: center;
+}
+
+/* worked examples */
+
+.worked-example {
+  border: 1px solid var(--gray-light);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin: 10px 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.worked-example .problem {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.worked-example .work-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.worked-example .work-lines .line {
+  border-bottom: 1px solid var(--gray-light);
+  height: 1.6em;
+}
+
+/* callouts, matching the deck's [!NOTE] / [!TIP] alerts */
+
+.callout-tip {
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  margin: 10px 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.callout-tip strong {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* fill-in tables, e.g. classification exercises */
+
+.fill-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 10px 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.fill-table th,
+.fill-table td {
+  border: 1px solid var(--ink);
+  padding: 6px 8px;
+  text-align: center;
+}
+
+.fill-table td.blank {
+  height: 1.8em;
+}
+
+/* matrix grids, for adjacency-matrix practice */
+
+.matrix-grid {
+  display: inline-grid;
+  gap: 2px;
+  margin: 10px 0;
+}
+
+.matrix-grid .cell {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.matrix-grid .cell.label {
+  border: none;
+  font-weight: 700;
+}
+
+/* print control + footer */
+
+.print-btn {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+.footer-note {
+  margin-top: 20px;
+  font-size: 0.75rem;
+  color: var(--gray);
+  text-align: center;
+}
