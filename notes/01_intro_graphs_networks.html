@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Introduction to Networks — Notes Template</title>
+<link rel="stylesheet" href="notes.css" />
+</head>
+<body>
+<div class="page">
+  <button type="button" class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <header class="worksheet-header">
+    <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
+    <h1>Introduction to Networks and Decision Mathematics</h1>
+    <div class="field-row">
+      <div class="field">Date <span class="fill-line long"></span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Key Vocabulary</h2>
+    <p class="section-note">Label the degree of each vertex on the graph below as we work through it.</p>
+
+    <div class="vocab-block">
+      <div class="vocab-term">Graph</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Vertices (singular: vertex)</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Edges</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Degree of a vertex</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Loop</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+    </div>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+          <svg viewBox="0 0 220 140" width="220" height="140">
+            <line x1="40" y1="30" x2="140" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="40" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="190" y2="70" stroke="#000" stroke-width="1.5" />
+            <circle cx="190" cy="44" r="12" fill="none" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="30" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="40" y="34" text-anchor="middle" font-size="13" font-weight="700">A</text>
+            <circle cx="140" cy="30" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="140" y="34" text-anchor="middle" font-size="13" font-weight="700">B</text>
+            <circle cx="40" cy="110" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="40" y="114" text-anchor="middle" font-size="13" font-weight="700">C</text>
+            <circle cx="190" cy="70" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="74" text-anchor="middle" font-size="13" font-weight="700">D</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">deg(A) = <span class="fill-line"></span> &nbsp; deg(B) = <span class="fill-line"></span> &nbsp; deg(C) = <span class="fill-line"></span> &nbsp; deg(D) = <span class="fill-line"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Graph Types</h2>
+
+    <div class="vocab-block">
+      <div class="vocab-term">Connected graph</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Disconnected graph</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 200 140" width="200" height="140">
+            <line x1="40" y1="30" x2="140" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="40" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="190" y2="70" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="30" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="40" y="34" text-anchor="middle" font-size="13" font-weight="700">A</text>
+            <circle cx="140" cy="30" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="140" y="34" text-anchor="middle" font-size="13" font-weight="700">B</text>
+            <circle cx="40" cy="110" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="40" y="114" text-anchor="middle" font-size="13" font-weight="700">C</text>
+            <circle cx="190" cy="70" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="74" text-anchor="middle" font-size="13" font-weight="700">D</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">Connected graph</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 130" width="220" height="130">
+            <line x1="30" y1="30" x2="110" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="30" x2="30" y2="100" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="30" x2="30" y2="100" stroke="#000" stroke-width="1.5" />
+            <line x1="160" y1="100" x2="200" y2="40" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="30" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="34" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="110" cy="30" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="34" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="30" cy="100" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="104" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="160" cy="100" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="160" y="104" text-anchor="middle" font-size="12" font-weight="700">D</text>
+            <circle cx="200" cy="40" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="200" y="44" text-anchor="middle" font-size="12" font-weight="700">E</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">Disconnected graph</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Graph Types (cont.)</h2>
+
+    <div class="vocab-block">
+      <div class="vocab-term">Complete graph</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+      <p>Formula for the number of edges in a complete graph with <em>n</em> vertices: <span class="fill-line xlong"></span></p>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Simple graph</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+    </div>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 200 150" width="200" height="150">
+            <line x1="40" y1="30" x2="180" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="180" y1="30" x2="180" y2="120" stroke="#000" stroke-width="1.5" />
+            <line x1="180" y1="120" x2="40" y2="120" stroke="#000" stroke-width="1.5" />
+            <line x1="40" y1="120" x2="40" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="40" y1="30" x2="180" y2="120" stroke="#000" stroke-width="1.5" />
+            <line x1="180" y1="30" x2="40" y2="120" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="30" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="40" y="34" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="180" cy="30" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="180" y="34" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="180" cy="120" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="180" y="124" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="40" cy="120" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="40" y="124" text-anchor="middle" font-size="12" font-weight="700">D</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">Complete graph (K4)</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 140" width="220" height="140">
+            <line x1="40" y1="30" x2="140" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="40" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="190" y2="70" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="30" r="10" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="140" cy="30" r="10" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="110" r="10" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="190" cy="70" r="10" fill="#fff" stroke="#000" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="diagram-caption">Simple graph (unlabelled)</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Isomorphic Graphs</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Isomorphic graphs</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+    </div>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 140" width="220" height="140">
+            <line x1="40" y1="70" x2="110" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="40" y1="70" x2="110" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="30" x2="110" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="30" x2="180" y2="20" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="110" x2="180" y2="120" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="70" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="110" cy="30" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="110" cy="110" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="180" cy="20" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="180" cy="120" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="diagram-caption">Graph 1</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 140" width="220" height="140">
+            <line x1="190" y1="70" x2="120" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="70" x2="120" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="120" y1="30" x2="120" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="120" y1="30" x2="50" y2="20" stroke="#000" stroke-width="1.5" />
+            <line x1="120" y1="110" x2="50" y2="120" stroke="#000" stroke-width="1.5" />
+            <circle cx="190" cy="70" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="120" cy="30" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="120" cy="110" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="50" cy="20" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="50" cy="120" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="diagram-caption">Graph 2 (isomorphic to Graph 1 — same structure, drawn differently)</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Planar Graphs</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Planar graph</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+    </div>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 140" width="220" height="140">
+            <line x1="40" y1="30" x2="140" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="40" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="190" y2="70" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="30" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="140" cy="30" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="110" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="190" cy="70" r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="diagram-caption">Planar</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 150" width="220" height="150">
+            <line x1="110" y1="15" x2="167" y2="56" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="15" x2="145" y2="124" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="15" x2="75" y2="124" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="15" x2="53" y2="56" stroke="#000" stroke-width="1.5" />
+            <line x1="167" y1="56" x2="145" y2="124" stroke="#000" stroke-width="1.5" />
+            <line x1="167" y1="56" x2="75" y2="124" stroke="#000" stroke-width="1.5" />
+            <line x1="167" y1="56" x2="53" y2="56" stroke="#000" stroke-width="1.5" />
+            <line x1="145" y1="124" x2="53" y2="56" stroke="#000" stroke-width="1.5" />
+            <circle cx="110" cy="15" r="8" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="167" cy="56" r="8" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="145" cy="124" r="8" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="75" cy="124" r="8" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <circle cx="53" cy="56" r="8" fill="#fff" stroke="#000" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="diagram-caption">Not planar</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 240 170" width="240" height="170">
+            <line x1="30" y1="25" x2="180" y2="25" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="25" x2="105" y2="100" stroke="#000" stroke-width="1.5" />
+            <line x1="180" y1="25" x2="105" y2="100" stroke="#000" stroke-width="1.5" />
+            <line x1="225" y1="75" x2="30" y2="25" stroke="#000" stroke-width="1.5" />
+            <line x1="180" y1="25" x2="225" y2="75" stroke="#000" stroke-width="1.5" />
+            <line x1="150" y1="150" x2="105" y2="100" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="29" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="180" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="180" y="29" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="105" cy="100" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="105" y="104" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="225" cy="75" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="225" y="79" text-anchor="middle" font-size="12" font-weight="700">D</text>
+            <circle cx="150" cy="150" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="150" y="154" text-anchor="middle" font-size="12" font-weight="700">E</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">Drawn with crossing edges, but still planar</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Bridges</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Bridge</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+    </div>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 260 160" width="260" height="160">
+            <line x1="30" y1="30" x2="110" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="30" x2="30" y2="100" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="30" x2="30" y2="100" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="30" x2="180" y2="55" stroke="#000" stroke-width="1.5" />
+            <line x1="180" y1="55" x2="240" y2="90" stroke="#000" stroke-width="1.5" />
+            <line x1="240" y1="90" x2="180" y2="130" stroke="#000" stroke-width="1.5" />
+            <line x1="180" y1="130" x2="180" y2="55" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="30" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="34" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="110" cy="30" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="34" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="30" cy="100" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="104" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="180" cy="55" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="180" y="59" text-anchor="middle" font-size="12" font-weight="700">D</text>
+            <circle cx="240" cy="90" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="240" y="94" text-anchor="middle" font-size="12" font-weight="700">E</text>
+            <circle cx="180" cy="130" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="180" y="134" text-anchor="middle" font-size="12" font-weight="700">F</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">The edge BD is a bridge. Mark it on the diagram.</div>
+      </div>
+    </div>
+
+    <div class="worked-example">
+      <span class="label">Try Together</span>
+      <div class="diagram-row">
+        <div class="diagram-box-wrap">
+          <div class="diagram-image small">
+            <svg viewBox="0 0 220 210" width="220" height="210">
+              <line x1="110" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+              <line x1="110" y1="30" x2="190" y2="110" stroke="#000" stroke-width="1.5" />
+              <line x1="40" y1="110" x2="20" y2="190" stroke="#000" stroke-width="1.5" />
+              <circle cx="110" cy="30" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+              <text x="110" y="34" text-anchor="middle" font-size="12" font-weight="700">X</text>
+              <circle cx="40" cy="110" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+              <text x="40" y="114" text-anchor="middle" font-size="12" font-weight="700">Y</text>
+              <circle cx="190" cy="110" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+              <text x="190" y="114" text-anchor="middle" font-size="12" font-weight="700">Z</text>
+              <circle cx="20" cy="190" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+              <text x="20" y="194" text-anchor="middle" font-size="12" font-weight="700">W</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="problem">Find the bridge(s) in this graph.</div>
+      <div class="work-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Faces</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Faces (of a planar graph)</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+    </div>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 140" width="220" height="140">
+            <line x1="40" y1="30" x2="140" y2="30" stroke="#000" stroke-width="1.5" />
+            <line x1="40" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="40" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="140" y1="30" x2="190" y2="70" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="30" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="40" y="34" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="140" cy="30" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="140" y="34" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="40" cy="110" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="40" y="114" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="190" cy="70" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="74" text-anchor="middle" font-size="12" font-weight="700">D</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">Number of faces = <span class="fill-line"></span></div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 160" width="220" height="160">
+            <line x1="30" y1="75" x2="110" y2="25" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="75" x2="110" y2="130" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="25" x2="110" y2="130" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="25" x2="190" y2="25" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="190" y2="130" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="130" x2="110" y2="130" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="130" x2="110" y2="25" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="75" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="79" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="110" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="29" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="110" cy="130" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="134" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="190" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="29" text-anchor="middle" font-size="12" font-weight="700">D</text>
+            <circle cx="190" cy="130" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="134" text-anchor="middle" font-size="12" font-weight="700">E</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">Number of faces = <span class="fill-line"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Euler's Formula</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Euler's formula</div>
+      <p>For any connected planar graph: <span class="fill-line xlong"></span></p>
+    </div>
+
+    <div class="worked-example">
+      <span class="label">Worked Example</span>
+      <div class="problem">A connected planar graph has 10 vertices and 15 edges. How many faces does it have?</div>
+      <div class="work-lines">
+        <div class="line filled">v &minus; e + f = 2</div>
+        <div class="line filled">v = 10, e = 15</div>
+        <div class="line filled">10 &minus; 15 + f = 2</div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+
+    <div class="worked-example">
+      <span class="label">Your Turn</span>
+      <div class="problem">A connected planar graph has 8 faces and 12 edges. How many vertices does it have?</div>
+      <div class="work-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Questions</h2>
+    <p class="checklist-source">Edrolo 8A, p.526</p>
+    <div class="checklist">
+      <span class="checklist-item"><span class="box"></span>3</span>
+      <span class="checklist-item"><span class="box"></span>4</span>
+      <span class="checklist-item"><span class="box"></span>6</span>
+      <span class="checklist-item"><span class="box"></span>7</span>
+      <span class="checklist-item"><span class="box"></span>8</span>
+      <span class="checklist-item"><span class="box"></span>10</span>
+      <span class="checklist-item"><span class="box"></span>12</span>
+      <span class="checklist-item"><span class="box"></span>14a</span>
+      <span class="checklist-item"><span class="box"></span>14c</span>
+      <span class="checklist-item"><span class="box"></span>16</span>
+      <span class="checklist-item"><span class="box"></span>20</span>
+    </div>
+  </section>
+
+  <footer class="footer-note">Introduction to Networks and Decision Mathematics — Heathmont College</footer>
+</div>
+</body>
+</html>

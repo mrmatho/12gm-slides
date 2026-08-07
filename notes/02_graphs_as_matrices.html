@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Graphs as Matrices — Notes Template</title>
+<link rel="stylesheet" href="notes.css" />
+</head>
+<body>
+<div class="page">
+  <button type="button" class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <header class="worksheet-header">
+    <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
+    <h1>Graphs as Matrices</h1>
+    <div class="field-row">
+      <div class="field">Date <span class="fill-line long"></span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Getting Started</h2>
+    <p class="section-note">Fill in the adjacency matrix for the graph shown.</p>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 150" width="220" height="150">
+            <line x1="30" y1="25" x2="190" y2="25" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="190" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="125" x2="30" y2="25" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="29" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="190" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="29" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="30" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="129" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="190" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="129" text-anchor="middle" font-size="12" font-weight="700">D</text>
+          </svg>
+        </div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-4">
+            <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-4">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Adjacency Matrices</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Adjacency matrix</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+      <p>Rows and columns represent: <span class="fill-line long"></span></p>
+      <p>The entries represent: <span class="fill-line long"></span></p>
+    </div>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell">0</div><div class="cell">1</div><div class="cell">1</div>
+                <div class="cell">1</div><div class="cell">0</div><div class="cell">0</div>
+                <div class="cell">1</div><div class="cell">0</div><div class="cell">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Given matrix</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-box small"></div>
+        <div class="diagram-caption">Draw the graph for this matrix</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Practice</h2>
+
+    <h3>Q1. Fill in the adjacency matrix for this graph</h3>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+          <svg viewBox="0 0 220 240" width="200" height="220">
+            <line x1="110" y1="20" x2="30" y2="150" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="20" x2="190" y2="150" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="20" x2="110" y2="90" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="150" x2="110" y2="220" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="150" x2="110" y2="220" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="90" x2="30" y2="150" stroke="#000" stroke-width="1.5" />
+            <line x1="110" y1="90" x2="190" y2="150" stroke="#000" stroke-width="1.5" />
+            <circle cx="110" cy="20" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="24" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="110" cy="90" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="94" text-anchor="middle" font-size="12" font-weight="700">E</text>
+            <circle cx="30" cy="150" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="154" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="190" cy="150" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="154" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="110" cy="220" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="224" text-anchor="middle" font-size="12" font-weight="700">D</text>
+          </svg>
+        </div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-5">
+            <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div><div class="cell">E</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div><div class="cell">E</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-5">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Q2. Draw the graph for this adjacency matrix</h3>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-4">
+            <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-4">
+                <div class="cell">0</div><div class="cell">1</div><div class="cell">1</div><div class="cell">0</div>
+                <div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div>
+                <div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div>
+                <div class="cell">0</div><div class="cell">1</div><div class="cell">1</div><div class="cell">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-box small"></div>
+        <div class="diagram-caption">Draw the graph</div>
+      </div>
+    </div>
+
+    <h3>Q3 &amp; Q4. Use this matrix</h3>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell">0</div><div class="cell">1</div><div class="cell">1</div>
+                <div class="cell">1</div><div class="cell">1</div><div class="cell">1</div>
+                <div class="cell">1</div><div class="cell">1</div><div class="cell">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p><strong>Q3.</strong> How many edges are in the graph represented by this matrix? <span class="fill-line long"></span></p>
+    <p><strong>Q4.</strong> Which vertex has a loop? <span class="fill-line long"></span></p>
+  </section>
+
+  <section class="section">
+    <h2>Things to Note About Adjacency Matrices</h2>
+    <p>A loop is represented by a 1 in the <span class="fill-line long"></span> of the matrix.</p>
+    <p>The adjacency matrix of a simple graph is <span class="fill-line long"></span> about the diagonal.</p>
+    <p>Adjacency matrices for <span class="fill-line long"></span> graphs are not symmetric.</p>
+  </section>
+
+  <section class="section">
+    <h2>Directed Graphs</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Directed graph (digraph)</div>
+      <div class="fill-lines compact"><div class="line"></div><div class="line"></div></div>
+    </div>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+          <svg viewBox="0 0 220 240" width="200" height="220">
+            <defs>
+              <marker id="arrowDG1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#000" />
+              </marker>
+            </defs>
+            <line x1="102" y1="34" x2="38" y2="136" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG1)" />
+            <line x1="118" y1="34" x2="182" y2="136" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG1)" />
+            <line x1="42" y1="160" x2="98" y2="210" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG1)" />
+            <line x1="178" y1="160" x2="122" y2="210" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG1)" />
+            <line x1="110" y1="74" x2="110" y2="36" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG1)" />
+            <line x1="97" y1="100" x2="43" y2="140" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG1)" />
+            <line x1="177" y1="140" x2="123" y2="100" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG1)" />
+            <circle cx="110" cy="20" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="24" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="110" cy="90" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="94" text-anchor="middle" font-size="12" font-weight="700">E</text>
+            <circle cx="30" cy="150" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="154" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="190" cy="150" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="154" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="110" cy="220" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="110" y="224" text-anchor="middle" font-size="12" font-weight="700">D</text>
+          </svg>
+        </div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="matrix directed">
+          <div class="matrix-to-label">To</div>
+          <div class="matrix-col-headers cols-5">
+            <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div><div class="cell">E</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-from-label">From</div>
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div><div class="cell">E</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-5">
+                <div class="cell">0</div><div class="cell">1</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div>
+                <div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div>
+                <div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div><div class="cell">1</div>
+                <div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div>
+                <div class="cell">1</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">A digraph's matrix needs From / To axis labels</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Practice (cont.)</h2>
+
+    <h3>Q4. Write the adjacency matrix for this graph</h3>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 180" width="220" height="180">
+            <defs>
+              <marker id="arrowDG2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#000" />
+              </marker>
+            </defs>
+            <line x1="46" y1="30" x2="174" y2="30" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG2)" />
+            <line x1="190" y1="46" x2="190" y2="134" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG2)" />
+            <line x1="174" y1="150" x2="46" y2="150" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG2)" />
+            <line x1="30" y1="134" x2="30" y2="46" stroke="#000" stroke-width="1.5" marker-end="url(#arrowDG2)" />
+            <circle cx="30" cy="30" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="34" text-anchor="middle" font-size="12" font-weight="700">W</text>
+            <circle cx="190" cy="30" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="34" text-anchor="middle" font-size="12" font-weight="700">X</text>
+            <circle cx="190" cy="150" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="154" text-anchor="middle" font-size="12" font-weight="700">Y</text>
+            <circle cx="30" cy="150" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="154" text-anchor="middle" font-size="12" font-weight="700">Z</text>
+          </svg>
+        </div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="matrix directed">
+          <div class="matrix-to-label">To</div>
+          <div class="matrix-col-headers cols-4">
+            <div class="cell">W</div><div class="cell">X</div><div class="cell">Y</div><div class="cell">Z</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-from-label">From</div>
+            <div class="matrix-row-headers">
+              <div class="cell">W</div><div class="cell">X</div><div class="cell">Y</div><div class="cell">Z</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-4">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Q5. Draw the graph for this adjacency matrix</h3>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix directed">
+          <div class="matrix-to-label">To</div>
+          <div class="matrix-col-headers cols-4">
+            <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-from-label">From</div>
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-4">
+                <div class="cell">0</div><div class="cell">1</div><div class="cell">1</div><div class="cell">0</div>
+                <div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div>
+                <div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div>
+                <div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-box small"></div>
+        <div class="diagram-caption">Draw the graph</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Questions</h2>
+    <p class="checklist-source">Edrolo 8B, p.539</p>
+    <div class="checklist">
+      <span class="checklist-item"><span class="box"></span>1</span>
+      <span class="checklist-item"><span class="box"></span>3</span>
+      <span class="checklist-item"><span class="box"></span>4</span>
+      <span class="checklist-item"><span class="box"></span>7</span>
+      <span class="checklist-item"><span class="box"></span>10</span>
+      <span class="checklist-item"><span class="box"></span>11</span>
+      <span class="checklist-item"><span class="box"></span>14</span>
+      <span class="checklist-item"><span class="box"></span>16</span>
+    </div>
+  </section>
+
+  <footer class="footer-note">Graphs as Matrices — Heathmont College</footer>
+</div>
+</body>
+</html>

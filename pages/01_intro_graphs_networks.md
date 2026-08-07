@@ -390,4 +390,13 @@ $v = 6$
 </v-clicks>
 
 
+---
+layout: center
+zoom: 1.6
+---
 
+# Questions
+
+## Edrolo 8A, p.526
+
+Questions 3, 4, 6-8, 10, 12, 14ac, 16, 20

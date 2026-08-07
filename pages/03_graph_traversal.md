@@ -77,3 +77,116 @@ For each, identify which labels apply: **Walk, Path, Trail, Cycle, Circuit**.
 5. J, I, H, J, I
 
 ---
+layout: two-cols-header
+---
+
+# Eulerian Trails
+
+*Euler is back!*
+
+An **Eulerian trail** is a trail that uses **every edge** of a graph exactly once.
+
+::left::
+
+For example, in this graph:
+
+```mermaid {scale: 1.2}
+graph LR
+    A((A)) --- B((B))
+    A --- C((C))
+    B --- C
+    B --- D((D))
+    D --- C
+```
+
+The following is an Eulerian trail:
+
+<v-clicks>
+
+**B, A, C, D, B, C**
+
+</v-clicks>
+
+::right::
+
+> [!TIP]
+> An Eulerian trail only exists if the graph has **exactly  2 vertices of odd degree** (odd vertices).
+>
+> The odd vertices are always the starting and ending vertices on the trail.
+
+---
+layout: two-cols-header
+---
+
+# Eulerian Circuit
+
+An **Eulerian circuit** is a circuit (so it starts and ends at the same vertex) that uses **every edge** of a graph exactly once.
+
+::left::
+
+For example, in this graph:
+
+```mermaid {scale: 1.2}
+graph LR
+    A((A)) --- B((B))
+    A --- C((C))
+    B --- C
+    B --- D((D))
+    D --- C
+    B --- C
+```
+
+**The following is an Eulerian circuit:**
+
+<v-clicks>
+
+**B, A, C, D, B, C, B**
+
+</v-clicks>
+
+::right::
+
+> [!TIP]
+> An Eulerian circuit only exists if the graph has **no vertices of odd degree** (no odd vertices)
+
+
+> [!IMPORTANT]
+> If you are asked to modify an existing graph to create an Eulerian trail or circuit, you add edges to connect odd vertices until there are only  2 left (for a trail) or 0 (for a circuit).
+
+---
+layout: center
+---
+
+# Hamiltonian Paths and Cycles
+
+A **Hamiltonian path** is a path that visits **every vertex** of a graph exactly once.
+
+A **Hamiltonian cycle** is a cycle that visits **every vertex** of a graph exactly once (with the same start and end vertex).
+
+There is no simple rule for finding a Hamiltonian path or cycle, but check that:
+
+- All vertices are visited
+- No vertex is visited more than once (except for the start/end vertex in a cycle)
+
+```mermaid {scale: 1.2}
+
+graph LR
+    A((A)) --- B((B))
+    A --- C((C))
+    B --- C
+    B --- D((D))
+    D --- C
+```
+
+Possible Hamiltonian path: **A, B, C, D**. Possible Hamiltonian cycle: **A, B, D, C, A**.
+
+---
+layout: center
+zoom: 1.6
+---
+
+# Questions
+
+## Edrolo 8C, p. 555
+
+Questions 2, 3, 5-7, 13-16.

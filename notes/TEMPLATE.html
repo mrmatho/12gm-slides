@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>[Topic Title] — Notes Template</title>
+<link rel="stylesheet" href="notes.css" />
+</head>
+<body>
+<!--
+  NOTES TEMPLATE — how to use
+  ============================
+  1. Copy this file to notes/NN_slug.html, matching the slide file
+     pages/NN_slug.md (same number + slug, .html instead of .md).
+  2. Replace "[Topic Title]" in <title> and the header <h1> below.
+  3. Walk pages/NN_slug.md top to bottom. For each slide or group of
+     related slides, add one <section class="section"> and fill it
+     using the block types below. Keep section order matching the
+     slide order so the worksheet stays easy to compare against the deck.
+     Skip slides that are in-class-only activities (e.g. a timed
+     whiteboard check) rather than something worth keeping in notes.
+  4. Diagram boxes come in two flavours - pick per diagram:
+       - .diagram-box: blank, for the student to draw (use when the
+         task IS the construction, e.g. "draw the graph for this matrix").
+       - .diagram-image: holds a supplied inline <svg> of the graph, for
+         when the graph is a "given" the student reads/analyses (e.g.
+         counting faces, finding a bridge, building a matrix from it).
+         Don't default to one or the other for every diagram - match
+         each one to what the slide is actually asking the student to do.
+  5. Delete this instructional comment block once the file is done
+     (optional — it never renders or prints).
+
+  BLOCK TYPES
+  -----------
+  Vocabulary term — student writes the full definition as it's
+  explained live:
+    <div class="vocab-block">
+      <div class="vocab-term">Term name</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+
+  Diagram box — blank box for a hand-drawn graph. Use .diagram-row to
+  place two or three side by side. Add "small" or "tall" to resize:
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-box"></div>
+        <div class="diagram-caption">Optional caption / instruction</div>
+      </div>
+    </div>
+
+  Diagram image — same wrapper, but for a supplied graph (swap in a hand
+  -built inline SVG: circles + text for vertices, lines for edges, all
+  stroke="#000" to stay print-safe):
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 200 140" width="200" height="140">
+            <line x1="40" y1="30" x2="150" y2="30" stroke="#000" stroke-width="1.5" />
+            <circle cx="40" cy="30" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="40" y="34" text-anchor="middle" font-size="13" font-weight="700">A</text>
+            <circle cx="150" cy="30" r="14" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="150" y="34" text-anchor="middle" font-size="13" font-weight="700">B</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">Optional caption</div>
+      </div>
+    </div>
+
+  Worked example — problem/formula shown in full, working left blank.
+  Give the .label a "Worked Example" for a fully modelled first example,
+  or "Your Turn" / "Try Together" for a practice one. For the FIRST
+  worked example in a topic, scaffold it: pre-fill the opening step(s)
+  as a "line filled" row so students see the format, then leave the
+  remaining steps as blank "line" rows to complete live:
+    <div class="worked-example">
+      <span class="label">Worked Example</span>
+      <div class="problem">Problem statement or formula, shown in full.</div>
+      <div class="work-lines">
+        <div class="line filled">v - e + f = 2</div>
+        <div class="line filled">v = 10, e = 15</div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+
+  Tip / note callout — matches the deck's [!TIP] / [!NOTE] alerts:
+    <div class="callout-tip"><strong>Tip</strong> Callout text goes here.</div>
+
+  Fill-in table — for classification-style exercises:
+    <table class="fill-table">
+      <thead><tr><th>Sequence</th><th>Walk?</th><th>Path?</th></tr></thead>
+      <tbody><tr><td>A, B, C</td><td class="blank"></td><td class="blank"></td></tr></tbody>
+    </table>
+
+  Matrix — row/column vertex labels sit outside the bracket, matching
+  standard notation. Use class "blank" on any cell the student must
+  fill in; omit it (and put the value as text) for a given cell:
+    <div class="matrix">
+      <div class="matrix-col-headers cols-3">
+        <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+      </div>
+      <div class="matrix-body-row">
+        <div class="matrix-row-headers">
+          <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+        </div>
+        <div class="matrix-wrap">
+          <div class="matrix-values cols-3">
+            <div class="cell">0</div><div class="cell">1</div><div class="cell">1</div>
+            <div class="cell">1</div><div class="cell blank"></div><div class="cell blank"></div>
+            <div class="cell">1</div><div class="cell blank"></div><div class="cell blank"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  Inline blank inside a sentence (widths: fill-line / fill-line long / fill-line xlong):
+    A <span class="fill-line"></span> is an edge that connects a vertex to itself.
+
+  Question checklist — for a slide's textbook question list, e.g.
+  "Edrolo 8A, p.526 — Questions 3, 4, 6-8, 10, 12, 14ac, 16, 20". Expand
+  ranges ("6-8" -> 6, 7, 8) and multi-part refs ("14ac" -> 14a, 14c) into
+  one checklist-item per question:
+    <p class="checklist-source">Edrolo 8A, p.526</p>
+    <div class="checklist">
+      <span class="checklist-item"><span class="box"></span>3</span>
+      <span class="checklist-item"><span class="box"></span>4</span>
+    </div>
+-->
+
+<div class="page">
+  <button type="button" class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <header class="worksheet-header">
+    <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
+    <h1>[Topic Title]</h1>
+    <div class="field-row">
+      <div class="field">Date <span class="fill-line long"></span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>[Section title]</h2>
+
+    <div class="vocab-block">
+      <div class="vocab-term">[Term]</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-note">[Topic Title] — Heathmont College</footer>
+</div>
+</body>
+</html>

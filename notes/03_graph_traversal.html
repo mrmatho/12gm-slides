@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Traversing Graphs — Notes Template</title>
+<link rel="stylesheet" href="notes.css" />
+</head>
+<body>
+<div class="page">
+  <button type="button" class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <header class="worksheet-header">
+    <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
+    <h1>Traversing Graphs</h1>
+    <div class="field-row">
+      <div class="field">Date <span class="fill-line long"></span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Key Vocabulary</h2>
+
+    <div class="vocab-block">
+      <div class="vocab-term">Walk</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Path</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Trail</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Cycle</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Circuit</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+
+    <div class="callout-tip"><strong>Tip</strong> The definitions of walk, path, trail, cycle, and circuit are easy to ignore, but are always used deliberately. Check in with your notes if you don't remember the difference when answering a question.</div>
+  </section>
+
+  <section class="section">
+    <h2>Example</h2>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 150" width="220" height="150">
+            <line x1="30" y1="25" x2="190" y2="25" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="190" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="125" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="29" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="190" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="29" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="30" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="129" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="190" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="129" text-anchor="middle" font-size="12" font-weight="700">D</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout-tip"><strong>Tip</strong> Paths and cycles are about vertices. Trails and circuits are about edges.</div>
+
+    <table class="fill-table">
+      <thead>
+        <tr><th>Sequence</th><th>Walk?</th><th>Path?</th><th>Trail?</th><th>Cycle?</th><th>Circuit?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A, B, C</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>A, B, D</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>A, B, C, D, B</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>A, B, C, A</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>Try It Now</h2>
+    <p class="section-note">For each sequence, identify which labels apply: Walk, Path, Trail, Cycle, Circuit.</p>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+          <svg viewBox="0 0 250 210" width="250" height="210">
+            <line x1="30" y1="30" x2="150" y2="20" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="30" x2="90" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="150" y1="20" x2="90" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="150" y1="20" x2="220" y2="90" stroke="#000" stroke-width="1.5" />
+            <line x1="220" y1="90" x2="90" y2="110" stroke="#000" stroke-width="1.5" />
+            <line x1="220" y1="90" x2="160" y2="190" stroke="#000" stroke-width="1.5" />
+            <line x1="90" y1="110" x2="160" y2="190" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="30" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="34" text-anchor="middle" font-size="12" font-weight="700">F</text>
+            <circle cx="150" cy="20" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="150" y="24" text-anchor="middle" font-size="12" font-weight="700">G</text>
+            <circle cx="90" cy="110" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="90" y="114" text-anchor="middle" font-size="12" font-weight="700">H</text>
+            <circle cx="220" cy="90" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="220" y="94" text-anchor="middle" font-size="12" font-weight="700">I</text>
+            <circle cx="160" cy="190" r="13" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="160" y="194" text-anchor="middle" font-size="12" font-weight="700">J</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <table class="fill-table">
+      <thead>
+        <tr><th>Sequence</th><th>Applicable labels</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1. F, G, H, I, J</td><td class="blank"></td></tr>
+        <tr><td>2. G, H, I, J</td><td class="blank"></td></tr>
+        <tr><td>3. F, I, H, J</td><td class="blank"></td></tr>
+        <tr><td>4. G, I, H, G</td><td class="blank"></td></tr>
+        <tr><td>5. J, I, H, J, I</td><td class="blank"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>Eulerian Trails</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Eulerian trail</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 150" width="220" height="150">
+            <line x1="30" y1="25" x2="190" y2="25" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="190" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="125" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="29" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="190" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="29" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="30" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="129" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="190" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="129" text-anchor="middle" font-size="12" font-weight="700">D</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <p>Find an Eulerian trail for this graph: <span class="fill-line xlong"></span></p>
+    <div class="callout-tip"><strong>Tip</strong> An Eulerian trail only exists if the graph has exactly 2 vertices of odd degree (odd vertices). The odd vertices are always the starting and ending vertices on the trail.</div>
+  </section>
+
+  <section class="section">
+    <h2>Eulerian Circuits</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Eulerian circuit</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 150" width="220" height="150">
+            <line x1="30" y1="25" x2="190" y2="25" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <path d="M 190,25 Q 140,110 30,125" stroke="#000" stroke-width="1.5" fill="none" />
+            <line x1="190" y1="25" x2="190" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="125" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="29" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="190" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="29" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="30" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="129" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="190" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="129" text-anchor="middle" font-size="12" font-weight="700">D</text>
+          </svg>
+        </div>
+        <div class="diagram-caption">Note: there are two edges between B and C</div>
+      </div>
+    </div>
+    <p>Find an Eulerian circuit for this graph: <span class="fill-line xlong"></span></p>
+    <div class="callout-tip"><strong>Tip</strong> An Eulerian circuit only exists if the graph has no vertices of odd degree.</div>
+    <div class="callout-tip"><strong>Note</strong> To modify a graph to create an Eulerian trail or circuit, add edges to connect odd vertices until there are only 2 left (for a trail) or 0 left (for a circuit).</div>
+  </section>
+
+  <section class="section">
+    <h2>Hamiltonian Paths and Cycles</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Hamiltonian path</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Hamiltonian cycle</div>
+      <div class="fill-lines compact"><div class="line"></div></div>
+    </div>
+    <p class="section-note">Check: all vertices are visited, and no vertex is visited more than once (except the start/end vertex in a cycle).</p>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 220 150" width="220" height="150">
+            <line x1="30" y1="25" x2="190" y2="25" stroke="#000" stroke-width="1.5" />
+            <line x1="30" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="25" x2="190" y2="125" stroke="#000" stroke-width="1.5" />
+            <line x1="190" y1="125" x2="30" y2="125" stroke="#000" stroke-width="1.5" />
+            <circle cx="30" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="29" text-anchor="middle" font-size="12" font-weight="700">A</text>
+            <circle cx="190" cy="25" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="29" text-anchor="middle" font-size="12" font-weight="700">B</text>
+            <circle cx="30" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="30" y="129" text-anchor="middle" font-size="12" font-weight="700">C</text>
+            <circle cx="190" cy="125" r="12" fill="#fff" stroke="#000" stroke-width="1.5" />
+            <text x="190" y="129" text-anchor="middle" font-size="12" font-weight="700">D</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <p>Possible Hamiltonian path: <span class="fill-line xlong"></span></p>
+    <p>Possible Hamiltonian cycle: <span class="fill-line xlong"></span></p>
+  </section>
+
+  <section class="section">
+    <h2>Questions</h2>
+    <p class="checklist-source">Edrolo 8C, p.555</p>
+    <div class="checklist">
+      <span class="checklist-item"><span class="box"></span>2</span>
+      <span class="checklist-item"><span class="box"></span>3</span>
+      <span class="checklist-item"><span class="box"></span>5</span>
+      <span class="checklist-item"><span class="box"></span>6</span>
+      <span class="checklist-item"><span class="box"></span>7</span>
+      <span class="checklist-item"><span class="box"></span>13</span>
+      <span class="checklist-item"><span class="box"></span>14</span>
+      <span class="checklist-item"><span class="box"></span>15</span>
+      <span class="checklist-item"><span class="box"></span>16</span>
+    </div>
+  </section>
+
+  <footer class="footer-note">Traversing Graphs — Heathmont College</footer>
+</div>
+</body>
+</html>

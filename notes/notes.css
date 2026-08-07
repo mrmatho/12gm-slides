@@ -12,7 +12,6 @@
   --gray-dark: #333;
   --gray: #555;
   --gray-light: #999;
-  --dot-color: #aaa;
   --radius-sm: 5px;
   --radius-md: 10px;
   --accent-teal: #3ab9d5; /* screen-only accent, never used in print */
@@ -95,6 +94,7 @@ body {
   flex-wrap: wrap;
   gap: 24px;
   font-size: 0.9rem;
+  justify-content: flex-end;
 }
 
 .field {
@@ -212,9 +212,6 @@ body {
   min-height: 150px;
   border: 1.5px solid var(--ink);
   border-radius: var(--radius-md);
-  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
-  background-size: 14px 14px;
-  background-position: 7px 7px;
 }
 
 .diagram-box.tall {
@@ -223,6 +220,29 @@ body {
 
 .diagram-box.small {
   min-height: 100px;
+}
+
+/* diagram-image: same footprint as diagram-box, but holds a supplied
+   drawing (e.g. an inline SVG of the graph) instead of blank space -
+   use when the graph is a "given" to read/analyse rather than something
+   the student needs to construct from scratch. */
+.diagram-image {
+  min-height: 150px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.diagram-image.small {
+  min-height: 100px;
+}
+
+.diagram-image svg {
+  max-width: 100%;
+  height: auto;
 }
 
 .diagram-caption {
@@ -242,6 +262,16 @@ body {
   page-break-inside: avoid;
 }
 
+.worked-example .label {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--gray);
+  margin-bottom: 4px;
+}
+
 .worked-example .problem {
   font-size: 0.9rem;
   margin-bottom: 8px;
@@ -257,6 +287,16 @@ body {
 .worked-example .work-lines .line {
   border-bottom: 1px solid var(--gray-light);
   height: 1.6em;
+}
+
+/* a pre-filled scaffold step, shown in a worked example to model the
+   process before the student continues on the blank .line rows below */
+.worked-example .work-lines .line.filled {
+  border-bottom: none;
+  height: auto;
+  padding: 1px 0;
+  font-size: 0.9rem;
+  color: var(--gray-dark);
 }
 
 /* callouts, matching the deck's [!NOTE] / [!TIP] alerts */
@@ -301,27 +341,157 @@ body {
   height: 1.8em;
 }
 
-/* matrix grids, for adjacency-matrix practice */
+/* matrices, for adjacency-matrix practice. Row/column vertex labels sit
+   outside the bracket (matching standard matrix notation); the bracket
+   itself is drawn with pseudo-elements around just the numeric grid. */
 
-.matrix-grid {
-  display: inline-grid;
-  gap: 2px;
-  margin: 10px 0;
+.matrix {
+  display: inline-block;
+  margin: 6px 16px 10px 0;
+  vertical-align: top;
 }
 
-.matrix-grid .cell {
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--ink);
+.matrix-col-headers {
+  display: grid;
+  gap: 2px;
+  margin-left: 34px;
+  margin-bottom: 2px;
+}
+
+/* column-count utilities, shared by .matrix-col-headers and .matrix-values
+   so a matrix's size is set via a class instead of an inline style */
+.cols-3 { grid-template-columns: repeat(3, 32px); }
+.cols-4 { grid-template-columns: repeat(4, 32px); }
+.cols-5 { grid-template-columns: repeat(5, 32px); }
+.cols-6 { grid-template-columns: repeat(6, 32px); }
+
+.matrix-col-headers .cell {
+  width: 32px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.matrix-body-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.matrix-row-headers {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-right: 2px;
+}
+
+.matrix-row-headers .cell {
+  width: 24px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* axis labels for a directed-graph (digraph) matrix */
+.matrix-to-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray);
+  margin-left: 50px;
+  margin-bottom: 2px;
+}
+
+.matrix-from-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray);
+  margin-right: 3px;
+}
+
+.matrix-wrap {
+  position: relative;
+  padding: 0 10px;
+}
+
+.matrix-wrap::before,
+.matrix-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 7px;
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.matrix-wrap::before {
+  left: 0;
+  border-left: 2px solid var(--ink);
+}
+
+.matrix-wrap::after {
+  right: 0;
+  border-right: 2px solid var(--ink);
+}
+
+.matrix-values {
+  display: grid;
+  gap: 2px;
+}
+
+.matrix-values .cell {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.9rem;
 }
 
-.matrix-grid .cell.label {
-  border: none;
-  font-weight: 700;
+/* a cell the student must fill in, rather than a given value */
+.matrix-values .cell.blank {
+  align-items: flex-end;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--ink);
+  height: 26px;
+}
+
+/* question checklists, e.g. a textbook question list to tick off */
+
+.checklist-source {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin: 0 0 8px;
+}
+
+.checklist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0 0 4px;
+}
+
+.checklist-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.checklist-item .box {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
 /* print control + footer */

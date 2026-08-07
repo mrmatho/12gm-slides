@@ -84,7 +84,7 @@ layout: two-cols
 zoom: 0.95
 ---
 
-# More Practice
+# Practice
 
 **Q1.** Identify the adjacency matrix for the following graph:
 
@@ -150,6 +150,11 @@ layout:center
 
 # Directed Graphs
 
+<table>
+<tbody>
+<tr>
+<td>
+
 ```mermaid {scale: 1.2}
 
 graph LR
@@ -157,11 +162,86 @@ graph LR
     A --> C((C))
     B --> D((D))
     C --> D
-    E((E)) --> A
+    C --> E((E))
+    E --> A
     E --> B
-    C --> E
+    
 ```
 
-**Directed graphs** (or **digraphs**) have directed edges (arrows) that indicate the direction of the connection between vertices. 
+</td>
+<td>
+
+$$
+\begin{array}{ccc}
+ & & \textbf{To} \\
+ & & \begin{matrix} A & B & C & D & E \end{matrix} \\
+\textbf{From} & \begin{matrix} A \\ B \\ C \\ D \\ E \end{matrix} &
+\begin{bmatrix}
+    0 & 1 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1 & 1 \\
+    0 & 0 & 0 & 0 & 0 \\
+    1 & 1 & 0 & 0 & 0
+\end{bmatrix}
+\end{array}
+$$
+</td></tr>
+</tbody>
+</table>
+
+**Directed graphs** (or **digraphs**) have directed edges (arrows) that indicate the direction of the connection between vertices.
+
+The adjacency matrix for a digraph should include "From" and "To" labels to indicate the direction of connection. 
+
+---
+layout: two-cols-header
+---
+
+# Practice
+
+::left::
+
+```mermaid {scale: 1.4}
+
+graph LR
+
+    W((W)) --> X((X))
+    X((X)) --> Y((Y))
+    Z((Z)) --> Y
+    Z((Z)) --> W
+
+```
+
+**Q4.** Write the adjacency matrix for this graph.
+
+::right::
+
+$$
+\begin{array}{ccc}
+ & & \textbf{To} \\
+ & & \begin{matrix} A & B & C & D  \end{matrix} \\
+\textbf{From} & \begin{matrix} A \\ B \\ C \\ D \\ \end{matrix} &
+\begin{bmatrix}
+    0 & 1 & 1 & 0  \\
+    0 & 0 & 0 & 1  \\
+    1 & 0 & 0 & 1  \\
+    0 & 0 & 0 & 0  \\
+    1 & 1 & 0 & 0 
+\end{bmatrix}
+\end{array}
+$$
+
+**Q5.** Draw the graph for this adjacency matrix.
+
+---
+layout: center
+zoom: 1.4
+---
+
+# Questions
+
+## Edrolo 8B, p.539
+
+Questions 1, 3, 4, 7, 10, 11, 14, 16
 
 ---
