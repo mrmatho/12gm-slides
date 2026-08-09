@@ -326,6 +326,7 @@ There are **four faces in this graph:**
 
 ---
 layout: center
+zoom: 0.95
 ---
 
 # Euler's formula
@@ -339,8 +340,17 @@ $v - e + f = 2$
 - Check whether a graph is planar without needing to draw it in planar form
 - Identify the number of faces, edges, or vertices in a planar graph if we know the other two values.
 
+> [!TIP]
+> You can use a re-arranged version of the formula for each of the three variables:
+>
+> - Faces: $f = e - v + 2$
+> - Edges: $e = v + f - 2$
+> - Vertices: $v = e - f + 2$
+
 > [!NOTE]
 > **Leonhard Euler** (1707–1783) was a Swiss mathematician who made important discoveries in many areas of mathematics, including founding graph theory (the basis of our Networks and Decisions unit). Euler will show up again.
+
+
 ---
 layout: two-cols-header
 ---

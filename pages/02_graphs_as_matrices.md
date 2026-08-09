@@ -31,6 +31,27 @@ $$
 
 ---
 layout: center
+---
+
+# Quick Review from last lesson: Euler's formula
+
+The table below lists the number of edges, faces and vertices in a set of planar graphs. Use Euler's formula ($v - e + f = 2$) to fill in the missing values.
+
+| Vertices $v$ | Edges $e$ | Faces $f$ |
+| ------------ | --------- | --------- |
+| 3            | 3         |           |
+|              | 4         | 5         |
+| 12           |           | 10        |
+
+> [!TIP]
+> You can use a re-arranged version of the formula for each of the three variables:
+>
+> - Faces: $f = e - v + 2$
+> - Edges: $e = v + f - 2$
+> - Vertices: $v = e - f + 2$
+
+---
+layout: center
 zoom: 1.2
 ---
 
@@ -140,7 +161,7 @@ layout: center
 
 - A loop (an edge that connects a vertex to itself) is represented by a 1 in the diagonal of the matrix. 
     - Loops are the only edges that are represented in the diagonal of the adjacency matrix.
-- The adjacency matrix of a simple graph is symmetric about the diagonal. 
+- The adjacency matrix of a simple graph is symmetric about the diagonal.
     - Edges are undirected, so the connection from vertex A to vertex B is the same as the connection from vertex B to vertex A.
 - We can use adjacency matrices to represent **directed graphs**, but the adjacency matrix will not be symmetric in that case.
 

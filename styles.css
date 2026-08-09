@@ -45,3 +45,13 @@
 .left-col {
     border-right: 1px solid #838181;
 }
+
+.slidev-layout th {
+    --uno: 'bg-lightblue-200 dark:bg-blue-700';
+}
+
+
+
+.slidev-layout td, .slidev-layout th {
+    border: 1px solid #838181;
+}
