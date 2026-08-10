@@ -47,3 +47,8 @@ hide: false
 ---
 
 ---
+src: pages/04_minimum_connector_problems.md
+hide: false
+---
+
+---
