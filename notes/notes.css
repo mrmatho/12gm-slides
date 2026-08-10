@@ -159,7 +159,7 @@ body {
 .fill-lines {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 28px;
   margin-top: 8px;
 }
 
