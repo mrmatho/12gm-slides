@@ -32,6 +32,15 @@ jobs:
       - name: Build
         run: npm run build -- --base /${{github.event.repository.name}}/
 
+      - name: Copy printable notes
+        run: |
+          mkdir -p dist/handouts
+          cp notes/notes.css dist/handouts/
+          for f in notes/*.html; do
+            [ "$(basename "$f")" = "TEMPLATE.html" ] && continue
+            cp "$f" dist/handouts/
+          done
+
       - uses: actions/configure-pages@v4
 
       - uses: actions/upload-pages-artifact@v3
