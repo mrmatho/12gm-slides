@@ -52,7 +52,7 @@ The table below lists the number of edges, faces and vertices in a set of planar
 
 ---
 layout: center
-zoom: 1.2
+zoom: 1.1
 ---
 
 # Adjacency Matrices
