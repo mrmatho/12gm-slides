@@ -1,0 +1,12 @@
+{
+  // Slidev decks use "---" as slide separators / frontmatter fences, and each
+  // slide has its own "# Title" — that trips up rules written for normal docs.
+  "MD003": false, // heading-style: "---" after a text line reads as a setext heading
+  "MD022": false, // blanks-around-headings: same false positive as MD003
+  "MD025": false, // single-h1: every slide legitimately starts a new "# Title"
+  "MD024": false, // no-duplicate-heading: allow repeated "# Practice" etc. across slides
+  "MD041": false, // first-line-heading: files start with slidev frontmatter, not a heading
+  "MD033": false, // inline-html: allow HTML in slides
+  "MD034": false, // bare-urls: allow bare URLs in slides
+  "MD013": false // line length: I need to allow long bullet point lines
+}

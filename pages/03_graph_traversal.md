@@ -18,7 +18,7 @@ layout: center
 - **Circuit**: A trail that starts and ends at the same vertex
 
 > [!TIP]
-> The definitions of walk, path, trail, cycle, and circuit are easy to ignore, but are **always used deliberately**. Check in with your notes if you don't remember the difference when answering a question. 
+> The definitions of walk, path, trail, cycle, and circuit are easy to ignore, but are **always used deliberately**. Check in with your notes if you don't remember the difference when answering a question.
 
 ---
 layout: center
@@ -36,11 +36,10 @@ graph LR
     D --- C
 ```
 
-
 > [!TIP]
-> **Paths and cycles** are about vertices. **Trails and circuits** are about edges. 
+> **Paths and cycles** are about vertices. **Trails and circuits** are about edges.
 
-<v-clicks> 
+<v-clicks>
 
 | Sequence      | Walk? | Path? | Trail? | Cycle? | Circuit? |
 |---------------|-------|-------|--------|--------|----------|
@@ -148,7 +147,6 @@ graph LR
 
 > [!TIP]
 > An Eulerian circuit only exists if the graph has **no vertices of odd degree** (no odd vertices)
-
 
 > [!IMPORTANT]
 > If you are asked to modify an existing graph to create an Eulerian trail or circuit, you add edges to connect odd vertices until there are only  2 left (for a trail) or 0 (for a circuit).

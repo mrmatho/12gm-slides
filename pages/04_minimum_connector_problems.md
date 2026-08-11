@@ -10,9 +10,9 @@ layout: center
 zoom: 1.2
 ---
 
-# Weighted Graphs (Networks)
+# Weighted Graphs
 
-A **network** is a graph where each edge has a **weight** — a number representing cost, distance, time, or some other quantity.
+A **Weighted Graph** is a graph where each edge has a **weight** — a number representing cost, distance, time, or some other quantity.
 
 ```mermaid {scale: 1.3}
 graph LR
@@ -31,8 +31,6 @@ graph LR
 ---
 layout: two-cols-header
 ---
-
-
 
 # Subgraphs
 
@@ -64,7 +62,8 @@ graph LR
     B ---|10| D((D))
     A ---|8| D((D))
 ```
-**...of this graph.** The subgraph contains only some of the vertices and edges of the larger graph. 
+
+**...of this graph.** The subgraph contains only some of the vertices and edges of the larger graph.
 
 None of the edges or vertices in the subgraph are new. They all exist in the larger graph.
 
@@ -285,3 +284,34 @@ zoom: 1.6
 ## Edrolo 8D, p. 567
 
 Questions 1, 4, 5, 7, 9, 12, 13
+
+---
+layout: center
+zoom: 1.1
+---
+
+# Exit Ticket Questions - Review so far
+
+For the graph below:
+
+1. Is it a **simple graph**? Why or why not?
+2. Identify a **bridge**.
+3. Write a **cycle** for this graph.
+4. How many **faces** are there in the graph?
+5. Does an **Eulerian circuit** exist? Why or why not?
+
+````mermaid {scale: 0.95}
+
+graph LR
+    A((A)) --- B((B))
+    A --- C((C))
+    B --- D((D))
+    C --- D
+    C --- E((E))
+    D --- F((F))
+    E --- F
+    C --- G((G))
+    G --- H((H))
+    H --- G
+    H --- I((I))
+````

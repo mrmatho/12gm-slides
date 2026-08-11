@@ -59,7 +59,7 @@ zoom: 1.1
 
 *You thought you were finished with matrices!*
 
-An **adjacency matrix** is a square matrix that represents the connections between each vertex in a graph. 
+An **adjacency matrix** is a square matrix that represents the connections between each vertex in a graph.
 
 - The rows and columns of the matrix represent the vertices of the graph.
 - The entries of the matrix represent the number of connections (edges) between the vertices. For a simple graph, the entries are either 0 (no connection) or 1 (connection).
@@ -78,7 +78,7 @@ $$
 \begin{bmatrix}
 0 & 1 & 1  \\
 1 & 0 & 0  \\
-1 & 0 & 0 
+1 & 0 & 0
 \end{bmatrix}
 \end{array}
 $$
@@ -161,10 +161,10 @@ layout: center
 
 # Things to note about adjacency matrices
 
-- A loop (an edge that connects a vertex to itself) is represented by a 1 in the diagonal of the matrix. 
-    - Loops are the only edges that are represented in the diagonal of the adjacency matrix.
+- A loop (an edge that connects a vertex to itself) is represented by a 1 in the diagonal of the matrix.
+  - Loops are the only edges that are represented in the diagonal of the adjacency matrix.
 - The adjacency matrix of a simple graph is symmetric about the diagonal.
-    - Edges are undirected, so the connection from vertex A to vertex B is the same as the connection from vertex B to vertex A.
+  - Edges are undirected, so the connection from vertex A to vertex B is the same as the connection from vertex B to vertex A.
 - We can use adjacency matrices to represent **directed graphs**, but the adjacency matrix will not be symmetric in that case.
 
 ---
@@ -214,7 +214,7 @@ $$
 
 **Directed graphs** (or **digraphs**) have directed edges (arrows) that indicate the direction of the connection between vertices.
 
-The adjacency matrix for a digraph should include "From" and "To" labels to indicate the direction of connection. 
+The adjacency matrix for a digraph should include "From" and "To" labels to indicate the direction of connection.
 
 ---
 layout: two-cols-header
@@ -248,7 +248,7 @@ $$
     0 & 1 & 1 & 0  \\
     0 & 0 & 0 & 1  \\
     1 & 0 & 0 & 1  \\
-    0 & 0 & 0 & 0 
+    0 & 0 & 0 & 0
 \end{bmatrix}
 \end{array}
 $$
