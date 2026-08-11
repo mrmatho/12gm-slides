@@ -64,6 +64,8 @@ An **adjacency matrix** is a square matrix that represents the connections betwe
 - The rows and columns of the matrix represent the vertices of the graph.
 - The entries of the matrix represent the number of connections (edges) between the vertices. For a simple graph, the entries are either 0 (no connection) or 1 (connection).
 
+**Find the adjacency matrix for the graph on your notes.**
+
 <table>
 <tbody>
 <tr>
