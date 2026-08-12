@@ -12,10 +12,10 @@ layout: center
 # Traversing Graphs
 
 - **Walk**: A sequence of vertices and edges that can be followed in a graph
-- **Path**: A walk where all vertices are distinct
-- **Trail**: A walk where all edges are distinct
-- **Cycle**: A path that starts and ends at the same vertex
+- **Trail**: A walk that does not repeat any edges
+- **Path**: A walk that does not repeat any vertices
 - **Circuit**: A trail that starts and ends at the same vertex
+- **Cycle**: A path that starts and ends at the same vertex
 
 > [!TIP]
 > The definitions of walk, path, trail, cycle, and circuit are easy to ignore, but are **always used deliberately**. Check in with your notes if you don't remember the difference when answering a question.

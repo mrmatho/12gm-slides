@@ -8,5 +8,7 @@
   "MD041": false, // first-line-heading: files start with slidev frontmatter, not a heading
   "MD033": false, // inline-html: allow HTML in slides
   "MD034": false, // bare-urls: allow bare URLs in slides
-  "MD013": false // line length: I need to allow long bullet point lines
+  "MD013": false, // line length: I need to allow long bullet point lines
+  "MD036": false, // emphasis-style: allow _emphasis_ and *emphasis* in slides
+  "MD028": false // Don't need it.
 }
