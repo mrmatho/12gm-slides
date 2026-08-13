@@ -125,7 +125,8 @@ zoom: 1.2
     { id: 'S', label: 'Source', x: 85, y: 110 },
     { id: 'A', label: 'A', x: 270, y: 50 },
     { id: 'B', label: 'B', x: 270, y: 170 },
-    { id: 'T', label: 'Sink', x: 445, y: 110 },
+    { id: 'C', label: 'C', x: 445, y: 50 },
+    { id: 'T', label: 'Sink', x: 500, y: 150 },
   ]"
   :edges="[
     { from: 'S', to: 'A', capacity: 4 },
@@ -133,74 +134,90 @@ zoom: 1.2
     { from: 'A', to: 'T', capacity: 3 },
     { from: 'B', to: 'A', capacity: 5 },
     { from: 'B', to: 'T', capacity: 2 },
+    { from: 'A', to: 'C', capacity: 3 },
+    { from: 'C', to: 'T', capacity: 2 },
   ]"
-  :width="520"
-  :cuts="[{ x1: 160, y1: 25, x2: 160, y2: 210, label: 'Cut' }]"
+  :width="550"
+  :cuts="[{ x1: 160, y1: 25, x2: 160, y2: 210, label: 'Cut A: 6' },
+        { x1: 350, y1: 25, x2: 350, y2: 210, label: 'Cut B: 5' },
+        { x1: 490, y1: 25, x2: 420, y2: 210, label: 'Cut C: 7' }
+  ]"
 />
 
 ---
 layout: center
-zoom: 1.2
+zoom: 1.5
 ---
 
-# Maximum-Flow Minimum-Cut Theorem
+# Find the Cut Capacity
 
--
+On your mini-whiteboard, write the capacity for each cut in the diagram below.
 
-> [!TIP]
->
-
----
-layout: two-cols
-zoom: 0.95
----
-
-# Worked Example
-
-```mermaid {scale: 1.2}
-graph LR
-    S((S)) -->|4| A((A))
-    S -->|2| B((B))
-    A -->|3| T((T))
-    B -->|5| A
-    B -->|2| T
-```
-
-::right::
-
-**Find the maximum flow from S to T.**
-
-<v-clicks>
-
-1.
-2.
-3.
-
-**Maximum flow:**
-
-</v-clicks>
+<FlowNetwork
+  :nodes="[
+    { id: 'S', label: 'Source', x: 85, y: 110 },
+    { id: 'A', label: 'A', x: 200, y: 50 },
+    { id: 'B', label: 'B', x: 200, y: 170 },
+    { id: 'C', label: 'C', x: 355, y: 50 },
+    { id: 'D', label: 'D', x: 400, y: 180 },
+    { id: 'T', label: 'Sink', x: 500, y: 150 },
+  ]"
+  :edges="[
+    { from: 'S', to: 'A', capacity: 1 },
+    { from: 'S', to: 'B', capacity: 7 },
+    { from: 'A', to: 'T', capacity: 4 },
+    { from: 'B', to: 'A', capacity: 3 },
+    { from: 'B', to: 'D', capacity: 8 },
+    { from: 'A', to: 'C', capacity: 3 },
+    { from: 'C', to: 'T', capacity: 2 },
+    { from: 'D', to: 'T', capacity: 4 },
+  ]"
+  :width="550"
+  :cuts="[{ x1: 160, y1: 25, x2: 160, y2: 210, label: 'Cut A' },
+        { x1: 285, y1: 25, x2: 285, y2: 210, label: 'Cut B'},
+        { x1: 450, y1: 25, x2: 250, y2: 210, label: 'Cut C'}
+  ]"
+/>
 
 ---
-layout: two-cols-header
-zoom: 0.95
+layout: center
+zoom: 1.3
 ---
 
-# Practice
+# Backwards Edges
 
-::left::
+- For a given cut, some edges may run backwards: they travel from the **sink side to the source side**.
+- Backwards edges do not contribute to the cut capacity.
+- An edge that runs backwards on one cut, will likely still run forwards on another cut.
 
-```mermaid {scale: 1.1}
-graph LR
+---
+layout: center
+---
 
-```
+# Backwards Cut Example
 
-**Find the maximum flow.**
-
-::right::
-
-<v-clicks>
-
-</v-clicks>
+<FlowNetwork
+  :nodes="[
+    { id: 'S', label: 'Start', x: 85, y: 110 },
+    { id: 'A', label: 'A', x: 200, y: 50 },
+    { id: 'B', label: 'B', x: 380, y: 170 },
+    { id: 'C', label: 'C', x: 355, y: 50 },
+    { id: 'T', label: 'End', x: 500, y: 150 },
+  ]"
+  :edges="[
+    { from: 'S', to: 'A', capacity: 1 },
+    { from: 'S', to: 'B', capacity: 7 },
+    { from: 'A', to: 'T', capacity: 4 },
+    { from: 'B', to: 'A', capacity: 3 },
+    { from: 'A', to: 'C', capacity: 3 },
+    { from: 'C', to: 'T', capacity: 2 },
+    { from: 'B', to: 'T', capacity: 2 },
+  ]"
+  :width="550"
+  :cuts="[{ x1: 160, y1: 25, x2: 160, y2: 210, label: 'Cut A' },
+        { x1: 450, y1: 25, x2: 250, y2: 210, label: 'Cut B'}
+  ]"
+/>
 
 ---
 layout: center

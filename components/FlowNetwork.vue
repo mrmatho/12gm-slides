@@ -4,14 +4,15 @@
   to draw a line crossing specific edges, but here node/edge/cut positions are explicit props.
 
   Props:
-    nodes  Array<{ id, label, x, y }>          required. x/y are coordinates in the SVG's own space
-                                                (0..width, 0..height) — pick them by eye, e.g. against a
-                                                480x220 canvas, then adjust to taste.
-    edges  Array<{ from, to, capacity }>       optional. from/to reference node ids; drawn as an arrow
-                                                from `from` to `to` with `capacity` labelled at the midpoint.
+    nodes  Array<{ id, label, x, y }>   required. x/y are coordinates in the SVG's own space
+                                        (0..width, 0..height) — pick them by eye, e.g. against a
+                                        480x220 canvas, then adjust to taste.
+    edges  Array<{ from, to, capacity }>  optional. from/to reference node ids; drawn as an arrow
+                                        from `from` to `to` with `capacity` labelled at the midpoint.
     cuts   Array<{ x1, y1, x2, y2, label?,     optional. Each is a dashed line across the diagram. `label`
-                   labelX?, labelY? }>         is shown centred above the line's midpoint by default; pass
-                                                labelX/labelY to reposition it (e.g. for a near-horizontal cut).
+                   labelX?, labelY? }>         is shown just above the (x1, y1) end of the line by default —
+                                                order your endpoints so (x1, y1) is nearest where the label
+                                                should sit; pass labelX/labelY to reposition it explicitly.
     width, height   optional, default 480x220. The SVG viewBox size — raise these if a diagram feels cramped.
     nodeRadius      optional, default 22. Minimum node half-height; single-letter nodes use this as their
                                            radius, longer labels (e.g. "Source") widen automatically.
@@ -25,9 +26,9 @@
 -->
 <template>
   <div class="flow-network-wrap">
-    <svg :viewBox="`0 0 ${width} ${height}`" class="flow-network">
+    <svg :viewBox="`0 0 ${width} ${height}`" class="flow-network" :style="{ width: displayWidth + 'px' }">
       <defs>
-        <marker id="flow-network-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <marker :id="arrowId" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" class="fill-slate-600 dark:fill-slate-300" />
         </marker>
       </defs>
@@ -41,7 +42,7 @@
         :y2="edge.y2"
         class="stroke-slate-600 dark:stroke-slate-300"
         stroke-width="2"
-        marker-end="url(#flow-network-arrow)"
+        :marker-end="`url(#${arrowId})`"
       />
 
       <g v-for="(edge, i) in edgeLines" :key="'edge-label-' + i">
@@ -61,8 +62,8 @@
         />
         <text
           v-if="cut.label"
-          :x="cut.labelX ?? (cut.x1 + cut.x2) / 2"
-          :y="cut.labelY ?? Math.min(cut.y1, cut.y2) - 10"
+          :x="cut.labelX ?? cut.x1"
+          :y="cut.labelY ?? cut.y1 - 10"
           text-anchor="middle"
           dominant-baseline="central"
           style="font-size: 13px; font-weight: 600; paint-order: stroke; stroke-width: 4px"
@@ -79,7 +80,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, useId } from 'vue'
+
+const arrowId = `flow-network-arrow-${useId()}`
 
 const props = defineProps({
   nodes: {
@@ -107,6 +110,11 @@ const props = defineProps({
     default: 22
   }
 })
+
+// Fixed px (not a % of the surrounding layout) so the rendered size only depends on
+// `width`, not on how much other text is on the slide — layouts like `center` shrink-wrap
+// their content, so a percentage width here would vary with unrelated sibling content.
+const displayWidth = computed(() => Math.min(props.width, 520))
 
 const sizedNodes = computed(() => props.nodes.map(node => ({
   ...node,
@@ -152,8 +160,7 @@ const edgeLines = computed(() => props.edges.map(edge => {
 }
 
 .flow-network {
-  width: 100%;
-  max-width: 520px;
+  max-width: 100%;
   height: auto;
 }
 </style>
