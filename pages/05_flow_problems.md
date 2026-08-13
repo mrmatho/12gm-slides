@@ -104,9 +104,9 @@ Which edge is the bottleneck in this network?
 
 <v-clicks>
 
-- 4 capacity can get to A from S, but A can only send 3 to C. So **A -> C** is a bottleneck.
-- B could send 5 to A, but it only has 2 coming in, so **B -> A** is not a bottleneck.
-- A can send 3 to C, B can send to to C, but only 2 can continue to T. So **C -> T** is a bottleneck.
+- 4 capacity can get to $A$ from $S$, but $A$ can only send 3 to $C$. So **$A$ -> $C$** is a bottleneck.
+- $B$ could send 5 to $A$, but it only has 2 coming in, so **$B$ -> $A$** is not a bottleneck.
+- $A$ can send 3 to $C$, $B$ can send to to $C$, but only 2 can continue to $T$. So **$C$ -> $T$** is a bottleneck.
 
 </v-clicks>
 
@@ -219,14 +219,19 @@ layout: center
   ]"
 />
 
+- **Cut A** only has edges that run forwards, so the cut capacity is $1 + 7 = 8$.
+- **Cut B** has a backwards edge (from $B$ to $A$), so the capacity of that cut ignores the $3$.
+  - Its capacity is $2 + 4 + 7 = 13$.
+
 ---
 layout: center
 ---
 
 # Things to note
 
--
--
+- A **cut** must separate the source from the sink.
+  - When drawing a cut you must be careful to make sure there is no way "around" the cut. 
+- Cuts do not need to be straight lines - they will often be curved to loop around vertices.
 -
 
 ---
@@ -234,8 +239,20 @@ layout: center
 zoom: 1.6
 ---
 
-# Questions
+# Questions (Part 1)
 
-## Edrolo p. TBC
+## Edrolo 8E p. 578
 
-Questions TBC
+Questions 1, 3-6
+
+---
+layout: center
+---
+
+# Maximum Flow: Finding the Minimum Cut
+
+Because of the **bottlenecks** we described earlier, the lowest cut capacity (the **minimum cut**) will determine the **maximum flow** from the source to the sink.
+
+The **maximum flow** is equal to the **minimum cut capacity**.
+
+To find the minimum cut, we 
