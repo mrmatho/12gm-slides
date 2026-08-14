@@ -255,4 +255,98 @@ Because of the **bottlenecks** we described earlier, the lowest cut capacity (th
 
 The **maximum flow** is equal to the **minimum cut capacity**.
 
-To find the minimum cut, we 
+To find the minimum cut, we either:
+
+- Identify every possible cut in the network and calculate their capacities
+- Spot the bottlenecks in the network (edges with the lowest weights) and find a cut that includes them
+- Keep trying different cuts until we are satisfied we have found the minimum cut
+
+---
+layout: center
+zoom: 1.3
+---
+
+# Worked Example: Finding Minimum Cut
+
+<FlowNetwork
+  :nodes="[
+    { id: 'S', label: 'Source', x: 85, y: 110 },
+    { id: 'A', label: 'A', x: 200, y: 50 },
+    { id: 'B', label: 'B', x: 200, y: 170 },
+    { id: 'C', label: 'C', x: 375, y: 50 },
+    { id: 'D', label: 'D', x: 330, y: 180 },
+    { id: 'E', label: 'E', x: 340, y: 100 },
+    { id: 'T', label: 'Sink', x: 500, y: 150 },
+  ]"
+  :edges="[
+    { from: 'S', to: 'A', capacity: 1 },
+    { from: 'S', to: 'B', capacity: 7 },
+    { from: 'A', to: 'D', capacity: 4 },
+    { from: 'B', to: 'A', capacity: 3 },
+    { from: 'B', to: 'D', capacity: 8 },
+    { from: 'A', to: 'C', capacity: 3 },
+    { from: 'C', to: 'T', capacity: 2 },
+    { from: 'D', to: 'E', capacity: 4 },
+    { from: 'E', to: 'T', capacity: 3 },
+    { from: 'D', to: 'T', capacity: 2 },
+  ]"
+  :width="550"
+/>
+
+---
+layout: center
+zoom: 1.1
+---
+
+# Worked Example: Finding Minimum Cut
+
+<FlowNetwork
+  :nodes="[
+    { id: 'S', label: 'Source', x: 85, y: 110 },
+    { id: 'A', label: 'A', x: 200, y: 50 },
+    { id: 'B', label: 'B', x: 200, y: 170 },
+    { id: 'C', label: 'C', x: 375, y: 50 },
+    { id: 'D', label: 'D', x: 330, y: 180 },
+    { id: 'E', label: 'E', x: 340, y: 100 },
+    { id: 'T', label: 'Sink', x: 500, y: 150 },
+  ]"
+  :edges="[
+    { from: 'S', to: 'A', capacity: 1 },
+    { from: 'S', to: 'B', capacity: 7 },
+    { from: 'A', to: 'D', capacity: 4 },
+    { from: 'B', to: 'A', capacity: 3 },
+    { from: 'B', to: 'D', capacity: 8 },
+    { from: 'A', to: 'C', capacity: 3 },
+    { from: 'C', to: 'T', capacity: 2 },
+    { from: 'D', to: 'E', capacity: 4 },
+    { from: 'E', to: 'T', capacity: 3 },
+    { from: 'D', to: 'T', capacity: 2 },
+  ]"
+  :width="550",
+  :cuts="[{ x1: 160, y1: 25, x2: 160, y2: 210, label: 'Cut A' },
+        { x1: 285, y1: 25, x2: 285, y2: 210, label: 'Cut B'},
+        { x1: 430, y1: 25, x2: 430, y2: 210, label: 'Cut C'}
+  ]"
+/>
+
+<!-- Don't include this in notes-->
+
+<v-clicks>
+
+> - **Cut A** has a capacity of $1 + 7 = 8$.
+> - **Cut B** has a capacity of $3 + 8 + 3 = 14$.
+> - **Cut C** has a capacity of $2 + 3 + 2 = 7$.
+> - **Minimum Cut is Cut C** so **Maximum Flow is 7**.
+
+</v-clicks>
+
+---
+layout: center
+zoom: 1.6
+---
+
+# Questions (Part 2)
+
+Edrolo 8E p. 578
+
+Questions 7-10, 12, 14, 15
