@@ -36,11 +36,11 @@ where $n$ represents number of months after January 2024.
 2. 25000 is the initial investment ($25,000). 1.006 means that the monthly interest rate is 0.6% (or 0.006 as a decimal).
 3. $F_3 = 1.006^3 \times 25000$
 
-$= 1.0181 \times 25000 = 25452.50$
+$= 1.0181 \times 25000 = 25452.71$
 
 4. The annual interest rate is
 
- $1.006^{12} - 1 = 0.0743$ or 7.43%.
+$0.6 \% \times 12 = 7.2\%$
 
 </div>
 </v-clicks>
@@ -139,7 +139,7 @@ zoom: 1.2
   ]"
   :width="550"
   :cuts="[{ x1: 160, y1: 25, x2: 160, y2: 210, label: 'Cut A: 6' },
-        { x1: 350, y1: 25, x2: 350, y2: 210, label: 'Cut B: 5' },
+        { x1: 350, y1: 25, x2: 350, y2: 210, label: 'Cut B: 8' },
         { x1: 490, y1: 25, x2: 420, y2: 210, label: 'Cut C: 7' }
   ]"
 />
