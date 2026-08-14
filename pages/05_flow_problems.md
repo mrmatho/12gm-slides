@@ -230,9 +230,8 @@ layout: center
 # Things to note
 
 - A **cut** must separate the source from the sink.
-  - When drawing a cut you must be careful to make sure there is no way "around" the cut. 
+  - When drawing a cut you must be careful to make sure there is no way "around" the cut.
 - Cuts do not need to be straight lines - they will often be curved to loop around vertices.
--
 
 ---
 layout: center
