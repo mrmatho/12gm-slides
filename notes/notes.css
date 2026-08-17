@@ -299,6 +299,16 @@ body {
   color: var(--gray-dark);
 }
 
+/* larger-font step list, for algorithm steps students fill in blank-by-blank
+   while the teacher walks through them live (harder to read at normal
+   worksheet size when broken up with inline blanks) */
+.steps-list {
+  font-size: 1.05rem;
+  line-height: 2.1;
+  margin: 10px 0;
+  padding-left: 22px;
+}
+
 /* callouts, matching the deck's [!NOTE] / [!TIP] alerts */
 
 .callout-tip {

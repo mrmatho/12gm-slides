@@ -73,3 +73,13 @@
     border: 1px dotted #838181;
     margin: 5px;
 }
+
+.slidev-layout .col-left {
+    padding-right: 10px;
+    border-right: 1px dotted #838181;
+}
+
+.slidev-layout .col-right {
+    padding-left: 10px;
+    border-left: 1px dotted #838181;
+}

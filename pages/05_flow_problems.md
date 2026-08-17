@@ -1,7 +1,6 @@
 ---
 layout: cover
 hideInToc: false
-background: /img/flow.png
 ---
 
 # Flow Problems
@@ -349,3 +348,162 @@ zoom: 1.6
 Edrolo 8E p. 578
 
 Questions 7-10, 12, 14, 15
+
+---
+layout: center
+zoom: 1
+---
+
+## Which edges are backwards?
+
+<FlowNetwork
+  :nodes="[
+    { id: 'S', label: 'Start', x: 70, y: 120 },
+    { id: 'A', label: 'A', x: 180, y: 40 },
+    { id: 'B', label: 'B', x: 180, y: 200 },
+    { id: 'C', label: 'C', x: 330, y: 40 },
+    { id: 'D', label: 'D', x: 330, y: 200 },
+    { id: 'E', label: 'E', x: 480, y: 40 },
+    { id: 'F', label: 'F', x: 480, y: 200 },
+    { id: 'G', label: 'G', x: 630, y: 40 },
+    { id: 'H', label: 'H', x: 630, y: 200 },
+    { id: 'T', label: 'End', x: 780, y: 120 },
+  ]"
+  :edges="[
+    { from: 'S', to: 'A', capacity: 4 },
+    { from: 'S', to: 'B', capacity: 5 },
+    { from: 'A', to: 'C', capacity: 3 },
+    { from: 'A', to: 'D', capacity: 2 },
+    { from: 'B', to: 'A', capacity: 2 },
+    { from: 'B', to: 'D', capacity: 4 },
+    { from: 'C', to: 'E', capacity: 3 },
+    { from: 'C', to: 'D', capacity: 5 },
+    { from: 'D', to: 'G', capacity: 7 },
+    { from: 'D', to: 'F', capacity: 5 },
+    { from: 'E', to: 'G', capacity: 3 },
+    { from: 'E', to: 'T', capacity: 2 },
+    { from: 'F', to: 'H', capacity: 2 },
+    { from: 'F', to: 'E', capacity: 4 },
+    { from: 'G', to: 'T', capacity: 3 },
+    { from: 'H', to: 'T', capacity: 1 },
+  ]"
+  :width="860",
+  :cuts="[{ x1: 200, y1: 20, x2: 640, y2: 250, label: 'Capacity: ?'}
+  ]"
+  />
+
+**Edges that intersect the cut:**
+
+| From | To | From Side | To Side | Capacity | Include? |
+| ------ | ---- | ----------------- | ---------------- | ----- | ----- |
+| A | C | | | 3 | |
+| C | D | | | 5 | |
+| D | G | | | 7 | |
+| F | E | | | 4 | |
+| F | H | | | 2 | |
+
+---
+layout: center
+zoom: 1
+---
+
+## Which edges are backwards?
+
+<FlowNetwork
+  :nodes="[
+    { id: 'S', label: 'Start', x: 70, y: 120 },
+    { id: 'A', label: 'A', x: 180, y: 40 },
+    { id: 'B', label: 'B', x: 180, y: 200 },
+    { id: 'C', label: 'C', x: 330, y: 40 },
+    { id: 'D', label: 'D', x: 330, y: 200 },
+    { id: 'E', label: 'E', x: 480, y: 40 },
+    { id: 'F', label: 'F', x: 480, y: 200 },
+    { id: 'G', label: 'G', x: 630, y: 40 },
+    { id: 'H', label: 'H', x: 630, y: 200 },
+    { id: 'T', label: 'End', x: 780, y: 120 },
+  ]"
+  :edges="[
+    { from: 'S', to: 'A', capacity: 4 },
+    { from: 'S', to: 'B', capacity: 5 },
+    { from: 'A', to: 'C', capacity: 3 },
+    { from: 'A', to: 'D', capacity: 2 },
+    { from: 'B', to: 'A', capacity: 2 },
+    { from: 'B', to: 'D', capacity: 4 },
+    { from: 'C', to: 'E', capacity: 3 },
+    { from: 'C', to: 'D', capacity: 5 },
+    { from: 'D', to: 'G', capacity: 7 },
+    { from: 'D', to: 'F', capacity: 5 },
+    { from: 'E', to: 'G', capacity: 3 },
+    { from: 'E', to: 'T', capacity: 2 },
+    { from: 'F', to: 'H', capacity: 2 },
+    { from: 'F', to: 'E', capacity: 4 },
+    { from: 'G', to: 'T', capacity: 3 },
+    { from: 'H', to: 'T', capacity: 1 },
+  ]"
+  :width="860",
+  :cuts="[{ x1: 200, y1: 20, x2: 640, y2: 250, label: 'Capacity: ?'}
+  ]"
+  />
+
+**Edges that intersect the cut:**
+
+| From | To | From Side | To Side | Capacity | Include? |
+| ------ | ---- | ----------------- | ---------------- | ----- | ----- |
+| A | C | Source | Sink | 3 | ✅ |
+| C | D | | | 5 | |
+| D | G | | | 7 | |
+| F | E | | | 4 | |
+| F | H | | | 2 | |
+
+---
+layout: center
+zoom: 1
+---
+
+## Which edges are backwards?
+
+<FlowNetwork
+  :nodes="[
+    { id: 'S', label: 'Start', x: 70, y: 120 },
+    { id: 'A', label: 'A', x: 180, y: 40 },
+    { id: 'B', label: 'B', x: 180, y: 200 },
+    { id: 'C', label: 'C', x: 330, y: 40 },
+    { id: 'D', label: 'D', x: 330, y: 200 },
+    { id: 'E', label: 'E', x: 480, y: 40 },
+    { id: 'F', label: 'F', x: 480, y: 200 },
+    { id: 'G', label: 'G', x: 630, y: 40 },
+    { id: 'H', label: 'H', x: 630, y: 200 },
+    { id: 'T', label: 'End', x: 780, y: 120 },
+  ]"
+  :edges="[
+    { from: 'S', to: 'A', capacity: 4 },
+    { from: 'S', to: 'B', capacity: 5 },
+    { from: 'A', to: 'C', capacity: 3 },
+    { from: 'A', to: 'D', capacity: 2 },
+    { from: 'B', to: 'A', capacity: 2 },
+    { from: 'B', to: 'D', capacity: 4 },
+    { from: 'C', to: 'E', capacity: 3 },
+    { from: 'C', to: 'D', capacity: 5 },
+    { from: 'D', to: 'G', capacity: 7 },
+    { from: 'D', to: 'F', capacity: 5 },
+    { from: 'E', to: 'G', capacity: 3 },
+    { from: 'E', to: 'T', capacity: 2 },
+    { from: 'F', to: 'H', capacity: 2 },
+    { from: 'F', to: 'E', capacity: 4 },
+    { from: 'G', to: 'T', capacity: 3 },
+    { from: 'H', to: 'T', capacity: 1 },
+  ]"
+  :width="860",
+  :cuts="[{ x1: 200, y1: 20, x2: 640, y2: 250, label: 'Capacity: ?'}
+  ]"
+  />
+
+**Edges that intersect the cut:**
+
+| From | To | From Side | To Side | Capacity | Include? |
+| ------ | ---- | ----------------- | ---------------- | ----- | ----- |
+| A | C | Source | Sink | 3 | ✅ |
+| C | D | Sink | Source | 5 | ❌ |
+| D | G | Source | Sink | 7 | ✅ |
+| F | E | Source | Sink | 4 | ✅ |
+| F | H | Source | Sink | 2 | ✅ |
