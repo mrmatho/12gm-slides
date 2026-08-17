@@ -240,7 +240,13 @@ layout: center
 
 ---
 layout: center
+zoom: 1.2
 ---
+
+# Questions
+
+**Edrolo 8F p. 590**
+Questions 1, 3, 4, 7, 8, 10, 11
 
 > [!TIP]
 >
