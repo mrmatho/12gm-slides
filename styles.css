@@ -62,6 +62,7 @@
     padding: 3px;
     border-radius: 0.5em;
 }
+
 .slidev-layout td, .slidev-layout th {
     border: 1px solid #838181;
 }
@@ -82,4 +83,8 @@
 .slidev-layout .col-right {
     padding-left: 10px;
     border-left: 1px dotted #838181;
+}
+
+.slidev-layout td, .slidev-layout th {
+    padding: 5px;
 }

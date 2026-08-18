@@ -62,3 +62,8 @@ hide: false
 ---
 
 ---
+src: pages/07_allocation_problems.md
+hide: false
+---
+
+---

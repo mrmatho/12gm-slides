@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Allocation Problems — Notes</title>
+<link rel="stylesheet" href="notes.css" />
+</head>
+<body>
+<div class="page">
+  <button type="button" class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <header class="worksheet-header">
+    <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
+    <h1>Allocation (Matching) Problems</h1>
+    <div class="field-row">
+      <div class="field">Date <span class="fill-line long"></span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Key Vocabulary</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Allocation (matching) problem</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Bipartite graph</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Cost matrix</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Hungarian algorithm</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Allocation Problems as Bipartite Graphs</h2>
+    <p class="section-note">Person A can do Task 1 or Task 3. Person B can do Task 1 or Task 2. Person C can do Task 3.</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image small">
+          <svg viewBox="0 0 360 242" width="320" height="215">
+            <line x1="90.5" y1="82" x2="269.5" y2="82" stroke="#475569" stroke-width="2" />
+            <line x1="88.7" y1="90.2" x2="271.3" y2="169.8" stroke="#475569" stroke-width="2" />
+            <line x1="90.0" y1="125.6" x2="270.0" y2="86.4" stroke="#475569" stroke-width="2" />
+            <line x1="90.5" y1="130" x2="269.5" y2="130" stroke="#475569" stroke-width="2" />
+            <line x1="90.5" y1="178" x2="269.5" y2="178" stroke="#475569" stroke-width="2" />
+
+            <text x="70" y="16" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="600" fill="#64748b">People</text>
+            <text x="290" y="16" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="600" fill="#64748b">Tasks</text>
+
+            <g>
+              <ellipse cx="70" cy="82" rx="20.5" ry="20" fill="#e0f2fe" stroke="#0369a1" stroke-width="2" />
+              <text x="70" y="82" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="600" fill="#0c4a6e">A</text>
+              <ellipse cx="70" cy="130" rx="20.5" ry="20" fill="#e0f2fe" stroke="#0369a1" stroke-width="2" />
+              <text x="70" y="130" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="600" fill="#0c4a6e">B</text>
+              <ellipse cx="70" cy="178" rx="20.5" ry="20" fill="#e0f2fe" stroke="#0369a1" stroke-width="2" />
+              <text x="70" y="178" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="600" fill="#0c4a6e">C</text>
+              <ellipse cx="290" cy="82" rx="20.5" ry="20" fill="#e0f2fe" stroke="#0369a1" stroke-width="2" />
+              <text x="290" y="82" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="600" fill="#0c4a6e">1</text>
+              <ellipse cx="290" cy="130" rx="20.5" ry="20" fill="#e0f2fe" stroke="#0369a1" stroke-width="2" />
+              <text x="290" y="130" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="600" fill="#0c4a6e">2</text>
+              <ellipse cx="290" cy="178" rx="20.5" ry="20" fill="#e0f2fe" stroke="#0369a1" stroke-width="2" />
+              <text x="290" y="178" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="600" fill="#0c4a6e">3</text>
+            </g>
+          </svg>
+        </div>
+        <div class="diagram-caption">Edges show possible allocations</div>
+      </div>
+    </div>
+
+    <p>If each person can only do one task, what is the only valid allocation?</p>
+    <p>A &rarr; <span class="fill-line"></span> &nbsp; B &rarr; <span class="fill-line"></span> &nbsp; C &rarr; <span class="fill-line"></span></p>
+  </section>
+
+  <section class="section">
+    <h2>Allocation with Costs</h2>
+    <p class="section-note">Rows represent people, columns represent tasks. Each entry is the cost of assigning that person to that task.</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <table class="fill-table">
+          <thead><tr><th></th><th>Task 1</th><th>Task 2</th><th>Task 3</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>4</td><td>2</td><td>5</td></tr>
+            <tr><td>B</td><td>3</td><td>6</td><td>1</td></tr>
+            <tr><td>C</td><td>7</td><td>4</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p>Find the allocation that minimises the total cost.</p>
+    <p>Cheapest allocation: <span class="fill-line xlong"></span> &nbsp; Total cost: <span class="fill-line"></span></p>
+  </section>
+
+  <section class="section">
+    <h2>Worked Example: The Hungarian Algorithm</h2>
+    <p class="section-note">Follow along as your teacher solves this allocation problem for 4 people (A&ndash;D) and 4 tasks (1&ndash;4).</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-4">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div><div class="cell">4</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-4">
+                <div class="cell">20</div><div class="cell">30</div><div class="cell">20</div><div class="cell">25</div>
+                <div class="cell">50</div><div class="cell">20</div><div class="cell">20</div><div class="cell">50</div>
+                <div class="cell">30</div><div class="cell">20</div><div class="cell">40</div><div class="cell">30</div>
+                <div class="cell">60</div><div class="cell">50</div><div class="cell">30</div><div class="cell">40</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Given cost matrix</div>
+      </div>
+    </div>
+
+    <h3>Step 1: Row Reduction</h3>
+    <p>Subtract the minimum value in each row from every entry in that row.</p>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-4">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div><div class="cell">4</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-4">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p>Can all zeros be covered with fewer than 4 lines? <span class="fill-line long"></span></p>
+
+    <h3>Step 2: Column Reduction</h3>
+    <p>Subtract the minimum value in each column from every entry in that column.</p>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-4">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div><div class="cell">4</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-4">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p>Can all zeros be covered with fewer than 4 lines? <span class="fill-line long"></span></p>
+
+    <h3>Step 3: Lowest Uncovered Number</h3>
+    <p>Subtract the lowest uncovered number from all uncovered elements, and add it to all elements covered twice.</p>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-4">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div><div class="cell">4</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-4">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p>Can all zeros now be covered with 4 lines? <span class="fill-line long"></span> We are ready to allocate.</p>
+
+    <h3>Step 4: Draw the Bipartite Graph</h3>
+    <p class="section-note">Connect vertices with edges where the cost is zero, using your Step 3 matrix.</p>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-box"></div>
+        <div class="diagram-caption">Draw the bipartite graph</div>
+      </div>
+    </div>
+
+    <p>Optimal allocation: <span class="fill-line xlong"></span></p>
+    <p>Total cost (using the original matrix): <span class="fill-line"></span></p>
+  </section>
+
+  <section class="section">
+    <h2>Hungarian Algorithm Steps (Recap)</h2>
+    <ol class="steps-list">
+      <li><strong>Row reduction:</strong> Subtract the <span class="fill-line"></span> value in each row from all entries in that row. Cover the zeros with the minimum number of lines needed. If this equals the number of <span class="fill-line"></span>, go to Step 4.</li>
+      <li><strong>Column reduction:</strong> If fewer lines were needed, subtract the <span class="fill-line"></span> value in each column from all entries in that column. Check the zeros again.</li>
+      <li><strong>Lowest uncovered number:</strong> If still fewer lines than rows, find the <span class="fill-line long"></span> in the matrix. Subtract it from all <span class="fill-line long"></span> elements, and add it to all elements covered <span class="fill-line"></span>. Repeat until the number of lines equals the number of rows.</li>
+      <li><strong>Draw the bipartite graph,</strong> connecting vertices with edges where the cost is <span class="fill-line"></span>. Use the graph to find the optimal allocation.</li>
+      <li><strong>Calculate the total cost</strong> of the allocation using the <span class="fill-line long"></span> matrix (if required).</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <h2>Practice: Allocation Problems</h2>
+
+    <h3>1. Row reduction only</h3>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell">1</div><div class="cell">4</div><div class="cell">7</div>
+                <div class="cell">6</div><div class="cell">3</div><div class="cell">8</div>
+                <div class="cell">9</div><div class="cell">8</div><div class="cell">2</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Given cost matrix</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Row reduction</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-box small"></div>
+        <div class="diagram-caption">Bipartite graph</div>
+      </div>
+    </div>
+    <p>Optimal allocation: <span class="fill-line xlong"></span> &nbsp; Total cost: <span class="fill-line"></span></p>
+
+    <h3>2. Row and column reduction</h3>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell">7</div><div class="cell">5</div><div class="cell">8</div>
+                <div class="cell">6</div><div class="cell">4</div><div class="cell">9</div>
+                <div class="cell">9</div><div class="cell">6</div><div class="cell">7</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Given cost matrix</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Row reduction</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Column reduction</div>
+      </div>
+    </div>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-box small"></div>
+        <div class="diagram-caption">Bipartite graph</div>
+      </div>
+    </div>
+    <p>Optimal allocation: <span class="fill-line xlong"></span> &nbsp; Total cost: <span class="fill-line"></span></p>
+
+    <h3>3. Full algorithm</h3>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell">4</div><div class="cell">5</div><div class="cell">2</div>
+                <div class="cell">3</div><div class="cell">9</div><div class="cell">4</div>
+                <div class="cell">3</div><div class="cell">8</div><div class="cell">7</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Given cost matrix</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Row reduction</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Column reduction</div>
+      </div>
+    </div>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="matrix">
+          <div class="matrix-col-headers cols-3">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          </div>
+          <div class="matrix-body-row">
+            <div class="matrix-row-headers">
+              <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+            </div>
+            <div class="matrix-wrap">
+              <div class="matrix-values cols-3">
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+                <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-caption">Lowest uncovered number</div>
+      </div>
+      <div class="diagram-box-wrap">
+        <div class="diagram-box small"></div>
+        <div class="diagram-caption">Bipartite graph</div>
+      </div>
+    </div>
+    <p>Optimal allocation: <span class="fill-line xlong"></span> &nbsp; Total cost: <span class="fill-line"></span></p>
+  </section>
+
+  <section class="section">
+    <h2>Maximisation Problems</h2>
+    <p class="section-note">If the goal is to maximise total profit instead of minimising cost, convert the problem first:</p>
+    <ol class="steps-list">
+      <li>Subtract every entry in the matrix from the <span class="fill-line"></span> entry in the matrix.</li>
+      <li>Run the Hungarian algorithm as normal on the new matrix to find the optimal allocation.</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <h2>Questions</h2>
+    <p class="checklist-source">Edrolo 8G, p.602</p>
+    <div class="checklist">
+      <span class="checklist-item"><span class="box"></span>1</span>
+      <span class="checklist-item"><span class="box"></span>3</span>
+      <span class="checklist-item"><span class="box"></span>5</span>
+      <span class="checklist-item"><span class="box"></span>6</span>
+      <span class="checklist-item"><span class="box"></span>7</span>
+      <span class="checklist-item"><span class="box"></span>8</span>
+      <span class="checklist-item"><span class="box"></span>10</span>
+      <span class="checklist-item"><span class="box"></span>12</span>
+      <span class="checklist-item"><span class="box"></span>13</span>
+    </div>
+
+    <div class="callout-tip"><strong>Tip</strong> The Hungarian algorithm always finds the optimal allocation, unlike inspection. Watch out for maximisation problems &mdash; these need to be converted before applying the algorithm.</div>
+  </section>
+
+  <footer class="footer-note">Allocation Problems — Heathmont College</footer>
+</div>
+</body>
+</html>
