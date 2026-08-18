@@ -34,7 +34,7 @@ graph LR
     C ---|4| D
     C ---|6| E
     D ---|7| F
-    E ---|3| F
+    E ---|8| F
 
 ```
 
@@ -68,7 +68,7 @@ graph LR
     C ---|4| D
     C ---|6| E
     D ---|7| F
-    E ---|3| F
+    E ---|8| F
 
 linkStyle 2,4,6 stroke:red,stroke-width:5px
 
