@@ -97,20 +97,25 @@
 
   Matrix — row/column vertex labels sit outside the bracket, matching
   standard notation. Use class "blank" on any cell the student must
-  fill in; omit it (and put the value as text) for a given cell:
+  fill in; omit it (and put the value as text) for a given cell. Every
+  matrix in practice is either fully given or fully fill-in (never
+  mixed within one matrix) — when every value cell is blank, also add
+  "blank" to matrix-row-headers, since blank cells render taller (52px
+  vs. 32px) and the row headers must match that height to stay aligned
+  with their rows:
     <div class="matrix">
       <div class="matrix-col-headers cols-3">
         <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
       </div>
       <div class="matrix-body-row">
-        <div class="matrix-row-headers">
+        <div class="matrix-row-headers blank">
           <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
         </div>
         <div class="matrix-wrap">
           <div class="matrix-values cols-3">
-            <div class="cell">0</div><div class="cell">1</div><div class="cell">1</div>
-            <div class="cell">1</div><div class="cell blank"></div><div class="cell blank"></div>
-            <div class="cell">1</div><div class="cell blank"></div><div class="cell blank"></div>
+            <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+            <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
+            <div class="cell blank"></div><div class="cell blank"></div><div class="cell blank"></div>
           </div>
         </div>
       </div>

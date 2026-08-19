@@ -404,6 +404,12 @@ body {
   font-size: 0.85rem;
 }
 
+/* when every value in a row is a blank cell, the row headers must match
+   the taller blank row height (52px) so labels stay aligned with rows */
+.matrix-row-headers.blank .cell {
+  height: 52px;
+}
+
 /* axis labels for a directed-graph (digraph) matrix */
 .matrix-to-label {
   font-size: 0.7rem;
