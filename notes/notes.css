@@ -348,7 +348,7 @@ body {
 }
 
 .fill-table td.blank {
-  height: 1.8em;
+  height: 3.6em;
 }
 
 /* matrices, for adjacency-matrix practice. Row/column vertex labels sit
@@ -471,7 +471,7 @@ body {
   align-items: flex-end;
   padding-bottom: 3px;
   border-bottom: 1px solid var(--ink);
-  height: 26px;
+  height: 52px;
 }
 
 /* question checklists, e.g. a textbook question list to tick off */
