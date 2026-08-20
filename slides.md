@@ -67,3 +67,8 @@ hide: false
 ---
 
 ---
+src: pages/08_activity_networks_precedence.md
+hide: false
+---
+
+---
