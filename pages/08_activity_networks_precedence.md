@@ -66,8 +66,8 @@ We can represent the project tasks from a precedence table as a directed graph, 
 
 An **activity network** is a directed graph where:
 
-- Each **vertex** represents a task
-- Each **directed edge** represents a precedence relationship
+- Each **edge** represents a task
+- Each **vertex** demonstrates the precedence relationship - predecessor tasks point to successor tasks
 - The **weight** of each edge represents the duration of the task
 
 ::left::
