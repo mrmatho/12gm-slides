@@ -38,7 +38,7 @@ A precedence table shows which tasks must be completed before other tasks can st
 ::left::
 
 | Task | Duration | Predecessors |
-| --- | --- | --- |
+| :---: | :---: | :---: |
 | A | 3 | - |
 | B | 3 | - |
 | C | 2 | A |
@@ -73,7 +73,7 @@ An **activity network** is a directed graph where:
 ::left::
 
 | Task | Duration | Predecessors |
-| --- | --- | --- |
+| :---: | :---: | :---: |
 | A | 3 | - |
 | B | 3 | - |
 | C | 2 | A |
@@ -111,13 +111,10 @@ Write the precedence table for the following activity network:
   { id: 'F', duration: 11, predecessors: ['C', 'D', 'E'] }
 ]" :show-times="false" />
 
-
 <v-clicks>
 
-
-
 | Task | Duration | Predecessors |
-| --- | --- | --- |
+| :---: | :---: | :---: |
 | A | 10 | - |
 | B | 21 | - |
 | C | 12 | A |
@@ -136,10 +133,10 @@ zoom: 0.95
 
 Draw the activity network for the following precedence table:
 
-<div style="text-size: 0.8em;">
+<div style="text-size: 0.8em; width: 60%; text-align: center; margin: auto;">
 
 | Task | Duration | Predecessors |
-| --- | --- | --- |
+| :---: | :---: | :---: |
 | A | 2 | - |
 | B | 3 | A |
 | C | 4 | A |
@@ -158,6 +155,107 @@ Draw the activity network for the following precedence table:
   { id: 'D', duration: 2, predecessors: ['B'] },
   { id: 'E', duration: 3, predecessors: ['D'] },
   { id: 'F', duration: 1, predecessors: ['C', 'E'] }
-]" :show-times="true" />
+]" :show-times="false" />
 
 </v-clicks>
+
+---
+layout: default
+---
+
+# A more complicated example
+
+<ActivityNetwork :tasks="[
+  { id: 'A', duration: 2, predecessors: [] },
+  { id: 'B', duration: 3, predecessors: [] },
+  { id: 'C', duration: 4, predecessors: [] },
+  { id: 'D', duration: 2, predecessors: ['A'] },
+  { id: 'E', duration: 3, predecessors: ['B'] },
+  { id: 'F', duration: 1, predecessors: ['C', 'D'] },
+  { id: 'G', duration: 2, predecessors: ['E'] },
+  { id: 'H', duration: 3, predecessors: ['F', 'G'] }
+]" :show-times="false" />
+
+<div style="font-size: 0.7em;  width: 60%; text-align: center; margin: auto;">
+
+<v-clicks>
+
+| Task | Duration | Predecessors |
+| :---: | :---: | :---: |
+| A | 2 | - |
+| B | 3 | - |
+| C | 4 | - |
+| D | 2 | A |
+| E | 3 | B |
+| F | 1 | C, D |
+| G | 2 | E |
+| H | 3 | F, G |
+
+</v-clicks>
+
+</div>
+
+---
+layout: default
+---
+
+# Dummy Activities
+
+When the precedence table has a mis-match of predecessors, we sometimes need a **dummy activity** to make the activity network accurate.
+
+A **dummy activity** is a task that has no duration: only used to show precedence relationships in the activity network.
+
+Dummy activities are shown using a dashed line in the activity network.
+
+
+<ActivityNetwork :tasks="[
+  { id: 'A', duration: 2, predecessors: [] },
+  { id: 'B', duration: 3, predecessors: ['A'] },
+  { id: 'C', duration: 4, predecessors: ['A'] },
+  { id: 'D', duration: 2, predecessors: ['B', 'C'] },
+  { id: 'E', duration: 3, predecessors: ['C'] },
+  { id: 'F', duration: 1, predecessors: ['D', 'E'] }
+]" :show-times="false" />
+
+In this graph - the dummy shows that `Task D` cannot start until both `Task B` and `Task C` are completed. `Task E` can start as soon as task C is completed (it doesn't have a relationship with `Task C`)
+
+---
+layout: default
+zoom: 0.95
+---
+
+# Dummy Activities Continued
+
+<ActivityNetwork :tasks="[
+  { id: 'A', duration: 2, predecessors: [] },
+  { id: 'B', duration: 3, predecessors: ['A'] },
+  { id: 'C', duration: 4, predecessors: ['A'] },
+  { id: 'D', duration: 2, predecessors: ['B', 'C'] },
+  { id: 'E', duration: 3, predecessors: ['C'] },
+  { id: 'F', duration: 1, predecessors: ['D', 'E'] }
+]" :show-times="false" />
+
+The dummy activity has to be there to add the extra precedence relationship between `Task B` and `Task D`.
+
+<div style="font-size: 0.7em;  width: 60%; text-align: center; margin: auto;">
+
+| Task | Duration | Predecessors |
+| :---: | :---: | :---: |
+| A | 2 | - |
+| B | 3 | A |
+| C | 4 | A |
+| D | 2 |**B, C** |
+| E | 3 | **C** |
+| F | 1 | D, E |
+
+</div>
+
+---
+layout: center
+zoom: 1.5
+---
+
+# Edrolo 8H, p. 614
+
+Questions: 1-3, 5, 8, 10, 13-15
+

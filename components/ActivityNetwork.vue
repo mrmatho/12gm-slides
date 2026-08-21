@@ -9,9 +9,11 @@
       duration      number. Ignored (treated as 0) when dummy is true.
       predecessors  array of task ids that must finish before this task can start. Omit/[] for
                     a task with no predecessors (it will start from the network's start event).
-      dummy         optional bool. A dummy activity: drawn as a dashed edge with no "id,duration"
-                    label. Give it duration 0 (or omit it) and an id (used only internally/for
-                    other tasks to reference as a predecessor, never displayed). Add a dummy
+      dummy         optional bool. A dummy activity: drawn as a dashed edge with a small
+                    "dummy,0" label (deliberately smaller than real activity labels so it
+                    doesn't compete with them). Give it duration 0 (or omit it) and an id (used
+                    only internally/for other tasks to reference as a predecessor — the id
+                    itself is never displayed). Add a dummy
                     yourself when the precedence table needs one; the component *also* auto-inserts
                     a dummy wherever one is structurally forced (see below) — you don't need to
                     pre-empt those.
@@ -72,14 +74,20 @@
       />
 
       <g v-for="edge in layout.edges.filter(e => e.label)" :key="'edge-label-' + edge.key">
-        <rect :x="edge.midX - edge.label.length * 3.6 - 4" :y="edge.midY - 9" :width="edge.label.length * 7.2 + 8" height="16" class="fill-slate-200 dark:fill-slate-800" />
+        <rect
+          :x="edge.midX - edge.label.length * (edge.dummy ? 2.1 : 3.6) - (edge.dummy ? 3 : 4)"
+          :y="edge.midY - (edge.dummy ? 6 : 9)"
+          :width="edge.label.length * (edge.dummy ? 4.2 : 7.2) + (edge.dummy ? 6 : 8)"
+          :height="edge.dummy ? 12 : 16"
+          class="fill-slate-200 dark:fill-slate-800"
+        />
         <text
           :x="edge.midX"
           :y="edge.midY"
           text-anchor="middle"
           dominant-baseline="central"
-          style="font-size: 22px"
-          :class="edge.critical ? 'fill-red-600 dark:fill-red-300' : 'fill-slate-800 dark:fill-slate-100'"
+          :style="{ fontSize: (edge.dummy ? '13px' : '22px') }"
+          :class="edge.critical ? 'fill-red-600 dark:fill-red-300' : (edge.dummy ? 'fill-slate-500 dark:fill-slate-400' : 'fill-slate-800 dark:fill-slate-100')"
         >{{ edge.label }}</text>
       </g>
 
@@ -201,16 +209,25 @@ const graph = computed(() => {
       usesEnd = true
     } else if (downstream.length === 1) {
       toEvent = downstream[0]
+    } else if (downstream.includes(task.id)) {
+      // One of the fan-out targets is this task's own singleton group (some other task
+      // depends on this task alone) — that group's event *is* this task's end event, no
+      // dummy needed for it. Only the genuinely different merge group(s) need a dummy out.
+      toEvent = task.id
+      for (const groupKey_ of downstream) {
+        if (groupKey_ === task.id) continue
+        edges.push({ key: `auto-dummy-${task.id}-${groupKey_}`, from: toEvent, to: groupKey_, duration: 0, dummy: true, label: 'dummy,0' })
+      }
     } else {
       // Structural fan-out: this task feeds genuinely different predecessor-sets, so it needs
       // its own event with dummy edges radiating out to each place that needs it.
       toEvent = `__dedicated_${task.id}__`
       for (const groupKey_ of downstream) {
-        edges.push({ key: `auto-dummy-${task.id}-${groupKey_}`, from: toEvent, to: groupKey_, duration: 0, dummy: true, label: null })
+        edges.push({ key: `auto-dummy-${task.id}-${groupKey_}`, from: toEvent, to: groupKey_, duration: 0, dummy: true, label: 'dummy,0' })
       }
     }
 
-    edges.push({ key: task.id, from: fromEvent, to: toEvent, duration: task.duration, dummy: task.dummy, label: task.dummy ? null : `${task.id},${task.duration}` })
+    edges.push({ key: task.id, from: fromEvent, to: toEvent, duration: task.duration, dummy: task.dummy, label: task.dummy ? 'dummy,0' : `${task.id},${task.duration}` })
   }
 
   const nodeIds = new Set([START])
@@ -224,6 +241,10 @@ const graph = computed(() => {
 })
 
 // Kahn's algorithm: topological order + longest-path-from-start rank (used for the x column).
+// Dummy edges contribute 0 to the rank step (they take no time) so a dummy's target shares its
+// source's column instead of being pushed out an extra column with nothing to show for it —
+// that extra column was forcing the *real* activities beside it into skip/bow edges (see the
+// ActivityNetwork/dummy layout note above).
 function topoRank(nodeIds, edges) {
   const outEdges = new Map(nodeIds.map(id => [id, []]))
   const inDegree = new Map(nodeIds.map(id => [id, 0]))
@@ -241,7 +262,7 @@ function topoRank(nodeIds, edges) {
     const id = queue.shift()
     order.push(id)
     for (const edge of outEdges.get(id)) {
-      rank.set(edge.to, Math.max(rank.get(edge.to), rank.get(id) + 1))
+      rank.set(edge.to, Math.max(rank.get(edge.to), rank.get(id) + (edge.dummy ? 0 : 1)))
       remaining.set(edge.to, remaining.get(edge.to) - 1)
       if (remaining.get(edge.to) === 0) queue.push(edge.to)
     }
@@ -366,6 +387,16 @@ const layout = computed(() => {
     y: positions.get(id).y
   }))
 
+  // Two different tasks can legitimately share the same from/to event (e.g. two parallel
+  // activities out of the same start that both merge into the same event) — group edges by
+  // endpoint pair so those get spread apart instead of drawn as identical, mutually-hiding paths.
+  const parallelGroups = new Map()
+  for (const edge of edges) {
+    const key = `${edge.from}|${edge.to}`
+    if (!parallelGroups.has(key)) parallelGroups.set(key, [])
+    parallelGroups.get(key).push(edge.key)
+  }
+
   const nodeById = new Map(nodes.map(n => [n.id, n]))
   const laidOutEdges = edges.map(edge => {
     const from = nodeById.get(edge.from)
@@ -373,6 +404,10 @@ const layout = computed(() => {
     const fromRank = rank.get(edge.from)
     const toRank = rank.get(edge.to)
     const radius = nodeDisplayRadius.value
+
+    const parallelGroup = parallelGroups.get(`${edge.from}|${edge.to}`)
+    const parallelCount = parallelGroup.length
+    const parallelIndex = parallelGroup.indexOf(edge.key)
 
     // Would a straight line from `from` to `to` run through some unrelated node sitting in
     // a column strictly between them? If so, bow the curve away from it.
@@ -397,7 +432,7 @@ const layout = computed(() => {
       critical: props.highlightCriticalPath && critical.has(edge.key)
     }
 
-    if (bow === 0) {
+    if (bow === 0 && parallelCount <= 1) {
       const dx = to.x - from.x
       const dy = to.y - from.y
       const dist = Math.hypot(dx, dy) || 1
@@ -415,7 +450,9 @@ const layout = computed(() => {
     const dx = to.x - from.x
     const dy = to.y - from.y
     const dist = Math.hypot(dx, dy) || 1
-    const bowDist = BOW * Math.sign(bow)
+    const bowDist = parallelCount > 1
+      ? BOW * (parallelIndex - (parallelCount - 1) / 2)
+      : BOW * Math.sign(bow)
     const cx = midX + (-dy / dist) * bowDist
     const cy = midY + (dx / dist) * bowDist
 
