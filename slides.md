@@ -18,8 +18,8 @@ drawings:
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
 transition: fade
 selectable: true
-# enable Comark Syntax: https://comark.dev/syntax/markdown
-comark: true
+# disable Comark Syntax due renderer incompatibility in CI build
+comark: false
 hideInToc: false
 layout: cover
 defaults:
