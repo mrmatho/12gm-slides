@@ -32,11 +32,11 @@ jobs:
       - name: Build
         run: npm run build -- --base /${{github.event.repository.name}}/
 
-      - name: Copy printable notes
+      - name: Copy printable handouts
         run: |
           mkdir -p dist/handouts
-          cp notes/notes.css dist/handouts/
-          for f in notes/*.html; do
+          cp handouts/notes.css dist/handouts/
+          for f in handouts/*.html; do
             [ "$(basename "$f")" = "TEMPLATE.html" ] && continue
             cp "$f" dist/handouts/
           done

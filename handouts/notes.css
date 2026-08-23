@@ -1,5 +1,5 @@
 /*
-  Shared stylesheet for printable A4 notes templates in notes/*.html.
+  Shared stylesheet for printable A4 notes templates in handouts/*.html.
   Independent of the Slidev app and its styles.css (which is scoped to
   .slidev-layout and pulls in Slidev/UnoCSS-specific selectors).
   Tokens below are intentionally plain black/gray so worksheets print
