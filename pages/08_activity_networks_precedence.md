@@ -258,4 +258,3 @@ zoom: 1.5
 # Edrolo 8H, p. 614
 
 Questions: 1-3, 5, 8, 10, 13-15
-
