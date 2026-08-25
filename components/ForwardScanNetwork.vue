@@ -8,10 +8,14 @@
   rather than split inside the vertex circle the way ActivityNetwork does it. A node with more
   than one activity leaving it (including auto-inserted dummies — see
   useActivityNetworkLayout.js) gets one box per departing arrow, stacked vertically above the
-  node (closest box = first activity), each labelled with that activity's id and showing the
-  event's single, shared EST/LST pair — so every arrow leaving a merge/split event has its own
-  clearly-identified label instead of one box the arrows have to share visually. A sink event
-  (nothing leaves it) still gets exactly one, unlabelled box.
+  node (closest box = first activity), each labelled with that activity's id. The EST half is
+  the event's own (shared) earliest time, since every activity leaving an event can't start
+  before that event occurs. The LST half is that *activity's own* latest start
+  (head event's LST minus this activity's own duration) — not the event's shared LST — because
+  activities leaving the same event can have different float (e.g. one is on the critical path
+  and one isn't); showing the event's shared LST there would hide that difference. A sink event
+  (nothing leaves it) still gets exactly one, unlabelled box, showing the event's own EST/LST
+  pair (there's no "activity" to compute a per-activity LST from).
 
   Props: same `tasks` shape as ActivityNetwork (see its doc comment).
     revealStep   Number, default Infinity (reveal everything — acts like a static diagram).
@@ -110,7 +114,7 @@
             :width="props.boxWidth"
             :height="props.boxHeight"
             stroke-width="1.5"
-            :class="node.critical && criticalPathReady ? 'fill-sky-100 dark:fill-sky-900 stroke-red-500 dark:stroke-red-400' : 'fill-sky-100 dark:fill-sky-900 stroke-sky-700 dark:stroke-sky-300'"
+            :class="box.critical && criticalPathReady ? 'fill-red-200 dark:fill-red-950 stroke-red-500 dark:stroke-red-400' : 'fill-sky-100 dark:fill-sky-900 stroke-sky-700 dark:stroke-sky-300'"
           />
           <line
             :x1="box.x + props.boxWidth / 2"
@@ -120,8 +124,8 @@
             stroke-width="1"
             class="stroke-sky-700 dark:stroke-sky-300"
           />
-          <text :x="box.x + props.boxWidth * 0.25" :y="box.y + props.boxHeight / 2" text-anchor="middle" dominant-baseline="central" :style="{ fontSize: boxFontSize + 'px' }" class="fill-sky-900 dark:fill-sky-100">{{ estRevealed(node) ? node.est : '' }}</text>
-          <text :x="box.x + props.boxWidth * 0.75" :y="box.y + props.boxHeight / 2" text-anchor="middle" dominant-baseline="central" :style="{ fontSize: boxFontSize + 'px' }" class="fill-sky-900 dark:fill-sky-100">{{ lstRevealed(node) ? node.lst : '' }}</text>
+          <text :x="box.x + props.boxWidth * 0.25" :y="box.y + props.boxHeight / 2" text-anchor="middle" dominant-baseline="central" :style="{ fontSize: boxFontSize + 'px' }" class="fill-sky-900 dark:fill-sky-100">{{ estRevealed(node) ? box.est : '' }}</text>
+          <text :x="box.x + props.boxWidth * 0.75" :y="box.y + props.boxHeight / 2" text-anchor="middle" dominant-baseline="central" :style="{ fontSize: boxFontSize + 'px' }" class="fill-sky-900 dark:fill-sky-100">{{ lstRevealed(node) ? box.lst : '' }}</text>
           <text
             v-if="box.label"
             :x="box.x + props.boxWidth + 6"
@@ -191,8 +195,8 @@ const { graph, layout } = useActivityNetworkLayout(props, dotRadius)
 
 // EST/LST box above each vertex: one per activity leaving that event (minimum 1, for sinks),
 // stacked vertically in alphabetical order reading top (farthest from the node) to bottom
-// (closest to the node), each showing the event's single EST/LST pair plus that activity's id
-// so every departing arrow is unambiguous.
+// (closest to the node), each labelled with that activity's id. EST is the event's shared
+// value; LST is computed per-activity (see nodeBoxes) so differing float is visible.
 const BOX_GAP = 4
 const BOX_MARGIN = 8
 
@@ -214,16 +218,30 @@ const edgesFromId = computed(() => {
   return map
 })
 
+const nodeById = computed(() => new Map(layout.value.nodes.map(n => [n.id, n])))
+const edgeCriticalByKey = computed(() => new Map(layout.value.edges.map(e => [e.key, e.critical])))
+
 function nodeBoxes(node) {
   const edges = edgesFromId.value.get(node.id) ?? []
   const items = edges.length ? edges : [null]
   const x = node.x - props.boxWidth / 2
   return items.map((edge, i) => {
     const bottom = node.y - dotRadius.value - BOX_MARGIN - i * (props.boxHeight + BOX_GAP)
+    // EST is the event's own (shared) value; LST is per-activity — the head event's LST minus
+    // this specific activity's duration — so activities leaving the same event can show
+    // different float instead of all echoing the event's shared (minimum) LST.
+    const lst = edge ? nodeById.value.get(edge.to).lst - edge.duration : node.lst
+    // Critical is per-activity too: a box's own departing edge determines its highlight, not
+    // the event's shared zero-float status — two activities can leave the same event with only
+    // one of them actually critical (see doc comment above on per-activity LST).
+    const critical = edge ? !!edgeCriticalByKey.value.get(edge.key) : node.critical
     return {
       x,
       y: bottom - props.boxHeight,
-      label: edge ? edgeLabel(edge) : null
+      label: edge ? edgeLabel(edge) : null,
+      est: node.est,
+      lst,
+      critical
     }
   })
 }

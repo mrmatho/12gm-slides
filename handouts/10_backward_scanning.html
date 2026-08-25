@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Backward Scanning — Notes</title>
+<link rel="stylesheet" href="notes.css" />
+</head>
+<body>
+<div class="page">
+  <button type="button" class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <header class="worksheet-header">
+    <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
+    <h1>Backward Scanning and Critical Path</h1>
+    <div class="field-row">
+      <div class="field">Date <span class="fill-line long"></span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Key Vocabulary</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Latest Start Time</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Backward Scanning</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Backward Scanning Process</h2>
+    <ul>
+      <li>Start at the <strong>end of the project</strong> and work backwards to the start.</li>
+      <li>Travel backwards along the arrows of the network, <strong>subtracting</strong> the durations from the latest start times.</li>
+      <li>The duration of the project is the <strong>latest finish time</strong> of the last task(s) in the project.</li>
+      <li>When a task has multiple successors, use the latest start time with the <strong>minimum</strong> value.</li>
+    </ul>
+
+    <div class="callout-tip"><strong>Remember</strong> Forward scanning: Earliest Start Time, adding, maximum value. Backward scanning: Latest Start Time, subtracting, minimum value.</div>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 530 228" width="680" height="293">
+  <defs>
+    <marker id="aoa-arrow-bwd1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 76.0 114.0 L 194.0 114.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd1)" />
+  <path d="M 205.5 111.7 Q 265.0 86.7 324.5 111.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd1)" />
+  <path d="M 205.5 116.3 Q 265.0 141.3 324.5 116.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd1)" />
+  <path d="M 336.0 114.0 L 454.0 114.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd1)" />
+  <rect x="120.2" y="106.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="114.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,3</text>
+  <rect x="250.2" y="91.2" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="99.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,2</text>
+  <rect x="250.2" y="120.8" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="128.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,4</text>
+  <rect x="380.2" y="106.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="114.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,1</text>
+  <circle cx="70.0" cy="114.0" r="6" fill="#0369a1" />
+  <rect x="40.0" y="80.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="70.0" y1="80.0" x2="70.0" y2="100.0" stroke="#0369a1" stroke-width="1" />
+  <text x="55.0" y="90.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">0</text>
+  <text x="106.0" y="90.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">A</text>
+  <circle cx="460.0" cy="114.0" r="6" fill="#0369a1" />
+  <rect x="430.0" y="80.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="460.0" y1="80.0" x2="460.0" y2="100.0" stroke="#0369a1" stroke-width="1" />
+  <text x="445.0" y="90.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">8</text>
+  <circle cx="200.0" cy="114.0" r="6" fill="#0369a1" />
+  <rect x="170.0" y="80.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="200.0" y1="80.0" x2="200.0" y2="100.0" stroke="#0369a1" stroke-width="1" />
+  <text x="185.0" y="90.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">3</text>
+  <text x="236.0" y="90.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">C</text>
+  <rect x="170.0" y="56.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="200.0" y1="56.0" x2="200.0" y2="76.0" stroke="#0369a1" stroke-width="1" />
+  <text x="185.0" y="66.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">3</text>
+  <text x="236.0" y="66.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">B</text>
+  <circle cx="330.0" cy="114.0" r="6" fill="#0369a1" />
+  <rect x="300.0" y="80.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="330.0" y1="80.0" x2="330.0" y2="100.0" stroke="#0369a1" stroke-width="1" />
+  <text x="315.0" y="90.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">7</text>
+  <text x="366.0" y="90.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">D</text>
+</svg>
+        </div>
+        <div class="diagram-caption">EST is already filled in from forward scanning &mdash; scan right to left, filling in the LST half of each box as you go</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Try Together</h2>
+    <p class="section-note">Fill in the LST box above each event as your teacher scans backwards through the network below (EST already shown from forward scanning).</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 660 328" width="680" height="338">
+  <defs>
+    <marker id="aoa-arrow-bwd2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 74.6 160.2 Q 126.6 117.0 194.0 121.6" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd2)" />
+  <path d="M 76.0 164.4 Q 143.4 169.0 195.4 125.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd2)" />
+  <path d="M 75.7 165.8 L 194.3 204.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd2)" />
+  <path d="M 330.0 128.0 L 330.0 200.0" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#aoa-arrow-bwd2)" />
+  <path d="M 206.0 122.0 L 324.0 122.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd2)" />
+  <path d="M 206.0 206.0 L 324.0 206.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd2)" />
+  <path d="M 335.7 123.8 L 454.3 162.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd2)" />
+  <path d="M 335.7 204.2 L 454.3 165.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd2)" />
+  <path d="M 465.5 161.7 Q 525.0 136.7 584.5 161.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd2)" />
+  <path d="M 465.5 166.3 Q 525.0 191.3 584.5 166.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd2)" />
+  <rect x="112.1" y="121.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="130.5" y="129.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,10</text>
+  <rect x="124.7" y="149.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="139.5" y="157.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,8</text>
+  <rect x="116.6" y="177.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="185.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,14</text>
+  <rect x="312.3" y="158.0" width="35.4" height="12" fill="#f1f5f9" />
+  <text x="330.0" y="164.0" text-anchor="middle" dominant-baseline="central" font-size="13" fill="#64748b">dummy,0</text>
+  <rect x="246.6" y="114.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="122.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,17</text>
+  <rect x="246.6" y="198.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="206.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">E,11</text>
+  <rect x="376.6" y="135.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="143.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">F,12</text>
+  <rect x="376.6" y="177.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="185.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">G,23</text>
+  <rect x="510.2" y="141.2" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="149.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">H,5</text>
+  <rect x="510.2" y="170.8" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="178.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">I,6</text>
+  <circle cx="70.0" cy="164.0" r="6" fill="#0369a1" />
+  <rect x="40.0" y="130.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="70.0" y1="130.0" x2="70.0" y2="150.0" stroke="#0369a1" stroke-width="1" />
+  <text x="55.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">0</text>
+  <text x="106.0" y="140.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">C</text>
+  <rect x="40.0" y="106.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="70.0" y1="106.0" x2="70.0" y2="126.0" stroke="#0369a1" stroke-width="1" />
+  <text x="55.0" y="116.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">0</text>
+  <text x="106.0" y="116.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">B</text>
+  <rect x="40.0" y="82.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="70.0" y1="82.0" x2="70.0" y2="102.0" stroke="#0369a1" stroke-width="1" />
+  <text x="55.0" y="92.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">0</text>
+  <text x="106.0" y="92.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">A</text>
+  <circle cx="590.0" cy="164.0" r="6" fill="#0369a1" />
+  <rect x="560.0" y="130.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="590.0" y1="130.0" x2="590.0" y2="150.0" stroke="#0369a1" stroke-width="1" />
+  <text x="575.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">56</text>
+  <circle cx="200.0" cy="122.0" r="6" fill="#0369a1" />
+  <rect x="170.0" y="88.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="200.0" y1="88.0" x2="200.0" y2="108.0" stroke="#0369a1" stroke-width="1" />
+  <text x="185.0" y="98.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">10</text>
+  <text x="236.0" y="98.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">D</text>
+  <circle cx="200.0" cy="206.0" r="6" fill="#0369a1" />
+  <rect x="170.0" y="172.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="200.0" y1="172.0" x2="200.0" y2="192.0" stroke="#0369a1" stroke-width="1" />
+  <text x="185.0" y="182.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">14</text>
+  <text x="236.0" y="182.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">E</text>
+  <circle cx="330.0" cy="122.0" r="6" fill="#0369a1" />
+  <rect x="300.0" y="88.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="330.0" y1="88.0" x2="330.0" y2="108.0" stroke="#0369a1" stroke-width="1" />
+  <text x="315.0" y="98.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">27</text>
+  <text x="366.0" y="98.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">F</text>
+  <rect x="300.0" y="64.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="330.0" y1="64.0" x2="330.0" y2="84.0" stroke="#0369a1" stroke-width="1" />
+  <text x="315.0" y="74.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">27</text>
+  <text x="366.0" y="74.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">dummy</text>
+  <circle cx="330.0" cy="206.0" r="6" fill="#0369a1" />
+  <rect x="300.0" y="172.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="330.0" y1="172.0" x2="330.0" y2="192.0" stroke="#0369a1" stroke-width="1" />
+  <text x="315.0" y="182.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">27</text>
+  <text x="366.0" y="182.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">G</text>
+  <circle cx="460.0" cy="164.0" r="6" fill="#0369a1" />
+  <rect x="430.0" y="130.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="460.0" y1="130.0" x2="460.0" y2="150.0" stroke="#0369a1" stroke-width="1" />
+  <text x="445.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">50</text>
+  <text x="496.0" y="140.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">I</text>
+  <rect x="430.0" y="106.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="460.0" y1="106.0" x2="460.0" y2="126.0" stroke="#0369a1" stroke-width="1" />
+  <text x="445.0" y="116.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">50</text>
+  <text x="496.0" y="116.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">H</text>
+</svg>
+        </div>
+        <div class="diagram-caption">EST is already filled in from forward scanning &mdash; the dummy task means Task G cannot start until both Task D and Task E are completed</div>
+      </div>
+    </div>
+
+    <p>Project duration = <span class="fill-line"></span></p>
+
+    <div class="callout-tip"><strong>Tip</strong> You should always finish with at least one task with 0 float (EST = LST) at the start &mdash; if not, you have made a mistake somewhere.</div>
+  </section>
+
+  <section class="section">
+    <h2>The Critical Path</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Critical Path</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Float Time</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+    <ul>
+      <li>Tasks that have the same EST and LST <em>cannot be delayed without delaying the whole project</em>. These are called <strong>critical tasks</strong>.</li>
+      <li>These tasks form the <strong>critical path</strong> of the project &mdash; the <strong>longest path</strong> through the network, from start to end.</li>
+      <li>There is always at least one critical path in a project network.</li>
+    </ul>
+
+    <div class="callout-tip"><strong>Your Turn</strong> Using a coloured pen or highlighter, mark every activity where EST = LST (0 float) &mdash; these are the critical tasks. Trace the connected critical tasks from start to end to find the critical path.</div>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 660 328" width="680" height="338">
+  <defs>
+    <marker id="aoa-arrow-bwd3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 74.6 160.2 Q 126.6 117.0 194.0 121.6" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd3)" />
+  <path d="M 76.0 164.4 Q 143.4 169.0 195.4 125.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd3)" />
+  <path d="M 75.7 165.8 L 194.3 204.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd3)" />
+  <path d="M 330.0 128.0 L 330.0 200.0" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#aoa-arrow-bwd3)" />
+  <path d="M 206.0 122.0 L 324.0 122.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd3)" />
+  <path d="M 206.0 206.0 L 324.0 206.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd3)" />
+  <path d="M 335.7 123.8 L 454.3 162.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd3)" />
+  <path d="M 335.7 204.2 L 454.3 165.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd3)" />
+  <path d="M 465.5 161.7 Q 525.0 136.7 584.5 161.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd3)" />
+  <path d="M 465.5 166.3 Q 525.0 191.3 584.5 166.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-bwd3)" />
+
+  <rect x="112.1" y="121.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="130.5" y="129.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,10</text>
+  <rect x="124.7" y="149.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="139.5" y="157.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,8</text>
+  <rect x="116.6" y="177.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="185.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,14</text>
+  <rect x="312.3" y="158.0" width="35.4" height="12" fill="#f1f5f9" />
+  <text x="330.0" y="164.0" text-anchor="middle" dominant-baseline="central" font-size="13" fill="#64748b">dummy,0</text>
+  <rect x="246.6" y="114.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="122.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,17</text>
+  <rect x="246.6" y="198.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="206.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">E,11</text>
+  <rect x="376.6" y="135.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="143.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">F,12</text>
+  <rect x="376.6" y="177.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="185.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">G,23</text>
+  <rect x="510.2" y="141.2" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="149.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">H,5</text>
+  <rect x="510.2" y="170.8" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="178.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">I,6</text>
+
+  <!-- START: 0 | 0 -->
+  <circle cx="70.0" cy="164.0" r="6" fill="#0369a1" />
+  <rect x="40.0" y="130.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="70.0" y1="130.0" x2="70.0" y2="150.0" stroke="#0369a1" stroke-width="1" />
+  <text x="55.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">0</text>
+  <text x="85.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">2</text>
+  <text x="106.0" y="140.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">C</text>
+  <rect x="40.0" y="106.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="70.0" y1="106.0" x2="70.0" y2="126.0" stroke="#0369a1" stroke-width="1" />
+  <text x="55.0" y="116.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">0</text>
+  <text x="85.0" y="116.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">2</text>
+  <text x="106.0" y="116.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">B</text>
+  <rect x="40.0" y="82.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="70.0" y1="82.0" x2="70.0" y2="102.0" stroke="#0369a1" stroke-width="1" />
+  <text x="55.0" y="92.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">0</text>
+  <text x="85.0" y="92.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">0</text>
+  <text x="106.0" y="92.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">A</text>
+
+  <!-- END: 56 | 56 (sink box unlabelled) -->
+  <circle cx="590.0" cy="164.0" r="6" fill="#0369a1" />
+  <rect x="560.0" y="130.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="590.0" y1="130.0" x2="590.0" y2="150.0" stroke="#0369a1" stroke-width="1" />
+  <text x="575.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">56</text>
+  <text x="605.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">56</text>
+
+  <!-- event AB: 10 | 10 -->
+  <circle cx="200.0" cy="122.0" r="6" fill="#0369a1" />
+  <rect x="170.0" y="88.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="200.0" y1="88.0" x2="200.0" y2="108.0" stroke="#0369a1" stroke-width="1" />
+  <text x="185.0" y="98.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">10</text>
+  <text x="215.0" y="98.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">10</text>
+  <text x="236.0" y="98.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">D</text>
+
+  <!-- event C: 14 | 16 -->
+  <circle cx="200.0" cy="206.0" r="6" fill="#0369a1" />
+  <rect x="170.0" y="172.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="200.0" y1="172.0" x2="200.0" y2="192.0" stroke="#0369a1" stroke-width="1" />
+  <text x="185.0" y="182.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">14</text>
+  <text x="215.0" y="182.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">16</text>
+  <text x="236.0" y="182.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">E</text>
+
+  <!-- event D: 27 | 27 -->
+  <circle cx="330.0" cy="122.0" r="6" fill="#0369a1" />
+  <rect x="300.0" y="88.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="330.0" y1="88.0" x2="330.0" y2="108.0" stroke="#0369a1" stroke-width="1" />
+  <text x="315.0" y="98.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">27</text>
+  <text x="345.0" y="98.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">38</text>
+  <text x="366.0" y="98.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">F</text>
+  <rect x="300.0" y="64.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="330.0" y1="64.0" x2="330.0" y2="84.0" stroke="#0369a1" stroke-width="1" />
+  <text x="315.0" y="74.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">27</text>
+  <text x="345.0" y="74.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">27</text>
+  <text x="366.0" y="74.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">dummy</text>
+
+  <!-- event DE: 27 | 27 -->
+  <circle cx="330.0" cy="206.0" r="6" fill="#0369a1" />
+  <rect x="300.0" y="172.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="330.0" y1="172.0" x2="330.0" y2="192.0" stroke="#0369a1" stroke-width="1" />
+  <text x="315.0" y="182.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">27</text>
+  <text x="345.0" y="182.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">27</text>
+  <text x="366.0" y="182.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">G</text>
+
+  <!-- event FG: 50 | 50 -->
+  <circle cx="460.0" cy="164.0" r="6" fill="#0369a1" />
+  <rect x="430.0" y="130.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="460.0" y1="130.0" x2="460.0" y2="150.0" stroke="#0369a1" stroke-width="1" />
+  <text x="445.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">50</text>
+  <text x="475.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">50</text>
+  <text x="496.0" y="140.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">I</text>
+  <rect x="430.0" y="106.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <line x1="460.0" y1="106.0" x2="460.0" y2="126.0" stroke="#0369a1" stroke-width="1" />
+  <text x="445.0" y="116.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">50</text>
+  <text x="475.0" y="116.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0c4a6e">51</text>
+  <text x="496.0" y="116.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">H</text>
+</svg>
+        </div>
+        <div class="diagram-caption">Each box shows EST | LST for that activity, from your completed forward and backward scan</div>
+      </div>
+    </div>
+
+    <p>The critical path for this project is <span class="fill-line xlong"></span></p>
+  </section>
+
+  <section class="section">
+    <h2>Float Time</h2>
+    <p><strong>Float time</strong> is the amount of time a task can be delayed without delaying the project:</p>
+    <p style="text-align: center; font-size: 1.05rem; margin: 10px 0;">Float Time = LST &minus; EST</p>
+    <p>Tasks on the critical path have a float time of <strong>0</strong>.</p>
+
+    <div class="worked-example">
+      <span class="label">Worked Example</span>
+      <div class="problem">Find the float time for Task B (EST = 0, LST = 2) from the network above.</div>
+      <div class="work-lines">
+        <div class="line filled">Float Time = LST &minus; EST</div>
+        <div class="line filled">Float Time = 2 &minus; 0</div>
+        <div class="line filled">Float Time = 2</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Important Reminders</h2>
+    <ul>
+      <li>When two arrows meet at a vertex during backward scanning: we take the <strong>minimum</strong> of the resulting latest start times.</li>
+      <li>You can find the critical path either by forward/backward scanning and identifying the critical (0 float) tasks, or by inspection &mdash; finding the longest path through the network.</li>
+      <li>Be careful to follow dummy tasks correctly &mdash; they can be part of the critical path even though they have 0 duration.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Questions</h2>
+    <p class="checklist-source">Edrolo 8I, p.630</p>
+    <div class="checklist">
+      <span class="checklist-item"><span class="box"></span>5</span>
+      <span class="checklist-item"><span class="box"></span>6</span>
+      <span class="checklist-item"><span class="box"></span>7</span>
+      <span class="checklist-item"><span class="box"></span>8</span>
+      <span class="checklist-item"><span class="box"></span>9</span>
+      <span class="checklist-item"><span class="box"></span>10</span>
+      <span class="checklist-item"><span class="box"></span>11</span>
+      <span class="checklist-item"><span class="box"></span>12</span>
+      <span class="checklist-item"><span class="box"></span>14</span>
+      <span class="checklist-item"><span class="box"></span>16</span>
+      <span class="checklist-item"><span class="box"></span>17</span>
+      <span class="checklist-item"><span class="box"></span>18</span>
+    </div>
+  </section>
+
+  <footer class="footer-note">Backward Scanning and Critical Path — Heathmont College</footer>
+</div>
+</body>
+</html>

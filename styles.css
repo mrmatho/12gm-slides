@@ -40,6 +40,15 @@
     border-radius: 3px;
 }
 
+.slidev-layout em {
+    font-style: italic;
+    font-size: 1.1rem;
+    --uno: 'bg-slate-300 dark:bg-slate-700';
+    padding: 0 4px;
+    border-radius: 3px;
+    border: 1px dotted #838181;
+}
+
 .simple-border {
     border: 1px solid #838181;
     padding: 5px;
