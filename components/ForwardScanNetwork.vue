@@ -4,6 +4,15 @@
   showing them all at once — for walking through forward/backward scanning one event at a time
   on a single slide, driven by Slidev's click count, instead of many near-duplicate slides.
 
+  EST/LST are shown in small two-cell boxes (EST | LST) sitting above each event's vertex dot,
+  rather than split inside the vertex circle the way ActivityNetwork does it. A node with more
+  than one activity leaving it (including auto-inserted dummies — see
+  useActivityNetworkLayout.js) gets one box per departing arrow, stacked vertically above the
+  node (closest box = first activity), each labelled with that activity's id and showing the
+  event's single, shared EST/LST pair — so every arrow leaving a merge/split event has its own
+  clearly-identified label instead of one box the arrows have to share visually. A sink event
+  (nothing leaves it) still gets exactly one, unlabelled box.
+
   Props: same `tasks` shape as ActivityNetwork (see its doc comment).
     revealStep   Number, default Infinity (reveal everything — acts like a static diagram).
                  Bind to Slidev's click count, e.g. :reveal-step="$clicks".
@@ -15,14 +24,25 @@
                  (if enabled) switches on.
 
                  To find N for a slide's `clicks:` frontmatter, count the event vertices drawn
-                 in the diagram (dots/circles — not the tasks/edges) once, then set `clicks: N*2`
-                 (or `N*2 - 1` if you don't want a trailing empty click after the last LST reveals).
+                 in the diagram (dots — not the EST/LST boxes or the tasks/edges) once, then set
+                 `clicks: N*2` (or `N*2 - 1` if you don't want a trailing empty click after the
+                 last LST reveals).
 
     highlightCriticalPath   optional bool, default false. Only takes effect once every LST value
                              has been revealed (revealStep >= 2*N) — critical path is a
                              conclusion drawn from a *complete* EST/LST pass, so it doesn't make
                              sense to show it mid-scan.
-    width, height, nodeRadius   optional, same meaning as ActivityNetwork.
+    width, height   optional, same meaning as ActivityNetwork.
+    dotRadius       optional, default 6. Radius of the plain vertex dot — EST/LST live in the
+                     boxes above it, not inside the node, so there's no "big circle for text"
+                     mode here the way ActivityNetwork has.
+    boxWidth, boxHeight   optional, default 48 x 20. Size of each EST/LST box — grow these if the
+                           text feels cramped. Box label font size scales with boxHeight
+                           automatically; there's no separate font-size prop.
+    scale        optional, default 1. Uniformly scales the whole rendered diagram (nodes, boxes,
+                  text, everything) independent of the surrounding slide text — use this instead
+                  of Slidev's `zoom` frontmatter when you want the diagram bigger/smaller without
+                  also resizing the bullet points around it. E.g. :scale="1.4".
 
   Example:
     <ForwardScanNetwork :reveal-step="$clicks" :tasks="[
@@ -32,7 +52,7 @@
       { id: 'D', duration: 4, predecessors: ['B'] },
       { id: 'E', duration: 2, predecessors: ['C', 'D'] },
     ]" />
-    with `clicks: 8` in the slide frontmatter (4 events after start-merging x 2 passes).
+    with `clicks: N*2` (or `N*2 - 1`) in the slide frontmatter, N = number of event vertices.
 -->
 <template>
   <div class="activity-network-wrap">
@@ -79,15 +99,39 @@
         <circle
           :cx="node.x"
           :cy="node.y"
-          :r="nodeRadius"
-          stroke-width="2"
-          :class="nodeCircleClass(node)"
+          :r="dotRadius"
+          :class="node.critical && criticalPathReady ? 'fill-red-500 dark:fill-red-400' : 'fill-sky-700 dark:fill-sky-300'"
         />
 
-        <line :x1="node.x" :y1="node.y - nodeRadius" :x2="node.x" :y2="node.y + nodeRadius" stroke-width="1.5" class="stroke-sky-700 dark:stroke-sky-300" />
-
-        <text :x="node.x - nodeRadius * 0.5" :y="node.y" text-anchor="middle" dominant-baseline="central" style="font-size: 13px" class="fill-sky-900 dark:fill-sky-100">{{ estRevealed(node) ? node.est : '' }}</text>
-        <text :x="node.x + nodeRadius * 0.5" :y="node.y" text-anchor="middle" dominant-baseline="central" style="font-size: 13px" class="fill-sky-900 dark:fill-sky-100">{{ lstRevealed(node) ? node.lst : '' }}</text>
+        <g v-for="(box, i) in nodeBoxes(node)" :key="node.id + '-box-' + i">
+          <rect
+            :x="box.x"
+            :y="box.y"
+            :width="props.boxWidth"
+            :height="props.boxHeight"
+            stroke-width="1.5"
+            :class="node.critical && criticalPathReady ? 'fill-sky-100 dark:fill-sky-900 stroke-red-500 dark:stroke-red-400' : 'fill-sky-100 dark:fill-sky-900 stroke-sky-700 dark:stroke-sky-300'"
+          />
+          <line
+            :x1="box.x + props.boxWidth / 2"
+            :y1="box.y"
+            :x2="box.x + props.boxWidth / 2"
+            :y2="box.y + props.boxHeight"
+            stroke-width="1"
+            class="stroke-sky-700 dark:stroke-sky-300"
+          />
+          <text :x="box.x + props.boxWidth * 0.25" :y="box.y + props.boxHeight / 2" text-anchor="middle" dominant-baseline="central" :style="{ fontSize: boxFontSize + 'px' }" class="fill-sky-900 dark:fill-sky-100">{{ estRevealed(node) ? node.est : '' }}</text>
+          <text :x="box.x + props.boxWidth * 0.75" :y="box.y + props.boxHeight / 2" text-anchor="middle" dominant-baseline="central" :style="{ fontSize: boxFontSize + 'px' }" class="fill-sky-900 dark:fill-sky-100">{{ lstRevealed(node) ? node.lst : '' }}</text>
+          <text
+            v-if="box.label"
+            :x="box.x + props.boxWidth + 6"
+            :y="box.y + props.boxHeight / 2"
+            text-anchor="start"
+            dominant-baseline="central"
+            :style="{ fontSize: boxFontSize + 'px' }"
+            class="fill-slate-500 dark:fill-slate-400"
+          >{{ box.label }}</text>
+        </g>
       </g>
     </svg>
   </div>
@@ -121,16 +165,68 @@ const props = defineProps({
     type: Number,
     default: null
   },
-  nodeRadius: {
+  dotRadius: {
     type: Number,
-    default: 26
+    default: 6
+  },
+  boxWidth: {
+    type: Number,
+    default: 48
+  },
+  boxHeight: {
+    type: Number,
+    default: 20
+  },
+  scale: {
+    type: Number,
+    default: 1
   }
 })
 
-const displayWidth = computed(() => Math.min(layout.value.width, 720))
-const nodeRadius = computed(() => props.nodeRadius)
+const displayWidth = computed(() => Math.min(layout.value.width, 720) * props.scale)
+const dotRadius = computed(() => props.dotRadius)
+const boxFontSize = computed(() => Math.max(9, Math.round(props.boxHeight * 0.8)))
 
-const { layout } = useActivityNetworkLayout(props, nodeRadius)
+const { graph, layout } = useActivityNetworkLayout(props, dotRadius)
+
+// EST/LST box above each vertex: one per activity leaving that event (minimum 1, for sinks),
+// stacked vertically in alphabetical order reading top (farthest from the node) to bottom
+// (closest to the node), each showing the event's single EST/LST pair plus that activity's id
+// so every departing arrow is unambiguous.
+const BOX_GAP = 4
+const BOX_MARGIN = 8
+
+function edgeLabel(edge) {
+  return edge.dummy ? 'dummy' : edge.key
+}
+
+const edgesFromId = computed(() => {
+  const map = new Map()
+  for (const edge of graph.value.edges) {
+    if (!map.has(edge.from)) map.set(edge.from, [])
+    map.get(edge.from).push(edge)
+  }
+  for (const list of map.values()) {
+    // Descending, because index 0 renders closest to the node (see nodeBoxes) — so the box
+    // stack read top-to-bottom ends up ascending alphabetically.
+    list.sort((a, b) => edgeLabel(b).localeCompare(edgeLabel(a)))
+  }
+  return map
+})
+
+function nodeBoxes(node) {
+  const edges = edgesFromId.value.get(node.id) ?? []
+  const items = edges.length ? edges : [null]
+  const x = node.x - props.boxWidth / 2
+  return items.map((edge, i) => {
+    const bottom = node.y - dotRadius.value - BOX_MARGIN - i * (props.boxHeight + BOX_GAP)
+    return {
+      x,
+      y: bottom - props.boxHeight,
+      label: edge ? edgeLabel(edge) : null
+    }
+  })
+}
 
 // Position of each node within the forward-scan (EST) and backward-scan (LST) reveal orders.
 const estStepOf = computed(() => new Map(layout.value.order.map((id, i) => [id, i + 1])))
@@ -147,12 +243,6 @@ function lstRevealed(node) {
 }
 
 const criticalPathReady = computed(() => props.highlightCriticalPath && props.revealStep >= layout.value.order.length * 2)
-
-function nodeCircleClass(node) {
-  return node.critical && criticalPathReady.value
-    ? 'fill-sky-100 dark:fill-sky-900 stroke-red-500 dark:stroke-red-400'
-    : 'fill-sky-100 dark:fill-sky-900 stroke-sky-700 dark:stroke-sky-300'
-}
 </script>
 
 <style scoped>

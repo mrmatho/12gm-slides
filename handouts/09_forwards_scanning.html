@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Forward Scanning — Notes</title>
+<link rel="stylesheet" href="notes.css" />
+</head>
+<body>
+<div class="page">
+  <button type="button" class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <header class="worksheet-header">
+    <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
+    <h1>Forward Scanning</h1>
+    <div class="field-row">
+      <div class="field">Date <span class="fill-line long"></span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Key Vocabulary</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Earliest Start Time</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="vocab-block">
+      <div class="vocab-term">Forward Scanning</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Forward Scanning Principles</h2>
+    <ul>
+      <li>When a task has no predecessors, its earliest start time is 0.</li>
+      <li>Tasks with predecessors wait until all their predecessors are completed before they can start.</li>
+      <li>When a task has multiple predecessors, its earliest start time is the <strong>maximum/largest</strong> of the finish times of all its predecessors.</li>
+    </ul>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 530 228" width="680" height="293">
+  <defs>
+    <marker id="aoa-arrow-fwd1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 76.0 114.0 L 194.0 114.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd1)" />
+  <path d="M 205.5 111.7 Q 265.0 86.7 324.5 111.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd1)" />
+  <path d="M 205.5 116.3 Q 265.0 141.3 324.5 116.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd1)" />
+  <path d="M 336.0 114.0 L 454.0 114.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd1)" />
+  <rect x="120.2" y="106.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="114.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,3</text>
+  <rect x="250.2" y="91.2" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="99.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,2</text>
+  <rect x="250.2" y="120.8" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="128.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,4</text>
+  <rect x="380.2" y="106.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="114.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,1</text>
+  <circle cx="70.0" cy="114.0" r="6" fill="#0369a1" />
+  <rect x="40.0" y="80.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="106.0" y="90.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">A</text>
+  <circle cx="460.0" cy="114.0" r="6" fill="#0369a1" />
+  <rect x="430.0" y="80.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <circle cx="200.0" cy="114.0" r="6" fill="#0369a1" />
+  <rect x="170.0" y="80.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="236.0" y="90.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">C</text>
+  <rect x="170.0" y="56.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="236.0" y="66.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">B</text>
+  <circle cx="330.0" cy="114.0" r="6" fill="#0369a1" />
+  <rect x="300.0" y="80.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="366.0" y="90.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">D</text>
+</svg>
+        </div>
+        <div class="diagram-caption">Scan left to right, filling in the EST box above each event as you go</div>
+      </div>
+    </div>
+
+    <div class="callout-tip"><strong>Tip</strong> The EST written above an event is the earliest that <em>every</em> task leaving that event can begin — work it out from the EST + duration of every task arriving into the event, and take the maximum.</div>
+  </section>
+
+  <section class="section">
+    <h2>Try Together</h2>
+    <p class="section-note">Fill in the EST box above each event as your teacher scans through the network below.</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 660 328" width="680" height="338">
+  <defs>
+    <marker id="aoa-arrow-fwd2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 74.6 160.2 Q 126.6 117.0 194.0 121.6" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd2)" />
+  <path d="M 76.0 164.4 Q 143.4 169.0 195.4 125.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd2)" />
+  <path d="M 75.7 165.8 L 194.3 204.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd2)" />
+  <path d="M 330.0 128.0 L 330.0 200.0" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#aoa-arrow-fwd2)" />
+  <path d="M 206.0 122.0 L 324.0 122.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd2)" />
+  <path d="M 206.0 206.0 L 324.0 206.0" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd2)" />
+  <path d="M 335.7 123.8 L 454.3 162.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd2)" />
+  <path d="M 335.7 204.2 L 454.3 165.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd2)" />
+  <path d="M 465.5 161.7 Q 525.0 136.7 584.5 161.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd2)" />
+  <path d="M 465.5 166.3 Q 525.0 191.3 584.5 166.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aoa-arrow-fwd2)" />
+  <rect x="112.1" y="121.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="130.5" y="129.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,10</text>
+  <rect x="124.7" y="149.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="139.5" y="157.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,8</text>
+  <rect x="116.6" y="177.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="185.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,14</text>
+  <rect x="312.3" y="158.0" width="35.4" height="12" fill="#f1f5f9" />
+  <text x="330.0" y="164.0" text-anchor="middle" dominant-baseline="central" font-size="13" fill="#64748b">dummy,0</text>
+  <rect x="246.6" y="114.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="122.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,17</text>
+  <rect x="246.6" y="198.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="206.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">E,11</text>
+  <rect x="376.6" y="135.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="143.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">F,12</text>
+  <rect x="376.6" y="177.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="185.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">G,23</text>
+  <rect x="510.2" y="141.2" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="149.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">H,5</text>
+  <rect x="510.2" y="170.8" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="178.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">I,6</text>
+  <circle cx="70.0" cy="164.0" r="6" fill="#0369a1" />
+  <rect x="40.0" y="130.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="106.0" y="140.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">C</text>
+  <rect x="40.0" y="106.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="106.0" y="116.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">B</text>
+  <rect x="40.0" y="82.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="106.0" y="92.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">A</text>
+  <circle cx="590.0" cy="164.0" r="6" fill="#0369a1" />
+  <rect x="560.0" y="130.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <circle cx="200.0" cy="122.0" r="6" fill="#0369a1" />
+  <rect x="170.0" y="88.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="236.0" y="98.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">D</text>
+  <circle cx="200.0" cy="206.0" r="6" fill="#0369a1" />
+  <rect x="170.0" y="172.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="236.0" y="182.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">E</text>
+  <circle cx="330.0" cy="122.0" r="6" fill="#0369a1" />
+  <rect x="300.0" y="88.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="366.0" y="98.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">F</text>
+  <rect x="300.0" y="64.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="366.0" y="74.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">dummy</text>
+  <circle cx="330.0" cy="206.0" r="6" fill="#0369a1" />
+  <rect x="300.0" y="172.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="366.0" y="182.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">G</text>
+  <circle cx="460.0" cy="164.0" r="6" fill="#0369a1" />
+  <rect x="430.0" y="130.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="496.0" y="140.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">I</text>
+  <rect x="430.0" y="106.0" width="60" height="20" fill="#fff" stroke="#0369a1" stroke-width="1.5" />
+  <text x="496.0" y="116.0" text-anchor="start" dominant-baseline="central" font-size="12" fill="#64748b">H</text>
+</svg>
+        </div>
+        <div class="diagram-caption">The dummy task means Task G cannot start until both Task D and Task E are completed</div>
+      </div>
+    </div>
+
+    <p>Project duration = <span class="fill-line"></span></p>
+  </section>
+
+  <section class="section">
+    <h2>Important Reminders</h2>
+    <ul>
+      <li>When two tasks meet at a vertex: we take the <strong>maximum</strong> of the finish times for the earliest start time of the next task.</li>
+      <li>Be careful to follow dummy tasks to ensure the precedence relationships are correct.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Questions</h2>
+    <p class="checklist-source">Edrolo 8I, p.630</p>
+    <div class="checklist">
+      <span class="checklist-item"><span class="box"></span>1</span>
+      <span class="checklist-item"><span class="box"></span>2</span>
+      <span class="checklist-item"><span class="box"></span>3</span>
+      <span class="checklist-item"><span class="box"></span>4</span>
+      <span class="checklist-item"><span class="box"></span>15</span>
+    </div>
+  </section>
+
+  <footer class="footer-note">Forward Scanning — Heathmont College</footer>
+</div>
+</body>
+</html>

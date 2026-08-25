@@ -40,6 +40,11 @@
     width, height   optional. Auto-sized from the derived layout (columns x rows) if omitted.
     nodeRadius      optional, default 26. Radius of EST/LST event circles.
     dotRadius       optional, default 6. Radius of vertices when showTimes is false.
+    scale           optional, default 1. Uniformly scales the whole rendered diagram (nodes,
+                     text, everything) independent of the surrounding slide text — use this
+                     instead of Slidev's `zoom` frontmatter when you want the diagram
+                     bigger/smaller without also resizing the bullet points around it.
+                     E.g. :scale="1.4".
 
   Example:
     <ActivityNetwork :tasks="[
@@ -146,10 +151,14 @@ const props = defineProps({
   dotRadius: {
     type: Number,
     default: 6
+  },
+  scale: {
+    type: Number,
+    default: 1
   }
 })
 
-const displayWidth = computed(() => Math.min(layout.value.width, 720))
+const displayWidth = computed(() => Math.min(layout.value.width, 720) * props.scale)
 const nodeDisplayRadius = computed(() => props.showTimes ? props.nodeRadius : props.dotRadius)
 
 function nodeCircleClass(node) {
