@@ -119,6 +119,370 @@
     <div class="callout-tip"><strong>Remember</strong> If we reduce a task on the critical path, it may create a new critical path &mdash; and we can only reduce one task per question here, so once that happens we have exhausted our options.</div>
   </section>
 
+  <section class="section">
+    <h2>Making Multiple Reductions &mdash; Method 1</h2>
+    <p class="section-note">Sample Question: for the project shown below, tasks can be reduced by a maximum of 1 day per task, at a cost of $100 each. Find the minimum project completion time and the cost of crashing the network.</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 660 194" width="660" height="194">
+  <defs>
+    <marker id="method-full-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 75.7 95.2 L 194.3 56.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-full-arrow)" />
+  <path d="M 76 96.6 Q 143.4 92 195.4 135.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-full-arrow)" />
+  <path d="M 74.6 100.8 Q 126.6 144 194 139.4" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-full-arrow)" />
+  <path d="M 205.7 56.8 L 324.3 95.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-full-arrow)" />
+  <path d="M 205.7 137.2 L 324.3 98.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-full-arrow)" />
+  <path d="M 335.5 94.7 Q 395 69.7 454.5 94.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-full-arrow)" />
+  <path d="M 335.5 99.3 Q 395 124.3 454.5 99.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-full-arrow)" />
+  <path d="M 466 97 L 584 97" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-full-arrow)" />
+  <rect x="116.6" y="68.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,18</text>
+  <rect x="121.1" y="96.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="139.5" y="104.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,20</text>
+  <rect x="112.1" y="124.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="130.5" y="132.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,14</text>
+  <rect x="246.6" y="68.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,13</text>
+  <rect x="246.6" y="110.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="118.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">E,12</text>
+  <rect x="376.6" y="74.2" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="82.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">F,10</text>
+  <rect x="376.6" y="103.8" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="111.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">G,10</text>
+  <rect x="510.2" y="89.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="97.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">H,6</text>
+  <circle cx="70.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="590.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="55.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="139.0" r="6" fill="#0369a1" />
+  <circle cx="330.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="460.0" cy="97.0" r="6" fill="#0369a1" />
+</svg>
+        </div>
+        <div class="diagram-caption">Starting network &mdash; there are two critical paths</div>
+      </div>
+    </div>
+
+    <p class="section-note">Method 1 means rescanning the whole network after every reduction. The network structure below is repeated three times &mdash; fill in the durations as your teacher works through each round of crashing.</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 660 194" width="660" height="194">
+  <defs>
+    <marker id="method-b1-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 75.7 95.2 L 194.3 56.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b1-arrow)" />
+  <path d="M 76 96.6 Q 143.4 92 195.4 135.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b1-arrow)" />
+  <path d="M 74.6 100.8 Q 126.6 144 194 139.4" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b1-arrow)" />
+  <path d="M 205.7 56.8 L 324.3 95.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b1-arrow)" />
+  <path d="M 205.7 137.2 L 324.3 98.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b1-arrow)" />
+  <path d="M 335.5 94.7 Q 395 69.7 454.5 94.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b1-arrow)" />
+  <path d="M 335.5 99.3 Q 395 124.3 454.5 99.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b1-arrow)" />
+  <path d="M 466 97 L 584 97" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b1-arrow)" />
+  <rect x="127.4" y="68.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A</text>
+  <rect x="131.9" y="96.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="139.5" y="104.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B</text>
+  <rect x="122.9" y="124.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="130.5" y="132.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C</text>
+  <rect x="257.4" y="68.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D</text>
+  <rect x="257.4" y="110.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="118.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">E</text>
+  <rect x="387.4" y="74.2" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="82.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">F</text>
+  <rect x="387.4" y="103.8" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="111.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">G</text>
+  <rect x="517.4" y="89.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="97.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">H</text>
+  <circle cx="70.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="590.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="55.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="139.0" r="6" fill="#0369a1" />
+  <circle cx="330.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="460.0" cy="97.0" r="6" fill="#0369a1" />
+</svg>
+        </div>
+        <div class="diagram-caption">Round 1</div>
+      </div>
+    </div>
+    <p>Task(s) reduced <span class="fill-line"></span> &nbsp; Cost <span class="fill-line"></span> &nbsp; New critical path(s) <span class="fill-line xlong"></span></p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 660 194" width="660" height="194">
+  <defs>
+    <marker id="method-b2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 75.7 95.2 L 194.3 56.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b2-arrow)" />
+  <path d="M 76 96.6 Q 143.4 92 195.4 135.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b2-arrow)" />
+  <path d="M 74.6 100.8 Q 126.6 144 194 139.4" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b2-arrow)" />
+  <path d="M 205.7 56.8 L 324.3 95.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b2-arrow)" />
+  <path d="M 205.7 137.2 L 324.3 98.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b2-arrow)" />
+  <path d="M 335.5 94.7 Q 395 69.7 454.5 94.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b2-arrow)" />
+  <path d="M 335.5 99.3 Q 395 124.3 454.5 99.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b2-arrow)" />
+  <path d="M 466 97 L 584 97" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b2-arrow)" />
+  <rect x="127.4" y="68.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A</text>
+  <rect x="131.9" y="96.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="139.5" y="104.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B</text>
+  <rect x="122.9" y="124.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="130.5" y="132.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C</text>
+  <rect x="257.4" y="68.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D</text>
+  <rect x="257.4" y="110.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="118.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">E</text>
+  <rect x="387.4" y="74.2" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="82.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">F</text>
+  <rect x="387.4" y="103.8" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="111.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">G</text>
+  <rect x="517.4" y="89.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="97.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">H</text>
+  <circle cx="70.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="590.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="55.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="139.0" r="6" fill="#0369a1" />
+  <circle cx="330.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="460.0" cy="97.0" r="6" fill="#0369a1" />
+</svg>
+        </div>
+        <div class="diagram-caption">Round 2</div>
+      </div>
+    </div>
+    <p>Task(s) reduced <span class="fill-line"></span> &nbsp; Cost <span class="fill-line"></span> &nbsp; New critical path(s) <span class="fill-line xlong"></span></p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 660 194" width="660" height="194">
+  <defs>
+    <marker id="method-b3-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 75.7 95.2 L 194.3 56.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b3-arrow)" />
+  <path d="M 76 96.6 Q 143.4 92 195.4 135.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b3-arrow)" />
+  <path d="M 74.6 100.8 Q 126.6 144 194 139.4" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b3-arrow)" />
+  <path d="M 205.7 56.8 L 324.3 95.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b3-arrow)" />
+  <path d="M 205.7 137.2 L 324.3 98.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b3-arrow)" />
+  <path d="M 335.5 94.7 Q 395 69.7 454.5 94.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b3-arrow)" />
+  <path d="M 335.5 99.3 Q 395 124.3 454.5 99.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b3-arrow)" />
+  <path d="M 466 97 L 584 97" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method-b3-arrow)" />
+  <rect x="127.4" y="68.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A</text>
+  <rect x="131.9" y="96.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="139.5" y="104.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B</text>
+  <rect x="122.9" y="124.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="130.5" y="132.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C</text>
+  <rect x="257.4" y="68.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D</text>
+  <rect x="257.4" y="110.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="118.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">E</text>
+  <rect x="387.4" y="74.2" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="82.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">F</text>
+  <rect x="387.4" y="103.8" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="111.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">G</text>
+  <rect x="517.4" y="89.0" width="15.2" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="97.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">H</text>
+  <circle cx="70.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="590.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="55.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="139.0" r="6" fill="#0369a1" />
+  <circle cx="330.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="460.0" cy="97.0" r="6" fill="#0369a1" />
+</svg>
+        </div>
+        <div class="diagram-caption">Round 3 &mdash; rescan to confirm</div>
+      </div>
+    </div>
+    <p>Task(s) reduced <span class="fill-line"></span> &nbsp; Cost <span class="fill-line"></span> &nbsp; New critical path(s) <span class="fill-line xlong"></span></p>
+
+    <p><strong>Total reduction:</strong> <span class="fill-line"></span> days, at a total cost of <span class="fill-line"></span></p>
+  </section>
+
+  <section class="section">
+    <h2>Making Multiple Reductions &mdash; Method 2</h2>
+    <ul>
+      <li>We know the critical path is always the <strong>longest path</strong>. If we identify the length of every path, we can choose tasks to reduce the longest path until there is no way to reduce it further.</li>
+      <li>Choose an activity to reduce the longest path.</li>
+      <li>Update the lengths of the paths.</li>
+      <li>Keep doing this until there is no way to reduce the longest path any further.</li>
+    </ul>
+
+    <div class="callout-tip"><strong>Tip</strong> This is often easier than constantly rescanning the whole network, since you just keep track of path lengths in a table.</div>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 660 194" width="660" height="194">
+  <defs>
+    <marker id="method2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 75.7 95.2 L 194.3 56.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method2-arrow)" />
+  <path d="M 76 96.6 Q 143.4 92 195.4 135.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method2-arrow)" />
+  <path d="M 74.6 100.8 Q 126.6 144 194 139.4" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method2-arrow)" />
+  <path d="M 205.7 56.8 L 324.3 95.2" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method2-arrow)" />
+  <path d="M 205.7 137.2 L 324.3 98.8" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method2-arrow)" />
+  <path d="M 335.5 94.7 Q 395 69.7 454.5 94.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method2-arrow)" />
+  <path d="M 335.5 99.3 Q 395 124.3 454.5 99.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method2-arrow)" />
+  <path d="M 466 97 L 584 97" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#method2-arrow)" />
+  <rect x="116.6" y="68.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,18</text>
+  <rect x="121.1" y="96.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="139.5" y="104.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,20</text>
+  <rect x="112.1" y="124.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="130.5" y="132.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,14</text>
+  <rect x="246.6" y="68.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="76.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,13</text>
+  <rect x="246.6" y="110.0" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="118.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">E,12</text>
+  <rect x="376.6" y="74.2" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="82.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">F,10</text>
+  <rect x="376.6" y="103.8" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="111.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">G,10</text>
+  <rect x="510.2" y="89.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="97.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">H,6</text>
+  <circle cx="70.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="590.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="55.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="139.0" r="6" fill="#0369a1" />
+  <circle cx="330.0" cy="97.0" r="6" fill="#0369a1" />
+  <circle cx="460.0" cy="97.0" r="6" fill="#0369a1" />
+</svg>
+        </div>
+        <div class="diagram-caption">Same network as Method 1</div>
+      </div>
+    </div>
+
+    <h3>Paths</h3>
+    <ul>
+      <li>A(18) &rarr; D(13) &rarr; F(10) &rarr; H(6) = 47</li>
+      <li>A(18) &rarr; D(13) &rarr; G(10) &rarr; H(6) = 47</li>
+      <li>B(20) &rarr; E(12) &rarr; F(10) &rarr; H(6) = 48</li>
+      <li>B(20) &rarr; E(12) &rarr; G(10) &rarr; H(6) = 48</li>
+      <li>C(14) &rarr; E(12) &rarr; F(10) &rarr; H(6) = 42</li>
+      <li>C(14) &rarr; E(12) &rarr; G(10) &rarr; H(6) = 42</li>
+    </ul>
+
+    <table class="fill-table">
+      <thead>
+        <tr><th>Path</th><th>Length</th><th>H</th><th>E</th><th>F</th><th>G</th><th>A</th><th>B</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A &rarr; D &rarr; F &rarr; H</td><td>47</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>A &rarr; D &rarr; G &rarr; H</td><td>47</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>B &rarr; E &rarr; F &rarr; H</td><td>48</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>B &rarr; E &rarr; G &rarr; H</td><td>48</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>C &rarr; E &rarr; F &rarr; H</td><td>42</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>C &rarr; E &rarr; G &rarr; H</td><td>42</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      </tbody>
+    </table>
+
+    <p>Tasks reduced (in order): <span class="fill-line xlong"></span></p>
+    <p>Total cost = <span class="fill-line"></span> &nbsp; New project completion time = <span class="fill-line"></span> days</p>
+  </section>
+
+  <section class="section">
+    <h2>Try Yourself</h2>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 660 240.2" width="660" height="240">
+  <defs>
+    <marker id="try-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 75.7 122.1 L 194.3 164.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#try-arrow)" />
+  <path d="M 76 120.1 L 324 120.1" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#try-arrow)" />
+  <path d="M 205.7 164.3 L 324.3 122.1" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#try-arrow)" />
+  <path d="M 335.7 121.9 L 454.3 160.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#try-arrow)" />
+  <path d="M 460 84.1 L 460 156.1" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#try-arrow)" />
+  <path d="M 335.7 118.3 L 454.3 79.9" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#try-arrow)" />
+  <path d="M 465.7 160.3 L 584.3 121.9" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#try-arrow)" />
+  <path d="M 465.7 79.9 L 584.3 118.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#try-arrow)" />
+  <rect x="120.2" y="135.2" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="143.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,5</text>
+  <rect x="185.2" y="112.1" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="200.0" y="120.1" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,9</text>
+  <rect x="250.2" y="135.2" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="143.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,7</text>
+  <rect x="376.6" y="133.1" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="141.1" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,11</text>
+  <rect x="442.3" y="114.1" width="35.4" height="12" fill="#f1f5f9" />
+  <text x="460.0" y="120.1" text-anchor="middle" dominant-baseline="central" font-size="13" fill="#64748b">dummy,0</text>
+  <rect x="376.6" y="91.1" width="36.8" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="99.1" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">E,12</text>
+  <rect x="510.2" y="133.1" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="141.1" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">F,8</text>
+  <rect x="510.2" y="91.1" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="525.0" y="99.1" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">G,6</text>
+  <circle cx="70.0" cy="120.1" r="6" fill="#0369a1" />
+  <circle cx="590.0" cy="120.1" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="166.3" r="6" fill="#0369a1" />
+  <circle cx="330.0" cy="120.1" r="6" fill="#0369a1" />
+  <circle cx="460.0" cy="162.1" r="6" fill="#0369a1" />
+  <circle cx="460.0" cy="78.1" r="6" fill="#0369a1" />
+</svg>
+        </div>
+      </div>
+    </div>
+
+    <p>You can reduce the duration of any task by up to 3 days, with the following costs:</p>
+    <table class="fill-table">
+      <tbody>
+        <tr><th>Tasks A &ndash; C</th><td>$200 per day</td></tr>
+        <tr><th>Tasks D &ndash; G</th><td>$400 per day</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>You have a budget of $1500</strong> to reduce the project completion time. Find the minimum project completion time and indicate which tasks you would reduce (and by how much).</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-box xtall"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Important Reminders</h2>
+    <ul>
+      <li>Read the question carefully &mdash; each question will have different restrictions on how many tasks you can reduce, by how much, and the cost of reducing each task.</li>
+      <li>The critical path is always the longest path. If you can identify all the paths, you can reduce the longest path until there is no way to reduce it further.</li>
+      <li><strong>Watch for new critical paths</strong> &mdash; if you reduce a task on the critical path, it may create a new critical path. If you reduce a task that is not on the critical path, it will not reduce the project completion time.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Questions</h2>
+    <p class="checklist-source">Edrolo 8J</p>
+    <div class="checklist">
+      <span class="checklist-item"><span class="box"></span>1</span>
+      <span class="checklist-item"><span class="box"></span>3</span>
+      <span class="checklist-item"><span class="box"></span>5</span>
+      <span class="checklist-item"><span class="box"></span>6</span>
+      <span class="checklist-item"><span class="box"></span>7</span>
+      <span class="checklist-item"><span class="box"></span>9</span>
+      <span class="checklist-item"><span class="box"></span>11</span>
+      <span class="checklist-item"><span class="box"></span>12</span>
+    </div>
+  </section>
+
   <footer class="footer-note">Crashing the Network — Heathmont College</footer>
 </div>
 </body>

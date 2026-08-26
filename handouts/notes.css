@@ -218,6 +218,10 @@ body {
   min-height: 200px;
 }
 
+.diagram-box.xtall {
+  min-height: 320px;
+}
+
 .diagram-box.small {
   min-height: 100px;
 }
