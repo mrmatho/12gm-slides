@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Crashing the Network — Notes</title>
+<link rel="stylesheet" href="notes.css" />
+</head>
+<body>
+<div class="page">
+  <button type="button" class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <header class="worksheet-header">
+    <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
+    <h1>Crashing the Network</h1>
+    <div class="field-row">
+      <div class="field">Date <span class="fill-line long"></span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Key Vocabulary</h2>
+    <div class="vocab-block">
+      <div class="vocab-term">Crashing</div>
+      <div class="fill-lines compact">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Why Crash a Network?</h2>
+    <p>Most of the time when we are crashing a network, we have some restriction on:</p>
+    <ul class="steps-list">
+      <li>The <span class="fill-line long"></span> of crashing a task</li>
+      <li>The <span class="fill-line long"></span> we can crash a task by</li>
+      <li>The <span class="fill-line long"></span> of tasks we can crash</li>
+    </ul>
+    <p>To crash a network, we start by reducing the duration of the tasks on the <span class="fill-line"></span> path. This is because the length of the <span class="fill-line long"></span> determines the <span class="fill-line long"></span>.</p>
+  </section>
+
+  <section class="section">
+    <h2>Simple Crashing Example</h2>
+    <p class="section-note">The project network below has a project completion time of 10 days. Find the minimum completion time if we can reduce any one task by up to 3 days.</p>
+
+    <h3>Step 1: Identify the critical path</h3>
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 530 160" width="530" height="160">
+  <defs>
+    <marker id="simple1-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 76 80 L 194 80" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#simple1-arrow)" />
+  <path d="M 205.5 77.7 Q 265 52.7 324.5 77.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#simple1-arrow)" />
+  <path d="M 205.5 82.3 Q 265 107.3 324.5 82.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#simple1-arrow)" />
+  <path d="M 336 80 L 454 80" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#simple1-arrow)" />
+  <rect x="120.2" y="72.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="80.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,2</text>
+  <rect x="250.2" y="57.2" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="65.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,4</text>
+  <rect x="250.2" y="86.8" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="94.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,6</text>
+  <rect x="380.2" y="72.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="80.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,2</text>
+  <circle cx="70.0" cy="80.0" r="6" fill="#0369a1" />
+  <circle cx="460.0" cy="80.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="80.0" r="6" fill="#0369a1" />
+  <circle cx="330.0" cy="80.0" r="6" fill="#0369a1" />
+</svg>
+        </div>
+        <div class="diagram-caption">Project completion time = 10 days</div>
+      </div>
+    </div>
+    <p>Critical path = <span class="fill-line xlong"></span></p>
+
+    <h3>Step 2: Identify the best candidate(s) for crashing and reduce their duration</h3>
+    <p>Of A, C and D, which task can be reduced by the full 3 days? <span class="fill-line"></span></p>
+    <p class="section-note">If we reduce Task C by 3 days, we get the network below.</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box-wrap">
+        <div class="diagram-image">
+<svg viewBox="0 0 530 160" width="530" height="160">
+  <defs>
+    <marker id="simple2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569" />
+    </marker>
+  </defs>
+  <path d="M 76 80 L 194 80" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#simple2-arrow)" />
+  <path d="M 205.5 77.7 Q 265 52.7 324.5 77.7" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#simple2-arrow)" />
+  <path d="M 205.5 82.3 Q 265 107.3 324.5 82.3" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#simple2-arrow)" />
+  <path d="M 336 80 L 454 80" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#simple2-arrow)" />
+  <rect x="120.2" y="72.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="135.0" y="80.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">A,2</text>
+  <rect x="250.2" y="57.2" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="65.2" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">B,4</text>
+  <rect x="250.2" y="86.8" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="265.0" y="94.8" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">C,3</text>
+  <rect x="380.2" y="72.0" width="29.6" height="16" fill="#f1f5f9" />
+  <text x="395.0" y="80.0" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#1e293b">D,2</text>
+  <circle cx="70.0" cy="80.0" r="6" fill="#0369a1" />
+  <circle cx="460.0" cy="80.0" r="6" fill="#0369a1" />
+  <circle cx="200.0" cy="80.0" r="6" fill="#0369a1" />
+  <circle cx="330.0" cy="80.0" r="6" fill="#0369a1" />
+</svg>
+        </div>
+        <div class="diagram-caption">Network after reducing Task C by 3 days</div>
+      </div>
+    </div>
+
+    <p>New critical path = <span class="fill-line xlong"></span></p>
+    <p>New project completion time = <span class="fill-line"></span> days</p>
+    <p>We only reduced the project by <span class="fill-line"></span> days, not 3. Why? <span class="fill-line xlong"></span></p>
+
+    <div class="callout-tip"><strong>Remember</strong> If we reduce a task on the critical path, it may create a new critical path &mdash; and we can only reduce one task per question here, so once that happens we have exhausted our options.</div>
+  </section>
+
+  <footer class="footer-note">Crashing the Network — Heathmont College</footer>
+</div>
+</body>
+</html>
