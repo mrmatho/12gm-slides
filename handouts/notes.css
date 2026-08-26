@@ -177,7 +177,7 @@ body {
 .fill-line {
   display: inline-block;
   border-bottom: 1px solid var(--ink);
-  min-width: 3em;
+  min-width: 5em;
   height: 1em;
   vertical-align: bottom;
 }
@@ -219,7 +219,7 @@ body {
 }
 
 .diagram-box.xtall {
-  min-height: 320px;
+  min-height: 420px;
 }
 
 .diagram-box.small {
