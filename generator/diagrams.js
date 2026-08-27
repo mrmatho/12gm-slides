@@ -45,8 +45,8 @@ function ellipseBoundaryPoint(node, dx, dy) {
 }
 
 // Node radius/shape for a given label position: 'inside' sizes an ellipse to fit the label (the
-// original component behaviour); 'above'/'below' draws a small fixed-size dot instead, since the
-// label sits outside it as its own text element (see nodeMarkup).
+// original component behaviour); 'above'/'below'/'left'/'right' draw a small fixed-size dot
+// instead, since the label sits outside it as its own text element (see nodeMarkup).
 function nodeRxRy(label, nodeRadius, labelPosition, dotRadius) {
   if (labelPosition === 'inside') {
     return { rx: Math.max(nodeRadius, String(label).length * 6.5 + 14), ry: nodeRadius }
@@ -54,7 +54,7 @@ function nodeRxRy(label, nodeRadius, labelPosition, dotRadius) {
   return { rx: dotRadius, ry: dotRadius }
 }
 
-function sizeNode(node, nodeRadius, labelPosition = 'inside', dotRadius = 6) {
+function sizeNode(node, nodeRadius, labelPosition = 'left', dotRadius = 6) {
   return { ...node, ...nodeRxRy(node.label, nodeRadius, labelPosition, dotRadius) }
 }
 
@@ -67,18 +67,35 @@ function labelBox(midX, midY, text, opts = {}) {
 }
 
 // 'inside' draws the label centered inside the (label-sized) node ellipse, matching every
-// existing slide component. 'above'/'below' draws the node as a small dot with the label as a
-// separate text element sitting just outside it — the style ActivityNetwork/ForwardScanNetwork
-// use for event vertices when showTimes is off, offered here as a general per-diagram option.
-function nodeMarkup(node, labelPosition = 'inside') {
+// existing slide component — the ellipse is already an opaque shape, so the text needs no
+// background of its own. 'above'/'below'/'left'/'right' draw the node as a small dot instead,
+// with the label as a separate text element sitting just outside it (the style
+// ActivityNetwork/ForwardScanNetwork use for event vertices when showTimes is off, offered here
+// as a general per-diagram option) — floating over whatever else is on the canvas (edges,
+// other labels), so it gets a subtle background box for legibility, same idea as labelBox().
+function nodeMarkup(node, labelPosition = 'left') {
   if (labelPosition === 'inside') {
     return `<ellipse cx="${node.x}" cy="${node.y}" rx="${node.rx}" ry="${node.ry}" stroke-width="2" fill="${COLORS.nodeFill}" stroke="${COLORS.nodeStroke}" />` +
       `<text x="${node.x}" y="${node.y}" text-anchor="middle" dominant-baseline="central" style="font-size: 15px; font-weight: 600" fill="${COLORS.nodeText}">${esc(node.label)}</text>`
   }
+
   const gap = 10
-  const ty = labelPosition === 'above' ? node.y - node.ry - gap : node.y + node.ry + gap
+  let tx = node.x
+  let ty = node.y
+  let anchor = 'middle'
+  if (labelPosition === 'above') ty = node.y - node.ry - gap
+  else if (labelPosition === 'below') ty = node.y + node.ry + gap
+  else if (labelPosition === 'left') { tx = node.x - node.rx - gap; anchor = 'end' }
+  else if (labelPosition === 'right') { tx = node.x + node.rx + gap; anchor = 'start' }
+
+  const label = String(node.label)
+  const textWidth = label.length * 7.2 + 8
+  const textHeight = 16
+  const rectX = anchor === 'middle' ? tx - textWidth / 2 : anchor === 'end' ? tx - textWidth : tx
+
   return `<circle cx="${node.x}" cy="${node.y}" r="${node.ry}" fill="${COLORS.nodeStroke}" />` +
-    `<text x="${node.x}" y="${ty}" text-anchor="middle" dominant-baseline="central" style="font-size: 15px; font-weight: 600" fill="${COLORS.nodeText}">${esc(node.label)}</text>`
+    `<rect x="${rectX}" y="${ty - textHeight / 2}" width="${textWidth}" height="${textHeight}" rx="3" fill="${COLORS.labelBg}" />` +
+    `<text x="${tx}" y="${ty}" text-anchor="${anchor}" dominant-baseline="central" style="font-size: 15px; font-weight: 600" fill="${COLORS.nodeText}">${esc(label)}</text>`
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -88,15 +105,16 @@ function nodeMarkup(node, labelPosition = 'inside') {
 // default (plain lines, no arrowheads); renderDirectedSimpleGraph below is the same renderer
 // with the default flipped, exposed as a separate diagram type rather than a checkbox so the two
 // get distinct example JSON and aren't easy to mix up mid-edit.
-// `labelPosition`: 'inside' (default) | 'above' | 'below' — 'inside' fits an ellipse to the
-// label, as the slide components do; 'above'/'below' draws a small `dotRadius` (default 6) dot
-// instead, with the label as its own text sitting just outside it.
+// `labelPosition`: 'left' (default) | 'right' | 'above' | 'below' | 'inside' — 'inside' fits an
+// ellipse to the label, as the slide components do; the others draw a small `dotRadius`
+// (default 6) dot instead, with the label as its own text (on a subtle background box for
+// legibility) sitting just outside it, on the given side.
 export function renderSimpleGraph(props) {
   const width = props.width ?? 420
   const height = props.height ?? 240
   const nodeRadius = props.nodeRadius ?? 22
   const directed = props.directed ?? false
-  const labelPosition = props.labelPosition ?? 'inside'
+  const labelPosition = props.labelPosition ?? 'left'
   const dotRadius = props.dotRadius ?? 6
 
   const sizedNodes = (props.nodes ?? []).map(n => sizeNode(n, nodeRadius, labelPosition, dotRadius))
@@ -137,7 +155,7 @@ export function renderFlowNetwork(props) {
   const width = props.width ?? 480
   const height = props.height ?? 220
   const nodeRadius = props.nodeRadius ?? 22
-  const labelPosition = props.labelPosition ?? 'inside'
+  const labelPosition = props.labelPosition ?? 'left'
   const dotRadius = props.dotRadius ?? 6
 
   const sizedNodes = (props.nodes ?? []).map(n => sizeNode(n, nodeRadius, labelPosition, dotRadius))
@@ -187,7 +205,7 @@ export function renderBipartiteGraph(props) {
   const rightLabel = props.rightLabel ?? ''
   const leftNodes = props.leftNodes ?? []
   const rightNodes = props.rightNodes ?? []
-  const labelPosition = props.labelPosition ?? 'inside'
+  const labelPosition = props.labelPosition ?? 'left'
   const dotRadius = props.dotRadius ?? 6
 
   // Dot mode draws much smaller nodes than label-sized ellipses, but still needs headroom for

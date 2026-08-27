@@ -4,6 +4,7 @@ export const EXAMPLES = {
   "width": 420,
   "height": 240,
   "nodeRadius": 22,
+  "labelPosition": "left",
   "nodes": [
     { "id": "A", "label": "A", "x": 60, "y": 120 },
     { "id": "B", "label": "B", "x": 210, "y": 50 },
@@ -23,6 +24,7 @@ export const EXAMPLES = {
   "width": 420,
   "height": 240,
   "nodeRadius": 22,
+  "labelPosition": "left",
   "nodes": [
     { "id": "A", "label": "A", "x": 60, "y": 120 },
     { "id": "B", "label": "B", "x": 210, "y": 50 },
@@ -42,6 +44,7 @@ export const EXAMPLES = {
   "width": 480,
   "height": 240,
   "nodeRadius": 22,
+  "labelPosition": "left",
   "nodes": [
     { "id": "S", "label": "Source", "x": 70, "y": 120 },
     { "id": "A", "label": "A", "x": 230, "y": 60 },
@@ -63,6 +66,7 @@ export const EXAMPLES = {
   bipartite: `{
   "width": 360,
   "height": 240,
+  "labelPosition": "left",
   "leftLabel": "People",
   "rightLabel": "Tasks",
   "leftNodes": [
