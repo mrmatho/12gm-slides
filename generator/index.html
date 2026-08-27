@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Diagram Generator — Year 12 General Maths</title>
+<title>Graph Diagram Generator — Year 12 General Maths</title>
 <link rel="stylesheet" href="generator.css" />
 </head>
 <body>
 <div class="page">
   <header class="page-header">
     <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
-    <h1>Diagram Generator</h1>
+    <h1>Graph Diagram Generator</h1>
     <p class="intro">
       Build a network diagram and export it as SVG or PNG for use in documents, worksheets, or slides.
       Edit the JSON on the left — the preview updates as you type. Nothing is uploaded anywhere; everything
@@ -22,6 +22,7 @@
     <label for="type-select">Diagram type</label>
     <select id="type-select">
       <option value="simple">Simple Graph</option>
+      <option value="simpleDirected">Directed Simple Graph</option>
       <option value="flow">Flow Network</option>
       <option value="bipartite">Bipartite / Matching</option>
       <option value="activity">Activity Network (AOA)</option>
@@ -55,10 +56,49 @@
     </section>
   </main>
 
+  <details class="reference">
+    <summary>Field reference</summary>
+
+    <p class="reference-shared">Shared by Simple Graph, Directed Simple Graph, Flow Network and Bipartite/Matching:
+      <code>labelPosition</code> — <code>"inside"</code> (default, label fits inside the node) or
+      <code>"above"</code> / <code>"below"</code> (node drawn as a small dot, label as text outside it).
+      <code>dotRadius</code> — dot size in the latter two modes (default 6). <code>width</code>, <code>height</code>,
+      <code>nodeRadius</code> also apply to all four.</p>
+
+    <div class="reference-grid">
+      <div>
+        <h3>Simple Graph / Directed Simple Graph</h3>
+        <p><code>nodes</code>: <code>{ id, label, x, y }[]</code> — placed by hand, not auto-laid-out.<br>
+          <code>edges</code>: <code>{ from, to, label? }[]</code> — <code>label</code> is optional (e.g. a weight).<br>
+          <code>directed</code>: defaults <code>false</code> on Simple Graph, <code>true</code> on Directed Simple Graph;
+          an edge can override with its own <code>directed</code>.</p>
+      </div>
+      <div>
+        <h3>Flow Network</h3>
+        <p><code>nodes</code>: <code>{ id, label, x, y }[]</code>.<br>
+          <code>edges</code>: <code>{ from, to, capacity }[]</code> — always drawn directed.<br>
+          <code>cuts</code>: <code>{ x1, y1, x2, y2, label?, labelX?, labelY? }[]</code> — dashed line across the diagram.</p>
+      </div>
+      <div>
+        <h3>Bipartite / Matching</h3>
+        <p><code>leftNodes</code>, <code>rightNodes</code>: <code>{ id, label }[]</code> — each stacked into its own column,
+          spacing computed automatically.<br>
+          <code>edges</code>: <code>{ from, to, label? }[]</code> — undirected.<br>
+          <code>leftLabel</code>, <code>rightLabel</code>: optional column headings.<br>
+          <code>columnInset</code>: distance from each side to its column (default 70).</p>
+      </div>
+      <div>
+        <h3>Activity Network (AOA)</h3>
+        <p><code>tasks</code>: <code>{ id, duration, predecessors?, dummy? }[]</code> — event nodes, EST/LST and the
+          critical path are all derived from this.<br>
+          <code>showTimes</code>: default <code>false</code> — event vertices as plain dots; set <code>true</code> for
+          EST&#124;LST split circles.<br>
+          <code>highlightCriticalPath</code>: default <code>false</code>.</p>
+      </div>
+    </div>
+  </details>
+
   <footer class="footer-note">
-    <p>Field reference for each type mirrors the props documented at the top of the matching Vue
-      component in <code>components/</code> (<code>FlowNetwork.vue</code>, <code>BipartiteGraph.vue</code>,
-      <code>ActivityNetwork.vue</code>) in the slide deck repo.</p>
     <p><a href="../handouts/index.html">&larr; Printable notes</a></p>
   </footer>
 </div>

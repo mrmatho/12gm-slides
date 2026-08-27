@@ -193,6 +193,60 @@ button:hover {
   overflow: auto;
 }
 
+.reference {
+  margin-top: 22px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.reference summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--gray-dark);
+}
+
+.reference-shared {
+  margin: 12px 0 4px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--gray-dark);
+}
+
+.reference-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+
+@media (max-width: 700px) {
+  .reference-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reference-grid h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+}
+
+.reference-grid p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--gray-dark);
+}
+
+.reference code, .reference-shared code {
+  background: #fff;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
 .footer-note {
   margin-top: 26px;
   color: var(--gray);

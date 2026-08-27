@@ -1,7 +1,25 @@
 // Starter JSON shown in the editor when a diagram type is first selected (see app.js).
 export const EXAMPLES = {
   simple: `{
-  "directed": true,
+  "width": 420,
+  "height": 240,
+  "nodeRadius": 22,
+  "nodes": [
+    { "id": "A", "label": "A", "x": 60, "y": 120 },
+    { "id": "B", "label": "B", "x": 210, "y": 50 },
+    { "id": "C", "label": "C", "x": 210, "y": 190 },
+    { "id": "D", "label": "D", "x": 360, "y": 120 }
+  ],
+  "edges": [
+    { "from": "A", "to": "B", "label": 4 },
+    { "from": "A", "to": "C", "label": 7 },
+    { "from": "B", "to": "D", "label": 3 },
+    { "from": "C", "to": "D", "label": 5 },
+    { "from": "B", "to": "C", "label": 2 }
+  ]
+}`,
+
+  simpleDirected: `{
   "width": 420,
   "height": 240,
   "nodeRadius": 22,

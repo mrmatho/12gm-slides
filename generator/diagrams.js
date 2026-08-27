@@ -44,12 +44,18 @@ function ellipseBoundaryPoint(node, dx, dy) {
   return { x: node.x + ux * t, y: node.y + uy * t }
 }
 
-function sizeNode(node, nodeRadius) {
-  return {
-    ...node,
-    rx: Math.max(nodeRadius, String(node.label).length * 6.5 + 14),
-    ry: nodeRadius
+// Node radius/shape for a given label position: 'inside' sizes an ellipse to fit the label (the
+// original component behaviour); 'above'/'below' draws a small fixed-size dot instead, since the
+// label sits outside it as its own text element (see nodeMarkup).
+function nodeRxRy(label, nodeRadius, labelPosition, dotRadius) {
+  if (labelPosition === 'inside') {
+    return { rx: Math.max(nodeRadius, String(label).length * 6.5 + 14), ry: nodeRadius }
   }
+  return { rx: dotRadius, ry: dotRadius }
+}
+
+function sizeNode(node, nodeRadius, labelPosition = 'inside', dotRadius = 6) {
+  return { ...node, ...nodeRxRy(node.label, nodeRadius, labelPosition, dotRadius) }
 }
 
 function labelBox(midX, midY, text, opts = {}) {
@@ -60,23 +66,40 @@ function labelBox(midX, midY, text, opts = {}) {
     `<text x="${midX}" y="${midY}" text-anchor="middle" dominant-baseline="central" style="font-size: 13px" fill="${fill}">${esc(text)}</text>`
 }
 
-function nodeCircle(node, opts = {}) {
-  const fill = opts.critical ? COLORS.criticalNodeFill : COLORS.nodeFill
-  return `<ellipse cx="${node.x}" cy="${node.y}" rx="${node.rx}" ry="${node.ry}" stroke-width="2" fill="${fill}" stroke="${COLORS.nodeStroke}" />` +
-    `<text x="${node.x}" y="${node.y}" text-anchor="middle" dominant-baseline="central" style="font-size: 15px; font-weight: 600" fill="${COLORS.nodeText}">${esc(node.label)}</text>`
+// 'inside' draws the label centered inside the (label-sized) node ellipse, matching every
+// existing slide component. 'above'/'below' draws the node as a small dot with the label as a
+// separate text element sitting just outside it — the style ActivityNetwork/ForwardScanNetwork
+// use for event vertices when showTimes is off, offered here as a general per-diagram option.
+function nodeMarkup(node, labelPosition = 'inside') {
+  if (labelPosition === 'inside') {
+    return `<ellipse cx="${node.x}" cy="${node.y}" rx="${node.rx}" ry="${node.ry}" stroke-width="2" fill="${COLORS.nodeFill}" stroke="${COLORS.nodeStroke}" />` +
+      `<text x="${node.x}" y="${node.y}" text-anchor="middle" dominant-baseline="central" style="font-size: 15px; font-weight: 600" fill="${COLORS.nodeText}">${esc(node.label)}</text>`
+  }
+  const gap = 10
+  const ty = labelPosition === 'above' ? node.y - node.ry - gap : node.y + node.ry + gap
+  return `<circle cx="${node.x}" cy="${node.y}" r="${node.ry}" fill="${COLORS.nodeStroke}" />` +
+    `<text x="${node.x}" y="${ty}" text-anchor="middle" dominant-baseline="central" style="font-size: 15px; font-weight: 600" fill="${COLORS.nodeText}">${esc(node.label)}</text>`
 }
 
 // ---------------------------------------------------------------------------------------------
-// Simple Graph — plain nodes + edges, directed or undirected, explicit x/y (no auto-layout).
-// Not modelled on any existing component; a hand-placed alternative to the Mermaid `graph LR/TD`
-// fences used throughout pages/*.md, for when you want an exportable static image instead.
+// Simple Graph — plain nodes + edges, explicit x/y (no auto-layout). Not modelled on any
+// existing component; a hand-placed alternative to the Mermaid `graph LR/TD` fences used
+// throughout pages/*.md, for when you want an exportable static image instead. Undirected by
+// default (plain lines, no arrowheads); renderDirectedSimpleGraph below is the same renderer
+// with the default flipped, exposed as a separate diagram type rather than a checkbox so the two
+// get distinct example JSON and aren't easy to mix up mid-edit.
+// `labelPosition`: 'inside' (default) | 'above' | 'below' — 'inside' fits an ellipse to the
+// label, as the slide components do; 'above'/'below' draws a small `dotRadius` (default 6) dot
+// instead, with the label as its own text sitting just outside it.
 export function renderSimpleGraph(props) {
   const width = props.width ?? 420
   const height = props.height ?? 240
   const nodeRadius = props.nodeRadius ?? 22
-  const directed = props.directed ?? true
+  const directed = props.directed ?? false
+  const labelPosition = props.labelPosition ?? 'inside'
+  const dotRadius = props.dotRadius ?? 6
 
-  const sizedNodes = (props.nodes ?? []).map(n => sizeNode(n, nodeRadius))
+  const sizedNodes = (props.nodes ?? []).map(n => sizeNode(n, nodeRadius, labelPosition, dotRadius))
   const byId = new Map(sizedNodes.map(n => [n.id, n]))
 
   const arrowId = 'sg-arrow'
@@ -98,20 +121,26 @@ export function renderSimpleGraph(props) {
     if (e.label === undefined || e.label === null || e.label === '') continue
     svg += labelBox(e.midX, e.midY, e.label)
   }
-  for (const n of sizedNodes) svg += nodeCircle(n)
+  for (const n of sizedNodes) svg += nodeMarkup(n, labelPosition)
 
   return { width, height, svg }
 }
 
+export function renderDirectedSimpleGraph(props) {
+  return renderSimpleGraph({ ...props, directed: props.directed ?? true })
+}
+
 // ---------------------------------------------------------------------------------------------
 // Flow Network — port of components/FlowNetwork.vue. Explicit node x/y, capacity edges, optional
-// dashed "cut" lines.
+// dashed "cut" lines. `labelPosition`/`dotRadius` — see the note on renderSimpleGraph above.
 export function renderFlowNetwork(props) {
   const width = props.width ?? 480
   const height = props.height ?? 220
   const nodeRadius = props.nodeRadius ?? 22
+  const labelPosition = props.labelPosition ?? 'inside'
+  const dotRadius = props.dotRadius ?? 6
 
-  const sizedNodes = (props.nodes ?? []).map(n => sizeNode(n, nodeRadius))
+  const sizedNodes = (props.nodes ?? []).map(n => sizeNode(n, nodeRadius, labelPosition, dotRadius))
   const byId = new Map(sizedNodes.map(n => [n.id, n]))
 
   const arrowId = 'fn-arrow'
@@ -139,14 +168,16 @@ export function renderFlowNetwork(props) {
     }
   }
 
-  for (const n of sizedNodes) svg += nodeCircle(n)
+  for (const n of sizedNodes) svg += nodeMarkup(n, labelPosition)
 
   return { width, height, svg }
 }
 
 // ---------------------------------------------------------------------------------------------
 // Bipartite / Matching Graph — port of components/BipartiteGraph.vue. Two auto-stacked columns,
-// undirected edges (a possible pairing, not a direction).
+// undirected edges (a possible pairing, not a direction). `labelPosition`/`dotRadius` — see the
+// note on renderSimpleGraph above; in dot mode, column spacing grows a little to leave room for
+// the external label text.
 export function renderBipartiteGraph(props) {
   const width = props.width ?? 360
   const height = props.height ?? 240
@@ -156,10 +187,15 @@ export function renderBipartiteGraph(props) {
   const rightLabel = props.rightLabel ?? ''
   const leftNodes = props.leftNodes ?? []
   const rightNodes = props.rightNodes ?? []
+  const labelPosition = props.labelPosition ?? 'inside'
+  const dotRadius = props.dotRadius ?? 6
 
+  // Dot mode draws much smaller nodes than label-sized ellipses, but still needs headroom for
+  // the label text sitting above/below each one — hence the extra allowance below.
+  const effectiveRadius = labelPosition === 'inside' ? nodeRadius : dotRadius
   const marginTop = (leftLabel || rightLabel) ? 34 : 16
   const bottomMargin = 16
-  const minSpacing = nodeRadius * 2 + 8
+  const minSpacing = effectiveRadius * 2 + (labelPosition === 'inside' ? 8 : 24)
   const maxColumnCount = Math.max(leftNodes.length, rightNodes.length, 1)
   const effectiveHeight = Math.max(height, marginTop + bottomMargin + minSpacing * (maxColumnCount + 1))
 
@@ -170,8 +206,7 @@ export function renderBipartiteGraph(props) {
       ...node,
       x,
       y: marginTop + spacing * (i + 1),
-      rx: Math.max(nodeRadius, String(node.label).length * 6.5 + 14),
-      ry: nodeRadius
+      ...nodeRxRy(node.label, nodeRadius, labelPosition, dotRadius)
     }))
   }
 
@@ -200,7 +235,7 @@ export function renderBipartiteGraph(props) {
   }
   if (leftLabel) svg += `<text x="${leftX}" y="16" text-anchor="middle" dominant-baseline="central" style="font-size: 13px; font-weight: 600" fill="${COLORS.groupLabel}">${esc(leftLabel)}</text>`
   if (rightLabel) svg += `<text x="${rightX}" y="16" text-anchor="middle" dominant-baseline="central" style="font-size: 13px; font-weight: 600" fill="${COLORS.groupLabel}">${esc(rightLabel)}</text>`
-  for (const n of sizedNodes) svg += nodeCircle(n)
+  for (const n of sizedNodes) svg += nodeMarkup(n, labelPosition)
 
   return { width, height: effectiveHeight, svg }
 }
@@ -210,6 +245,10 @@ export function renderBipartiteGraph(props) {
 // composables/useActivityNetworkLayout.js (static/full-reveal form only — the progressive-reveal
 // behaviour of ForwardScanNetwork.vue is a presentation feature that doesn't apply to a one-shot
 // export). Describes *tasks* + predecessors; event nodes, EST/LST and critical path are derived.
+// `showTimes` defaults to false here (the source component defaults it true) — the generator is
+// for one-off exports, where a plain dot-vertex diagram (durations only, on the edges) is the
+// more commonly wanted starting point; `highlightCriticalPath` defaults false, matching the
+// source component.
 const START = '__start__'
 const END = '__end__'
 
@@ -450,7 +489,7 @@ function layoutActivityGraph(graph, props, nodeRadius) {
       key: edge.key,
       dummy: edge.dummy,
       label: edge.label,
-      critical: (props.highlightCriticalPath ?? true) && critical.has(edge.key)
+      critical: (props.highlightCriticalPath ?? false) && critical.has(edge.key)
     }
 
     if (bow === 0 && parallelCount <= 1) {
@@ -501,7 +540,7 @@ function layoutActivityGraph(graph, props, nodeRadius) {
 }
 
 export function renderActivityNetwork(props) {
-  const showTimes = props.showTimes ?? true
+  const showTimes = props.showTimes ?? false
   const nodeRadius = props.nodeRadius ?? 26
   const dotRadius = props.dotRadius ?? 6
   const displayRadius = showTimes ? nodeRadius : dotRadius
@@ -526,7 +565,7 @@ export function renderActivityNetwork(props) {
   }
 
   for (const node of layout.nodes) {
-    const critical = node.critical && (props.highlightCriticalPath ?? true)
+    const critical = node.critical && (props.highlightCriticalPath ?? false)
     if (showTimes) {
       const fill = critical ? COLORS.criticalNodeFill : COLORS.nodeFill
       svg += `<ellipse cx="${node.x}" cy="${node.y}" rx="${displayRadius}" ry="${displayRadius}" stroke-width="2" fill="${fill}" stroke="${critical ? COLORS.cut : COLORS.nodeStroke}" />`
@@ -543,6 +582,7 @@ export function renderActivityNetwork(props) {
 
 export const DIAGRAM_TYPES = {
   simple: { label: 'Simple Graph', render: renderSimpleGraph },
+  simpleDirected: { label: 'Directed Simple Graph', render: renderDirectedSimpleGraph },
   flow: { label: 'Flow Network', render: renderFlowNetwork },
   bipartite: { label: 'Bipartite / Matching', render: renderBipartiteGraph },
   activity: { label: 'Activity Network (AOA)', render: renderActivityNetwork }
