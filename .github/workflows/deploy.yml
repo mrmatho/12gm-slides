@@ -41,6 +41,11 @@ jobs:
             cp "$f" dist/handouts/
           done
 
+      - name: Copy diagram generator
+        run: |
+          mkdir -p dist/generator
+          cp generator/*.html generator/*.css generator/*.js dist/generator/
+
       - uses: actions/configure-pages@v4
 
       - uses: actions/upload-pages-artifact@v3

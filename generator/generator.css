@@ -1,0 +1,211 @@
+/*
+  Standalone stylesheet for generator/index.html. Independent of the Slidev app (styles.css) and
+  of handouts/notes.css (which targets print). This page is screen-only, so it's free to use the
+  teal accent and darker chrome those two avoid.
+*/
+
+:root {
+  --ink: #1e293b;
+  --gray-dark: #334155;
+  --gray: #64748b;
+  --gray-light: #cbd5e1;
+  --panel-bg: #f8fafc;
+  --border: #e2e8f0;
+  --accent: #0369a1;
+  --accent-bg: #e0f2fe;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+  --radius-sm: 5px;
+  --radius-md: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  margin: 0;
+  background: #eef2f6;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px 40px;
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+
+.topic-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--gray);
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 4px 0 10px;
+  font-size: 28px;
+}
+
+.intro {
+  max-width: 70ch;
+  color: var(--gray-dark);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.toolbar label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+select, button, textarea {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+select {
+  padding: 6px 10px;
+  border: 1px solid var(--gray-light);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--ink);
+}
+
+button {
+  padding: 7px 14px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  background: #045d8a;
+}
+
+#reset-example {
+  background: #fff;
+  color: var(--accent);
+}
+
+#reset-example:hover {
+  background: var(--accent-bg);
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(380px, 1.4fr);
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+.editor-pane, .preview-pane {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.pane-label {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--gray-dark);
+  margin-bottom: 8px;
+}
+
+.pane-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.export-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.export-controls label {
+  font-size: 13px;
+  color: var(--gray-dark);
+}
+
+#editor {
+  width: 100%;
+  min-height: 480px;
+  resize: vertical;
+  padding: 10px;
+  border: 1px solid var(--gray-light);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--ink);
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+.error-box {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--error-bg);
+  color: var(--error);
+  font-size: 13px;
+  border: 1px solid #fecaca;
+}
+
+.preview-surface {
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  overflow: auto;
+}
+
+.footer-note {
+  margin-top: 26px;
+  color: var(--gray);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-note code {
+  background: var(--panel-bg);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.footer-note a {
+  color: var(--accent);
+}

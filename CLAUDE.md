@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A [Slidev](https://sli.dev) slide deck for Year 12 General Maths (Heathmont College), covering graph theory / networks topics. Content lives in `pages/NN_slug.md` files, wired together by the top-level `slides.md`. Alongside the deck, `handouts/` holds independent, non-Slidev printable A4 worksheets — one static HTML file per topic — for use in class.
+A [Slidev](https://sli.dev) slide deck for Year 12 General Maths (Heathmont College), covering graph theory / networks topics. Content lives in `pages/NN_slug.md` files, wired together by the top-level `slides.md`. Alongside the deck, `handouts/` holds independent, non-Slidev printable A4 worksheets — one static HTML file per topic — for use in class. `generator/` is a third, similarly independent static page: a browser-side tool for building and exporting (SVG/PNG) the same diagram types as the slide components, for use outside the deck.
 
 ## Commands
 
@@ -27,7 +27,9 @@ Note: the GitHub Actions deploy workflow (`.github/workflows/deploy.yml`) uses `
 
 **The `handouts/` worksheet system is deliberately parallel to, not generated from, the slides.** Each `handouts/NN_slug.html` corresponds by filename to a `pages/NN_slug.md`, is plain static HTML/CSS (no build step, no Slidev, opens directly in a browser and prints via Ctrl+P), and is authored/maintained by hand. `handouts/TEMPLATE.html` documents the reusable block types (vocab blocks, diagram boxes vs. diagram images, worked examples, fill-in tables, matrix grids) inline in its own comments — read it before adding a new worksheet rather than reverse-engineering an existing one. New worksheets must also be linked in `handouts/index.html`. Because content isn't auto-generated, substantially editing a topic's slides means checking whether the matching `handouts/*.html` should be re-generated.
 
-**Deployment**: on push to `main`, GitHub Actions builds the Slidev site and separately copies `handouts/*.html` (excluding `TEMPLATE.html`) plus `handouts/notes.css` into `dist/handouts/`, so the worksheets are published alongside the deck at `/handouts/` but stay outside Slidev's own `/notes` presenter route. Netlify and Vercel configs (`netlify.toml`, `vercel.json`) are also available as alternative deploy targets, but neither are in active use.
+**The `generator/` diagram generator is a hand-maintained, plain-JS port of the diagram components, not a build output.** `generator/diagrams.js` re-implements the layout/geometry logic of `FlowNetwork.vue`, `BipartiteGraph.vue`, `ActivityNetwork.vue` (+ `composables/useActivityNetworkLayout.js`), and a fourth "Simple Graph" type with no slide-component equivalent (nodes/edges with explicit x/y, no auto-layout — a non-Mermaid alternative to the `graph LR`/`TD` fences used in `pages/*.md`) as string-building functions with inline colors (no Vue, no Tailwind classes) — `generator/app.js` reads a JSON textarea, calls the matching renderer, and shows the resulting SVG live, with buttons to download it as SVG or rasterize to PNG via `<canvas>`. It deliberately depends on nothing but the browser (no Mermaid, no CDN, no build step) so it works offline as a static page. Because it's a hand-sync'd port, not a shared import, changing a diagram component's layout math means mirroring the change in `diagrams.js` if the generator should stay consistent with it.
+
+**Deployment**: on push to `main`, GitHub Actions builds the Slidev site and separately copies `handouts/*.html` (excluding `TEMPLATE.html`) plus `handouts/notes.css` into `dist/handouts/`, and `generator/*.{html,css,js}` into `dist/generator/`, so both are published alongside the deck but stay outside Slidev's own routes. Netlify and Vercel configs (`netlify.toml`, `vercel.json`) are also available as alternative deploy targets, but neither are in active use.
 
 ## Conventions from prior feedback
 

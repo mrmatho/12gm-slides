@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Networks Review — Notes</title>
+<link rel="stylesheet" href="notes.css" />
+</head>
+<body>
+<div class="page">
+  <button type="button" class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <header class="worksheet-header">
+    <div class="topic-label">Year 12 General Maths — Networks &amp; Decision Mathematics</div>
+    <h1>Networks Review</h1>
+    <div class="field-row">
+      <div class="field">Date <span class="fill-line long"></span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Topics Covered</h2>
+    <ul>
+      <li><strong>Types of graphs:</strong> directed vs. undirected, weighted vs. unweighted, bipartite, simple, connected vs. disconnected, trees</li>
+      <li><strong>Graph concepts:</strong> degree, planar graphs, vertices/edges/faces, Euler's formula, isomorphic graphs, bridges, adjacency matrices</li>
+      <li><strong>Traversing graphs:</strong> walk, trail, path, circuit, cycle, Eulerian circuit/path, Hamiltonian cycle/trail</li>
+      <li><strong>Problems:</strong> shortest path (Dijkstra's), minimum spanning tree (Prim's), network flow (max flow / min cut), allocation (Hungarian), scheduling (EST, LST, critical path, crashing)</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Identifying the Problem Type</h2>
+    <table class="fill-table">
+      <thead>
+        <tr><th style="width:26%;">Problem Type</th><th>Keywords / clues</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Shortest Path</strong><br>(Dijkstra's Algorithm)</td><td>Moving efficiently between two specific locations &mdash; "shortest route," "minimum travel time," "least distance between X and Y"</td></tr>
+        <tr><td><strong>Minimum Spanning Tree</strong><br>(Prim's Algorithm)</td><td>Linking an entire network for minimum total length/cost &mdash; "connect all locations," "minimum total length of cable," "link all towers," always undirected</td></tr>
+        <tr><td><strong>Network Flow</strong><br>(Max Flow / Min Cut)</td><td>Maximum throughput or a bottleneck, always with a Source and Sink &mdash; "capacity," "bottleneck," "minimum cut," "source," "sink"</td></tr>
+        <tr><td><strong>Allocation</strong><br>(Hungarian Algorithm)</td><td>Pairing resources to tasks 1-to-1, minimising/maximising total &mdash; "assigning workers to jobs," "matching resources to tasks"</td></tr>
+        <tr><td><strong>Scheduling</strong><br>(EST/LST, Crashing)</td><td>Project timelines and completion time &mdash; "earliest/latest start time," "critical path," "float/slack," "crash," "minimum cost to reduce by X weeks"</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>Quick Tips</h2>
+    <ul>
+      <li><strong>Shortest Path:</strong> trace the route back from destination to origin to confirm the exact path; write totals at each node rather than guessing from single edges.</li>
+      <li><strong>Minimum Spanning Tree:</strong> apply the $V - 1$ rule ($V$ vertices need exactly $V - 1$ edges); never add an edge that creates a cycle, even if it's the shortest available.</li>
+      <li><strong>Network Flow:</strong> only add capacities of edges crossing from the source side to the sink side (no backward edges); check the cut fully separates source from sink.</li>
+      <li><strong>Allocation:</strong> for maximisation problems, subtract every entry from the largest value in the matrix before doing row/column reductions.</li>
+      <li><strong>Scheduling (EST/LST):</strong> "Max Forward, Min Backward" &mdash; take the highest incoming total for EST, the lowest outgoing value for LST. Float = LST &minus; EST.</li>
+      <li><strong>Crashing:</strong> reducing a critical activity can shift the critical path &mdash; recalculate all path lengths after every reduction step.</li>
+    </ul>
+
+    <div class="callout-tip"><strong>Before you start a question</strong> Identify the problem type first using the keywords above &mdash; the method you use depends entirely on getting this right.</div>
+  </section>
+
+  <footer class="footer-note">Networks Review — Heathmont College</footer>
+</div>
+</body>
+</html>
