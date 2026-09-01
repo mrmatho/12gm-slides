@@ -11,7 +11,7 @@
 
 const COLORS = {
   edge: '#475569',
-  labelBg: '#e2e8f0',
+  labelBg: '#ffffff',
   labelText: '#1e293b',
   nodeFill: '#e0f2fe',
   nodeStroke: '#0369a1',
