@@ -608,10 +608,121 @@ export function renderActivityNetwork(props) {
   return { width: layout.width, height: layout.height, svg }
 }
 
+// ---------------------------------------------------------------------------------------------
+// Forward Scanning Network — port of components/ForwardScanNetwork.vue (static/full-reveal form
+// only, same caveat as renderActivityNetwork above: the click-by-click EST/LST reveal is a
+// presentation feature that doesn't apply to a one-shot export, so every value is always shown).
+// Same underlying graph/layout as Activity Network (buildActivityGraph/layoutActivityGraph and
+// `tasks` prop shape — see the doc comment on renderActivityNetwork), but EST/LST are shown in
+// small two-cell boxes stacked above each event's dot instead of split inside the vertex circle:
+// one box per activity leaving that event (labelled with the activity's id, dummies included),
+// stacked closest-to-farthest from the node in alphabetical order, or a single unlabelled box for
+// a sink event. Each box's EST is the event's own (shared) value; LST is that *activity's own*
+// latest start (head event's LST minus its own duration, not the event's shared LST) — see
+// ForwardScanNetwork.vue's doc comment for why: activities leaving the same event can have
+// different float, and showing the shared LST in every box would hide that.
+// `dotRadius` (default 6), `boxWidth`/`boxHeight` (default 48x20) and `arrowSize` control sizing;
+// `highlightCriticalPath` defaults false, matching renderActivityNetwork.
+function edgeSortLabel(edge) {
+  return edge.dummy ? 'dummy' : edge.key
+}
+
+export function renderForwardScanNetwork(props) {
+  const dotRadius = props.dotRadius ?? 6
+  const boxWidth = props.boxWidth ?? 48
+  const boxHeight = props.boxHeight ?? 20
+  const boxFontSize = Math.max(9, Math.round(boxHeight * 0.8))
+  const arrowSize = props.arrowSize ?? 7
+  const highlightCriticalPath = props.highlightCriticalPath ?? false
+  const BOX_GAP = 4
+  const BOX_MARGIN = 8
+
+  const graph = buildActivityGraph(props.tasks ?? [])
+
+  // Boxes stack in descending sort order so index 0 (closest to the node) ends up alphabetically
+  // last — the visible stack then reads top-to-bottom in ascending order.
+  const edgesFromId = new Map()
+  for (const edge of graph.edges) {
+    if (!edgesFromId.has(edge.from)) edgesFromId.set(edge.from, [])
+    edgesFromId.get(edge.from).push(edge)
+  }
+  for (const list of edgesFromId.values()) {
+    list.sort((a, b) => edgeSortLabel(b).localeCompare(edgeSortLabel(a)))
+  }
+  const stackCountOf = id => Math.max(1, (edgesFromId.get(id) ?? []).length)
+  const topBoxYOf = node => node.y - dotRadius - BOX_MARGIN - (stackCountOf(node.id) - 1) * (boxHeight + BOX_GAP) - boxHeight
+
+  let layout = layoutActivityGraph(graph, props, dotRadius)
+
+  // A node with several departing activities near the top of the diagram can push its topmost
+  // box above y=0 and get clipped — the auto layout only leaves room for the plain dot/ellipse
+  // renderActivityNetwork draws, not these stacked boxes. Unless the caller pinned an explicit
+  // `height`, grow the canvas just enough to fit the tallest stack (this pushes every node's row
+  // down by the same amount, since layoutActivityGraph centers rows within the given height, so
+  // it only adds headroom — it doesn't otherwise change the layout).
+  if (props.height === undefined) {
+    const minTop = Math.min(0, ...layout.nodes.map(topBoxYOf))
+    if (minTop < 0) {
+      layout = layoutActivityGraph(graph, { ...props, height: layout.height - minTop * 2 }, dotRadius)
+    }
+  }
+
+  const nodeById = new Map(layout.nodes.map(n => [n.id, n]))
+  const edgeCriticalByKey = new Map(layout.edges.map(e => [e.key, e.critical]))
+
+  function nodeBoxes(node) {
+    const edges = edgesFromId.get(node.id) ?? []
+    const items = edges.length ? edges : [null]
+    const x = node.x - boxWidth / 2
+    return items.map((edge, i) => {
+      const bottom = node.y - dotRadius - BOX_MARGIN - i * (boxHeight + BOX_GAP)
+      const lst = edge ? nodeById.get(edge.to).lst - edge.duration : node.lst
+      const critical = edge ? !!edgeCriticalByKey.get(edge.key) : (node.critical && highlightCriticalPath)
+      return { x, y: bottom - boxHeight, label: edge ? edgeSortLabel(edge) : null, est: node.est, lst, critical }
+    })
+  }
+
+  const arrowId = 'fsn-arrow'
+  const arrowIdCritical = 'fsn-arrow-critical'
+  let svg = `<defs>${arrowMarker(arrowId, COLORS.edge, arrowSize)}${arrowMarker(arrowIdCritical, COLORS.criticalEdge, arrowSize)}</defs>`
+
+  for (const edge of layout.edges) {
+    svg += `<path d="${edge.path}" fill="none" stroke="${edge.critical ? COLORS.criticalEdge : COLORS.edge}" stroke-width="${edge.critical ? 3 : 2}"${edge.dummy ? ' stroke-dasharray="6 5"' : ''} marker-end="url(#${edge.critical ? arrowIdCritical : arrowId})" />`
+  }
+  for (const edge of layout.edges) {
+    if (!edge.label) continue
+    const w = edge.label.length * (edge.dummy ? 4.2 : 7.2) + (edge.dummy ? 6 : 8)
+    const h = edge.dummy ? 12 : 16
+    const fill = edge.critical ? COLORS.criticalLabelText : (edge.dummy ? COLORS.dummyText : COLORS.labelText)
+    svg += `<rect x="${edge.midX - w / 2}" y="${edge.midY - h / 2}" width="${w}" height="${h}" fill="${COLORS.labelBg}" />`
+    svg += `<text x="${edge.midX}" y="${edge.midY}" text-anchor="middle" dominant-baseline="central" style="font-size: ${edge.dummy ? 13 : 22}px" fill="${fill}">${esc(edge.label)}</text>`
+  }
+
+  for (const node of layout.nodes) {
+    const nodeCritical = node.critical && highlightCriticalPath
+    svg += `<circle cx="${node.x}" cy="${node.y}" r="${dotRadius}" fill="${nodeCritical ? COLORS.cut : COLORS.nodeStroke}" />`
+
+    for (const box of nodeBoxes(node)) {
+      const fill = box.critical ? COLORS.criticalNodeFill : COLORS.nodeFill
+      const stroke = box.critical ? COLORS.criticalEdge : COLORS.nodeStroke
+      svg += `<rect x="${box.x}" y="${box.y}" width="${boxWidth}" height="${boxHeight}" stroke-width="1.5" fill="${fill}" stroke="${stroke}" />`
+      svg += `<line x1="${box.x + boxWidth / 2}" y1="${box.y}" x2="${box.x + boxWidth / 2}" y2="${box.y + boxHeight}" stroke-width="1" stroke="${COLORS.nodeStroke}" />`
+      svg += `<text x="${box.x + boxWidth * 0.25}" y="${box.y + boxHeight / 2}" text-anchor="middle" dominant-baseline="central" style="font-size: ${boxFontSize}px" fill="${COLORS.nodeText}">${box.est}</text>`
+      svg += `<text x="${box.x + boxWidth * 0.75}" y="${box.y + boxHeight / 2}" text-anchor="middle" dominant-baseline="central" style="font-size: ${boxFontSize}px" fill="${COLORS.nodeText}">${box.lst}</text>`
+      if (box.label) {
+        svg += `<text x="${box.x + boxWidth + 6}" y="${box.y + boxHeight / 2}" text-anchor="start" dominant-baseline="central" style="font-size: ${boxFontSize}px" fill="${COLORS.dummyText}">${esc(box.label)}</text>`
+      }
+    }
+  }
+
+  return { width: layout.width, height: layout.height, svg }
+}
+
 export const DIAGRAM_TYPES = {
   simple: { label: 'Simple Graph', render: renderSimpleGraph },
   simpleDirected: { label: 'Directed Simple Graph', render: renderDirectedSimpleGraph },
   flow: { label: 'Flow Network', render: renderFlowNetwork },
   bipartite: { label: 'Bipartite / Matching', render: renderBipartiteGraph },
-  activity: { label: 'Activity Network (AOA)', render: renderActivityNetwork }
+  activity: { label: 'Activity Network (AOA)', render: renderActivityNetwork },
+  forwardScan: { label: 'Forward Scanning Network (AOA)', render: renderForwardScanNetwork }
 }

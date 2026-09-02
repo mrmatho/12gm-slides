@@ -26,6 +26,7 @@
       <option value="flow">Flow Network</option>
       <option value="bipartite">Bipartite / Matching</option>
       <option value="activity">Activity Network (AOA)</option>
+      <option value="forwardScan">Forward Scanning Network (AOA)</option>
     </select>
     <button id="reset-example" type="button">Reset to example</button>
   </div>
@@ -68,8 +69,8 @@
       <code>labelPosition</code> to override the diagram-level default for just that node (on Bipartite/Matching,
       this overrides rendering only — column spacing still follows the diagram-level setting, so mixing
       <code>"inside"</code> into a dot-mode column can overlap neighbours). <code>arrowSize</code> — arrowhead
-      marker width/height for directed edges (default 7); applies to Directed Simple Graph, Flow Network and
-      Activity Network.</p>
+      marker width/height for directed edges (default 7); applies to Directed Simple Graph, Flow Network, Activity
+      Network and Forward Scanning Network.</p>
 
     <div class="reference-grid">
       <div>
@@ -103,6 +104,18 @@
           <code>showTimes</code> is on, <code>dotRadius</code> (6) when it's off.<br>
           <code>width</code>, <code>height</code>: omitted by default — auto-sized from the derived event layout;
           not in the example JSON for that reason.</p>
+      </div>
+      <div>
+        <h3>Forward Scanning Network (AOA)</h3>
+        <p>Same <code>tasks</code>/derivation as Activity Network, and the same auto-sizing note for
+          <code>width</code>/<code>height</code>, but EST/LST are always shown in two-cell boxes stacked above each
+          event's dot rather than inside the vertex — one box per departing activity (label = that activity's id),
+          or a single unlabelled box for a sink event. Each box's LST is that <em>activity's own</em> latest start
+          (its head event's LST minus its own duration), so activities leaving the same event can show different
+          float.<br>
+          <code>dotRadius</code> (default 6), <code>boxWidth</code>/<code>boxHeight</code> (default 48 x 20 — box
+          label font size scales with <code>boxHeight</code> automatically). <code>highlightCriticalPath</code>:
+          default <code>false</code>.</p>
       </div>
     </div>
   </details>

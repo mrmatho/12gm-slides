@@ -33,6 +33,7 @@ export const EXAMPLES = {
   "directed": true,
   "labelPosition": "left",
   "dotRadius": 6,
+  "arrowSize": 7,
   "nodes": [
     { "id": "A", "label": "A", "x": 60, "y": 120 },
     { "id": "B", "label": "B", "x": 210, "y": 50 },
@@ -54,6 +55,7 @@ export const EXAMPLES = {
   "nodeRadius": 22,
   "labelPosition": "left",
   "dotRadius": 6,
+  "arrowSize": 7,
   "nodes": [
     { "id": "S", "label": "Source", "x": 70, "y": 110 },
     { "id": "A", "label": "A", "x": 230, "y": 55 },
@@ -105,6 +107,22 @@ export const EXAMPLES = {
   "highlightCriticalPath": false,
   "nodeRadius": 26,
   "dotRadius": 6,
+  "arrowSize": 7,
+  "tasks": [
+    { "id": "A", "duration": 3, "predecessors": [] },
+    { "id": "B", "duration": 3, "predecessors": [] },
+    { "id": "C", "duration": 2, "predecessors": ["A"] },
+    { "id": "D", "duration": 4, "predecessors": ["B"] },
+    { "id": "E", "duration": 2, "predecessors": ["C", "D"] }
+  ]
+}`,
+
+  forwardScan: `{
+  "highlightCriticalPath": false,
+  "dotRadius": 6,
+  "boxWidth": 48,
+  "boxHeight": 20,
+  "arrowSize": 7,
   "tasks": [
     { "id": "A", "duration": 3, "predecessors": [] },
     { "id": "B", "duration": 3, "predecessors": [] },
