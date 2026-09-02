@@ -64,7 +64,10 @@
       <code>"below"</code> draw the node as a small dot with the label as text on that side (on a subtle background
       for legibility), or <code>"inside"</code> fits the label inside the node itself.
       <code>dotRadius</code> — dot size outside <code>"inside"</code> mode (default 6). <code>width</code>,
-      <code>height</code>, <code>nodeRadius</code> also apply to all four. <code>arrowSize</code> — arrowhead
+      <code>height</code>, <code>nodeRadius</code> also apply to all four. Any node object can also set its own
+      <code>labelPosition</code> to override the diagram-level default for just that node (on Bipartite/Matching,
+      this overrides rendering only — column spacing still follows the diagram-level setting, so mixing
+      <code>"inside"</code> into a dot-mode column can overlap neighbours). <code>arrowSize</code> — arrowhead
       marker width/height for directed edges (default 7); applies to Directed Simple Graph, Flow Network and
       Activity Network.</p>
 

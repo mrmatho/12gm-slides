@@ -55,7 +55,7 @@ function nodeRxRy(label, nodeRadius, labelPosition, dotRadius) {
 }
 
 function sizeNode(node, nodeRadius, labelPosition = 'left', dotRadius = 6) {
-  return { ...node, ...nodeRxRy(node.label, nodeRadius, labelPosition, dotRadius) }
+  return { ...node, ...nodeRxRy(node.label, nodeRadius, node.labelPosition ?? labelPosition, dotRadius) }
 }
 
 function labelBox(midX, midY, text, opts = {}) {
@@ -74,7 +74,8 @@ function labelBox(midX, midY, text, opts = {}) {
 // as a general per-diagram option) — floating over whatever else is on the canvas (edges,
 // other labels), so it gets a subtle background box for legibility, same idea as labelBox().
 function nodeMarkup(node, labelPosition = 'left') {
-  if (labelPosition === 'inside') {
+  const pos = node.labelPosition ?? labelPosition
+  if (pos === 'inside') {
     return `<ellipse cx="${node.x}" cy="${node.y}" rx="${node.rx}" ry="${node.ry}" stroke-width="2" fill="${COLORS.nodeFill}" stroke="${COLORS.nodeStroke}" />` +
       `<text x="${node.x}" y="${node.y}" text-anchor="middle" dominant-baseline="central" style="font-size: 15px; font-weight: 600" fill="${COLORS.nodeText}">${esc(node.label)}</text>`
   }
@@ -83,10 +84,10 @@ function nodeMarkup(node, labelPosition = 'left') {
   let tx = node.x
   let ty = node.y
   let anchor = 'middle'
-  if (labelPosition === 'above') ty = node.y - node.ry - gap
-  else if (labelPosition === 'below') ty = node.y + node.ry + gap
-  else if (labelPosition === 'left') { tx = node.x - node.rx - gap; anchor = 'end' }
-  else if (labelPosition === 'right') { tx = node.x + node.rx + gap; anchor = 'start' }
+  if (pos === 'above') ty = node.y - node.ry - gap
+  else if (pos === 'below') ty = node.y + node.ry + gap
+  else if (pos === 'left') { tx = node.x - node.rx - gap; anchor = 'end' }
+  else if (pos === 'right') { tx = node.x + node.rx + gap; anchor = 'start' }
 
   const label = String(node.label)
   const textWidth = label.length * 7.2 + 8
@@ -108,7 +109,8 @@ function nodeMarkup(node, labelPosition = 'left') {
 // `labelPosition`: 'left' (default) | 'right' | 'above' | 'below' | 'inside' — 'inside' fits an
 // ellipse to the label, as the slide components do; the others draw a small `dotRadius`
 // (default 6) dot instead, with the label as its own text (on a subtle background box for
-// legibility) sitting just outside it, on the given side. `arrowSize` (default 7) sets the
+// legibility) sitting just outside it, on the given side. Any individual node can set its own
+// `labelPosition` to override this default just for that node. `arrowSize` (default 7) sets the
 // arrowhead marker's width/height for directed edges.
 export function renderSimpleGraph(props) {
   const width = props.width ?? 420
@@ -199,7 +201,9 @@ export function renderFlowNetwork(props) {
 // Bipartite / Matching Graph — port of components/BipartiteGraph.vue. Two auto-stacked columns,
 // undirected edges (a possible pairing, not a direction). `labelPosition`/`dotRadius` — see the
 // note on renderSimpleGraph above; in dot mode, column spacing grows a little to leave room for
-// the external label text.
+// the external label text. Column spacing is computed from the diagram-level `labelPosition`
+// only, so a per-node override to 'inside' against a dot-mode default can overlap neighbours —
+// fine for the occasional highlighted node, not for switching a whole column.
 export function renderBipartiteGraph(props) {
   const width = props.width ?? 360
   const height = props.height ?? 240
@@ -228,7 +232,7 @@ export function renderBipartiteGraph(props) {
       ...node,
       x,
       y: marginTop + spacing * (i + 1),
-      ...nodeRxRy(node.label, nodeRadius, labelPosition, dotRadius)
+      ...nodeRxRy(node.label, nodeRadius, node.labelPosition ?? labelPosition, dotRadius)
     }))
   }
 
