@@ -30,8 +30,8 @@ function esc(str) {
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
-function arrowMarker(id, color) {
-  return `<marker id="${id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="${color}" /></marker>`
+function arrowMarker(id, color, size = 7) {
+  return `<marker id="${id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="${size}" markerHeight="${size}" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="${color}" /></marker>`
 }
 
 // Point where the line from (node.x,node.y) toward (dx,dy) crosses the node's ellipse boundary.
@@ -108,7 +108,8 @@ function nodeMarkup(node, labelPosition = 'left') {
 // `labelPosition`: 'left' (default) | 'right' | 'above' | 'below' | 'inside' — 'inside' fits an
 // ellipse to the label, as the slide components do; the others draw a small `dotRadius`
 // (default 6) dot instead, with the label as its own text (on a subtle background box for
-// legibility) sitting just outside it, on the given side.
+// legibility) sitting just outside it, on the given side. `arrowSize` (default 7) sets the
+// arrowhead marker's width/height for directed edges.
 export function renderSimpleGraph(props) {
   const width = props.width ?? 420
   const height = props.height ?? 240
@@ -116,12 +117,13 @@ export function renderSimpleGraph(props) {
   const directed = props.directed ?? false
   const labelPosition = props.labelPosition ?? 'left'
   const dotRadius = props.dotRadius ?? 6
+  const arrowSize = props.arrowSize ?? 7
 
   const sizedNodes = (props.nodes ?? []).map(n => sizeNode(n, nodeRadius, labelPosition, dotRadius))
   const byId = new Map(sizedNodes.map(n => [n.id, n]))
 
   const arrowId = 'sg-arrow'
-  let svg = directed ? `<defs>${arrowMarker(arrowId, COLORS.edge)}</defs>` : ''
+  let svg = directed ? `<defs>${arrowMarker(arrowId, COLORS.edge, arrowSize)}</defs>` : ''
 
   const edgeGeoms = (props.edges ?? []).map(edge => {
     const from = byId.get(edge.from)
@@ -150,19 +152,21 @@ export function renderDirectedSimpleGraph(props) {
 
 // ---------------------------------------------------------------------------------------------
 // Flow Network — port of components/FlowNetwork.vue. Explicit node x/y, capacity edges, optional
-// dashed "cut" lines. `labelPosition`/`dotRadius` — see the note on renderSimpleGraph above.
+// dashed "cut" lines. `labelPosition`/`dotRadius`/`arrowSize` — see the note on renderSimpleGraph
+// above.
 export function renderFlowNetwork(props) {
   const width = props.width ?? 480
   const height = props.height ?? 220
   const nodeRadius = props.nodeRadius ?? 22
   const labelPosition = props.labelPosition ?? 'left'
   const dotRadius = props.dotRadius ?? 6
+  const arrowSize = props.arrowSize ?? 7
 
   const sizedNodes = (props.nodes ?? []).map(n => sizeNode(n, nodeRadius, labelPosition, dotRadius))
   const byId = new Map(sizedNodes.map(n => [n.id, n]))
 
   const arrowId = 'fn-arrow'
-  let svg = `<defs>${arrowMarker(arrowId, COLORS.edge)}</defs>`
+  let svg = `<defs>${arrowMarker(arrowId, COLORS.edge, arrowSize)}</defs>`
 
   const edgeLines = (props.edges ?? []).map(edge => {
     const from = byId.get(edge.from)
@@ -266,7 +270,8 @@ export function renderBipartiteGraph(props) {
 // `showTimes` defaults to false here (the source component defaults it true) — the generator is
 // for one-off exports, where a plain dot-vertex diagram (durations only, on the edges) is the
 // more commonly wanted starting point; `highlightCriticalPath` defaults false, matching the
-// source component.
+// source component. `arrowSize` (default 7) sets the arrowhead marker's width/height, for both
+// the normal and critical-path edge colors.
 const START = '__start__'
 const END = '__end__'
 
@@ -562,13 +567,14 @@ export function renderActivityNetwork(props) {
   const nodeRadius = props.nodeRadius ?? 26
   const dotRadius = props.dotRadius ?? 6
   const displayRadius = showTimes ? nodeRadius : dotRadius
+  const arrowSize = props.arrowSize ?? 7
 
   const graph = buildActivityGraph(props.tasks ?? [])
   const layout = layoutActivityGraph(graph, props, displayRadius)
 
   const arrowId = 'an-arrow'
   const arrowIdCritical = 'an-arrow-critical'
-  let svg = `<defs>${arrowMarker(arrowId, COLORS.edge)}${arrowMarker(arrowIdCritical, COLORS.criticalEdge)}</defs>`
+  let svg = `<defs>${arrowMarker(arrowId, COLORS.edge, arrowSize)}${arrowMarker(arrowIdCritical, COLORS.criticalEdge, arrowSize)}</defs>`
 
   for (const edge of layout.edges) {
     svg += `<path d="${edge.path}" fill="none" stroke="${edge.critical ? COLORS.criticalEdge : COLORS.edge}" stroke-width="${edge.critical ? 3 : 2}"${edge.dummy ? ' stroke-dasharray="6 5"' : ''} marker-end="url(#${edge.critical ? arrowIdCritical : arrowId})" />`
