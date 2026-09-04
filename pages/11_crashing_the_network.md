@@ -324,6 +324,7 @@ ul li{
 }
 
 </style>
+
 ---
 layout: center
 zoom: 1.1
@@ -359,14 +360,14 @@ zoom: 1
 
 # Suggested approach
 
-<ActivityNetwork :tasks="[
+<ForwardScanNetwork :tasks="[
   { id: 'A', duration: 5, predecessors: [] },
   { id: 'B', duration: 9, predecessors: [] },
   { id: 'C', duration: 7, predecessors: ['A'] },
   { id: 'D', duration: 11, predecessors: ['B', 'C'] },
   { id: 'E', duration: 12, predecessors: ['B', 'C'] },
-  { id: 'F', duration: 8, predecessors: ['D', 'E'] },
-  { id: 'G', duration: 6, predecessors: ['E'], box_position: "below" }
+  { id: 'F', duration: 8, predecessors: ['D', 'E'], boxPosition: 'below'},
+  { id: 'G', duration: 6, predecessors: ['E']}
 ]" :show-times="false" :scale="0.9"/>
 
 ### Paths: 
