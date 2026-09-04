@@ -119,6 +119,7 @@ export const EXAMPLES = {
 
   forwardScan: `{
   "highlightCriticalPath": false,
+  "showValues": true,
   "dotRadius": 6,
   "boxWidth": 48,
   "boxHeight": 20,

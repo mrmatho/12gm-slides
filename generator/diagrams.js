@@ -622,7 +622,11 @@ export function renderActivityNetwork(props) {
 // ForwardScanNetwork.vue's doc comment for why: activities leaving the same event can have
 // different float, and showing the shared LST in every box would hide that.
 // `dotRadius` (default 6), `boxWidth`/`boxHeight` (default 48x20) and `arrowSize` control sizing;
-// `highlightCriticalPath` defaults false, matching renderActivityNetwork.
+// `highlightCriticalPath` defaults false, matching renderActivityNetwork. `showValues` (default
+// true) toggles whether EST/LST numbers are printed in the boxes at all — set false to export the
+// boxes empty (structure, dividers and activity labels still shown) for students to fill in by
+// hand, or for a blank demo copy. This is an all-or-nothing static substitute for the slide
+// component's click-by-click `revealStep`, which has no equivalent here (see file-top comment).
 function edgeSortLabel(edge) {
   return edge.dummy ? 'dummy' : edge.key
 }
@@ -634,6 +638,7 @@ export function renderForwardScanNetwork(props) {
   const boxFontSize = Math.max(9, Math.round(boxHeight * 0.8))
   const arrowSize = props.arrowSize ?? 7
   const highlightCriticalPath = props.highlightCriticalPath ?? false
+  const showValues = props.showValues ?? true
   const BOX_GAP = 4
   const BOX_MARGIN = 8
 
@@ -707,8 +712,10 @@ export function renderForwardScanNetwork(props) {
       const stroke = box.critical ? COLORS.criticalEdge : COLORS.nodeStroke
       svg += `<rect x="${box.x}" y="${box.y}" width="${boxWidth}" height="${boxHeight}" stroke-width="1.5" fill="${fill}" stroke="${stroke}" />`
       svg += `<line x1="${box.x + boxWidth / 2}" y1="${box.y}" x2="${box.x + boxWidth / 2}" y2="${box.y + boxHeight}" stroke-width="1" stroke="${COLORS.nodeStroke}" />`
-      svg += `<text x="${box.x + boxWidth * 0.25}" y="${box.y + boxHeight / 2}" text-anchor="middle" dominant-baseline="central" style="font-size: ${boxFontSize}px" fill="${COLORS.nodeText}">${box.est}</text>`
-      svg += `<text x="${box.x + boxWidth * 0.75}" y="${box.y + boxHeight / 2}" text-anchor="middle" dominant-baseline="central" style="font-size: ${boxFontSize}px" fill="${COLORS.nodeText}">${box.lst}</text>`
+      if (showValues) {
+        svg += `<text x="${box.x + boxWidth * 0.25}" y="${box.y + boxHeight / 2}" text-anchor="middle" dominant-baseline="central" style="font-size: ${boxFontSize}px" fill="${COLORS.nodeText}">${box.est}</text>`
+        svg += `<text x="${box.x + boxWidth * 0.75}" y="${box.y + boxHeight / 2}" text-anchor="middle" dominant-baseline="central" style="font-size: ${boxFontSize}px" fill="${COLORS.nodeText}">${box.lst}</text>`
+      }
       if (box.label) {
         svg += `<text x="${box.x + boxWidth + 6}" y="${box.y + boxHeight / 2}" text-anchor="start" dominant-baseline="central" style="font-size: ${boxFontSize}px" fill="${COLORS.dummyText}">${esc(box.label)}</text>`
       }
