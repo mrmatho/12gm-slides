@@ -11,6 +11,10 @@
 // etc); this module only uses it for geometry (trimming edge endpoints to the circle boundary,
 // deciding when a node sits too close to a skip-edge's path to nudge/bow around).
 //
+// A task's optional `boxPosition` is carried through onto its edge unchanged (this module doesn't
+// interpret it) purely so ForwardScanNetwork.vue can read a per-activity override off
+// `layout.edges` — ActivityNetwork.vue has no boxes and ignores the field.
+//
 // Returns `{ graph, layout }`, both computed refs.
 import { computed } from 'vue'
 
@@ -62,7 +66,8 @@ export function useActivityNetworkLayout(props, nodeRadius) {
       id: t.id,
       duration: t.dummy ? 0 : (t.duration ?? 0),
       predecessors: t.predecessors ?? [],
-      dummy: !!t.dummy
+      dummy: !!t.dummy,
+      boxPosition: t.boxPosition ?? null
     }))
 
     // One event per distinct predecessor-set; that event is the shared start event for every
@@ -114,7 +119,7 @@ export function useActivityNetworkLayout(props, nodeRadius) {
         }
       }
 
-      edges.push({ key: task.id, from: fromEvent, to: toEvent, duration: task.duration, dummy: task.dummy, label: task.dummy ? 'dummy,0' : `${task.id},${task.duration}` })
+      edges.push({ key: task.id, from: fromEvent, to: toEvent, duration: task.duration, dummy: task.dummy, label: task.dummy ? 'dummy,0' : `${task.id},${task.duration}`, boxPosition: task.boxPosition })
     }
 
     const nodeIds = new Set([START])
@@ -280,6 +285,7 @@ export function useActivityNetworkLayout(props, nodeRadius) {
         key: edge.key,
         dummy: edge.dummy,
         label: edge.label,
+        boxPosition: edge.boxPosition ?? null,
         critical: props.highlightCriticalPath && critical.has(edge.key)
       }
 

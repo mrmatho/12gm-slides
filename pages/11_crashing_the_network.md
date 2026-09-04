@@ -350,7 +350,7 @@ You can reduce the duration of any task by up to 3 days, with the following cost
 </tbody>
 </table>
 
-**You have a budget of $1500** to reduce the project completion time. Find the minimum project completion time and indicate which tasks you would reduce (and by how much).
+**You have a budget of $1500** to reduce the project completion time. Find the minim um project completion time and indicate which tasks you would reduce (and by how much).
 
 ---
 layout: two-cols
@@ -366,7 +366,7 @@ zoom: 1
   { id: 'D', duration: 11, predecessors: ['B', 'C'] },
   { id: 'E', duration: 12, predecessors: ['B', 'C'] },
   { id: 'F', duration: 8, predecessors: ['D', 'E'] },
-  { id: 'G', duration: 6, predecessors: ['E'] }
+  { id: 'G', duration: 6, predecessors: ['E'], box_position: "below" }
 ]" :show-times="false" :scale="0.9"/>
 
 ### Paths: 

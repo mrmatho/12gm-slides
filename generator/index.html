@@ -117,7 +117,12 @@
           label font size scales with <code>boxHeight</code> automatically). <code>highlightCriticalPath</code>:
           default <code>false</code>. <code>showValues</code>: default <code>true</code>; set <code>false</code> to
           export the boxes empty (dividers and activity labels still shown) for students to fill in, or for a blank
-          demo copy.</p>
+          demo copy.<br>
+          <code>boxPosition</code>: default <code>"above"</code>, or <code>"below"</code> to stack the EST/LST boxes
+          under each event's dot instead. Can also be set per activity as <code>boxPosition</code> on that task in
+          <code>tasks</code>, overriding the diagram default for just that one box — a node with a mix of
+          above/below activities gets two independent stacks. A sink event's box (no activity to read an override
+          from) always follows the diagram default.</p>
       </div>
     </div>
   </details>

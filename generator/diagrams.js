@@ -319,7 +319,8 @@ function buildActivityGraph(tasksIn) {
     id: t.id,
     duration: t.dummy ? 0 : (t.duration ?? 0),
     predecessors: t.predecessors ?? [],
-    dummy: !!t.dummy
+    dummy: !!t.dummy,
+    boxPosition: t.boxPosition ?? null
   }))
 
   const groupEventOf = new Map()
@@ -363,7 +364,7 @@ function buildActivityGraph(tasksIn) {
       }
     }
 
-    edges.push({ key: task.id, from: fromEvent, to: toEvent, duration: task.duration, dummy: task.dummy, label: task.dummy ? 'dummy,0' : `${task.id},${task.duration}` })
+    edges.push({ key: task.id, from: fromEvent, to: toEvent, duration: task.duration, dummy: task.dummy, label: task.dummy ? 'dummy,0' : `${task.id},${task.duration}`, boxPosition: task.boxPosition })
   }
 
   const nodeIds = new Set([START])
@@ -516,6 +517,7 @@ function layoutActivityGraph(graph, props, nodeRadius) {
       key: edge.key,
       dummy: edge.dummy,
       label: edge.label,
+      boxPosition: edge.boxPosition ?? null,
       critical: (props.highlightCriticalPath ?? false) && critical.has(edge.key)
     }
 
@@ -614,19 +616,25 @@ export function renderActivityNetwork(props) {
 // presentation feature that doesn't apply to a one-shot export, so every value is always shown).
 // Same underlying graph/layout as Activity Network (buildActivityGraph/layoutActivityGraph and
 // `tasks` prop shape — see the doc comment on renderActivityNetwork), but EST/LST are shown in
-// small two-cell boxes stacked above each event's dot instead of split inside the vertex circle:
-// one box per activity leaving that event (labelled with the activity's id, dummies included),
-// stacked closest-to-farthest from the node in alphabetical order, or a single unlabelled box for
-// a sink event. Each box's EST is the event's own (shared) value; LST is that *activity's own*
-// latest start (head event's LST minus its own duration, not the event's shared LST) — see
-// ForwardScanNetwork.vue's doc comment for why: activities leaving the same event can have
-// different float, and showing the shared LST in every box would hide that.
+// small two-cell boxes stacked above (or below) each event's dot instead of split inside the
+// vertex circle: one box per activity leaving that event (labelled with the activity's id,
+// dummies included), stacked closest-to-farthest from the node in alphabetical order, or a single
+// unlabelled box for a sink event. Each box's EST is the event's own (shared) value; LST is that
+// *activity's own* latest start (head event's LST minus its own duration, not the event's shared
+// LST) — see ForwardScanNetwork.vue's doc comment for why: activities leaving the same event can
+// have different float, and showing the shared LST in every box would hide that.
 // `dotRadius` (default 6), `boxWidth`/`boxHeight` (default 48x20) and `arrowSize` control sizing;
 // `highlightCriticalPath` defaults false, matching renderActivityNetwork. `showValues` (default
 // true) toggles whether EST/LST numbers are printed in the boxes at all — set false to export the
 // boxes empty (structure, dividers and activity labels still shown) for students to fill in by
 // hand, or for a blank demo copy. This is an all-or-nothing static substitute for the slide
 // component's click-by-click `revealStep`, which has no equivalent here (see file-top comment).
+// `boxPosition` ('above' default, or 'below') sets which side of the node's dot the box stack(s)
+// sit on. It can also be set per activity via `boxPosition` on that task in `tasks`, which
+// overrides the diagram-level default for just that activity's box — a node with a mix of
+// above/below activities gets two independent stacks, each growing away from the node. A sink
+// event's box (no departing activity to read an override from) always follows the diagram-level
+// default.
 function edgeSortLabel(edge) {
   return edge.dummy ? 'dummy' : edge.key
 }
@@ -639,10 +647,12 @@ export function renderForwardScanNetwork(props) {
   const arrowSize = props.arrowSize ?? 7
   const highlightCriticalPath = props.highlightCriticalPath ?? false
   const showValues = props.showValues ?? true
+  const boxPositionDefault = props.boxPosition ?? 'above'
   const BOX_GAP = 4
   const BOX_MARGIN = 8
 
   const graph = buildActivityGraph(props.tasks ?? [])
+  const boxPositionOf = edge => (edge && edge.boxPosition) || boxPositionDefault
 
   // Boxes stack in descending sort order so index 0 (closest to the node) ends up alphabetically
   // last — the visible stack then reads top-to-bottom in ascending order.
@@ -654,37 +664,62 @@ export function renderForwardScanNetwork(props) {
   for (const list of edgesFromId.values()) {
     list.sort((a, b) => edgeSortLabel(b).localeCompare(edgeSortLabel(a)))
   }
-  const stackCountOf = id => Math.max(1, (edgesFromId.get(id) ?? []).length)
-  const topBoxYOf = node => node.y - dotRadius - BOX_MARGIN - (stackCountOf(node.id) - 1) * (boxHeight + BOX_GAP) - boxHeight
+
+  // Split a node's departing activities into the above-stack and below-stack (a sink node, with
+  // no activities, goes entirely into whichever stack the diagram default names).
+  function stacksOf(id) {
+    const edges = edgesFromId.get(id) ?? []
+    const items = edges.length ? edges : [null]
+    const above = items.filter(e => boxPositionOf(e) !== 'below')
+    const below = items.filter(e => boxPositionOf(e) === 'below')
+    return { above, below }
+  }
+  const topBoxYOf = node => {
+    const { above } = stacksOf(node.id)
+    return above.length ? node.y - dotRadius - BOX_MARGIN - (above.length - 1) * (boxHeight + BOX_GAP) - boxHeight : node.y
+  }
+  const bottomBoxYOf = node => {
+    const { below } = stacksOf(node.id)
+    return below.length ? node.y + dotRadius + BOX_MARGIN + (below.length - 1) * (boxHeight + BOX_GAP) + boxHeight : node.y
+  }
 
   let layout = layoutActivityGraph(graph, props, dotRadius)
 
-  // A node with several departing activities near the top of the diagram can push its topmost
-  // box above y=0 and get clipped — the auto layout only leaves room for the plain dot/ellipse
-  // renderActivityNetwork draws, not these stacked boxes. Unless the caller pinned an explicit
-  // `height`, grow the canvas just enough to fit the tallest stack (this pushes every node's row
-  // down by the same amount, since layoutActivityGraph centers rows within the given height, so
-  // it only adds headroom — it doesn't otherwise change the layout).
+  // A node with several stacked boxes near the top or bottom of the diagram can push a box past
+  // y=0 or past the canvas height and get clipped — the auto layout only leaves room for the
+  // plain dot/ellipse renderActivityNetwork draws, not these stacked boxes. Unless the caller
+  // pinned an explicit `height`, grow the canvas just enough to fit the tallest overflow in either
+  // direction (this pushes every node's row down by half the added height and leaves the other
+  // half below, since layoutActivityGraph centers rows within the given height — it only adds
+  // headroom on both sides, it doesn't otherwise change the layout).
   if (props.height === undefined) {
-    const minTop = Math.min(0, ...layout.nodes.map(topBoxYOf))
-    if (minTop < 0) {
-      layout = layoutActivityGraph(graph, { ...props, height: layout.height - minTop * 2 }, dotRadius)
+    const overflowTop = Math.max(0, -Math.min(0, ...layout.nodes.map(topBoxYOf)))
+    const overflowBottom = Math.max(0, ...layout.nodes.map(n => bottomBoxYOf(n) - layout.height))
+    const extra = Math.max(overflowTop, overflowBottom)
+    if (extra > 0) {
+      layout = layoutActivityGraph(graph, { ...props, height: layout.height + extra * 2 }, dotRadius)
     }
   }
 
   const nodeById = new Map(layout.nodes.map(n => [n.id, n]))
   const edgeCriticalByKey = new Map(layout.edges.map(e => [e.key, e.critical]))
 
-  function nodeBoxes(node) {
-    const edges = edgesFromId.get(node.id) ?? []
-    const items = edges.length ? edges : [null]
+  function buildBox(node, edge, i, position) {
     const x = node.x - boxWidth / 2
-    return items.map((edge, i) => {
-      const bottom = node.y - dotRadius - BOX_MARGIN - i * (boxHeight + BOX_GAP)
-      const lst = edge ? nodeById.get(edge.to).lst - edge.duration : node.lst
-      const critical = edge ? !!edgeCriticalByKey.get(edge.key) : (node.critical && highlightCriticalPath)
-      return { x, y: bottom - boxHeight, label: edge ? edgeSortLabel(edge) : null, est: node.est, lst, critical }
-    })
+    const y = position === 'below'
+      ? node.y + dotRadius + BOX_MARGIN + i * (boxHeight + BOX_GAP)
+      : node.y - dotRadius - BOX_MARGIN - i * (boxHeight + BOX_GAP) - boxHeight
+    const lst = edge ? nodeById.get(edge.to).lst - edge.duration : node.lst
+    const critical = edge ? !!edgeCriticalByKey.get(edge.key) : (node.critical && highlightCriticalPath)
+    return { x, y, label: edge ? edgeSortLabel(edge) : null, est: node.est, lst, critical }
+  }
+
+  function nodeBoxes(node) {
+    const { above, below } = stacksOf(node.id)
+    return [
+      ...above.map((edge, i) => buildBox(node, edge, i, 'above')),
+      ...below.map((edge, i) => buildBox(node, edge, i, 'below'))
+    ]
   }
 
   const arrowId = 'fsn-arrow'

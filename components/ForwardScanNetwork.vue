@@ -43,6 +43,12 @@
     boxWidth, boxHeight   optional, default 48 x 20. Size of each EST/LST box — grow these if the
                            text feels cramped. Box label font size scales with boxHeight
                            automatically; there's no separate font-size prop.
+    boxPosition   optional, default 'above'. 'below' stacks the EST/LST boxes under each event's
+                  dot instead of above it. Can also be set per activity via `boxPosition` on that
+                  task in `tasks`, overriding the diagram default for just that one box — a node
+                  with a mix of above/below activities gets two independent stacks, each growing
+                  away from the node. A sink event's box (no activity to read an override from)
+                  always follows the diagram-level default.
     scale        optional, default 1. Uniformly scales the whole rendered diagram (nodes, boxes,
                   text, everything) independent of the surrounding slide text — use this instead
                   of Slidev's `zoom` frontmatter when you want the diagram bigger/smaller without
@@ -181,6 +187,10 @@ const props = defineProps({
     type: Number,
     default: 20
   },
+  boxPosition: {
+    type: String,
+    default: 'above'
+  },
   scale: {
     type: Number,
     default: 1
@@ -193,15 +203,22 @@ const boxFontSize = computed(() => Math.max(9, Math.round(props.boxHeight * 0.8)
 
 const { graph, layout } = useActivityNetworkLayout(props, dotRadius)
 
-// EST/LST box above each vertex: one per activity leaving that event (minimum 1, for sinks),
-// stacked vertically in alphabetical order reading top (farthest from the node) to bottom
-// (closest to the node), each labelled with that activity's id. EST is the event's shared
-// value; LST is computed per-activity (see nodeBoxes) so differing float is visible.
+// EST/LST box above (or below) each vertex: one per activity leaving that event (minimum 1, for
+// sinks), stacked vertically in alphabetical order reading closest-to-farthest from the node,
+// each labelled with that activity's id. EST is the event's shared value; LST is computed
+// per-activity (see nodeBoxes) so differing float is visible.
 const BOX_GAP = 4
 const BOX_MARGIN = 8
 
 function edgeLabel(edge) {
   return edge.dummy ? 'dummy' : edge.key
+}
+
+// Which side of the node an activity's box sits on: its own `boxPosition` (set per task) if
+// given, else the diagram-level default. A sink's box (edge === null, no task to read an
+// override from) always follows the diagram default.
+function boxPositionOf(edge) {
+  return (edge && edge.boxPosition) || props.boxPosition
 }
 
 const edgesFromId = computed(() => {
@@ -211,39 +228,50 @@ const edgesFromId = computed(() => {
     map.get(edge.from).push(edge)
   }
   for (const list of map.values()) {
-    // Descending, because index 0 renders closest to the node (see nodeBoxes) — so the box
-    // stack read top-to-bottom ends up ascending alphabetically.
+    // Descending, because index 0 renders closest to the node (see nodeBoxes) — so each stack
+    // read closest-to-farthest from the node ends up ascending alphabetically.
     list.sort((a, b) => edgeLabel(b).localeCompare(edgeLabel(a)))
   }
   return map
 })
 
+// A node's departing activities split into an above-stack and a below-stack (a sink node, with
+// no activities, goes entirely into whichever stack the diagram default names) — each stack
+// grows independently away from the node, so a node can show both at once.
+function stacksOf(id) {
+  const edges = edgesFromId.value.get(id) ?? []
+  const items = edges.length ? edges : [null]
+  return {
+    above: items.filter(e => boxPositionOf(e) !== 'below'),
+    below: items.filter(e => boxPositionOf(e) === 'below')
+  }
+}
+
 const nodeById = computed(() => new Map(layout.value.nodes.map(n => [n.id, n])))
 const edgeCriticalByKey = computed(() => new Map(layout.value.edges.map(e => [e.key, e.critical])))
 
-function nodeBoxes(node) {
-  const edges = edgesFromId.value.get(node.id) ?? []
-  const items = edges.length ? edges : [null]
+function buildBox(node, edge, i, position) {
   const x = node.x - props.boxWidth / 2
-  return items.map((edge, i) => {
-    const bottom = node.y - dotRadius.value - BOX_MARGIN - i * (props.boxHeight + BOX_GAP)
-    // EST is the event's own (shared) value; LST is per-activity — the head event's LST minus
-    // this specific activity's duration — so activities leaving the same event can show
-    // different float instead of all echoing the event's shared (minimum) LST.
-    const lst = edge ? nodeById.value.get(edge.to).lst - edge.duration : node.lst
-    // Critical is per-activity too: a box's own departing edge determines its highlight, not
-    // the event's shared zero-float status — two activities can leave the same event with only
-    // one of them actually critical (see doc comment above on per-activity LST).
-    const critical = edge ? !!edgeCriticalByKey.value.get(edge.key) : node.critical
-    return {
-      x,
-      y: bottom - props.boxHeight,
-      label: edge ? edgeLabel(edge) : null,
-      est: node.est,
-      lst,
-      critical
-    }
-  })
+  const y = position === 'below'
+    ? node.y + dotRadius.value + BOX_MARGIN + i * (props.boxHeight + BOX_GAP)
+    : node.y - dotRadius.value - BOX_MARGIN - i * (props.boxHeight + BOX_GAP) - props.boxHeight
+  // EST is the event's own (shared) value; LST is per-activity — the head event's LST minus
+  // this specific activity's duration — so activities leaving the same event can show
+  // different float instead of all echoing the event's shared (minimum) LST.
+  const lst = edge ? nodeById.value.get(edge.to).lst - edge.duration : node.lst
+  // Critical is per-activity too: a box's own departing edge determines its highlight, not
+  // the event's shared zero-float status — two activities can leave the same event with only
+  // one of them actually critical (see doc comment above on per-activity LST).
+  const critical = edge ? !!edgeCriticalByKey.value.get(edge.key) : node.critical
+  return { x, y, label: edge ? edgeLabel(edge) : null, est: node.est, lst, critical }
+}
+
+function nodeBoxes(node) {
+  const { above, below } = stacksOf(node.id)
+  return [
+    ...above.map((edge, i) => buildBox(node, edge, i, 'above')),
+    ...below.map((edge, i) => buildBox(node, edge, i, 'below'))
+  ]
 }
 
 // Position of each node within the forward-scan (EST) and backward-scan (LST) reveal orders.
