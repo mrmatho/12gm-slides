@@ -330,7 +330,9 @@ layout: center
 # Revision Schedule for this week
 
 - **Today**: Stats from Exam 2
-- **Tomorrow**: Summary Book check
+- **Tomorrow**: Summary Book check. Finance (if time)
 - **Wednesday Double**: Full Exam 1 Practice
 
-First week of holidays: Exam 2. 
+**First week of holidays: Exam 2.**
+
+*You **must** bring your summary notes and ClassPad to every lesson from now until we finish.* The end is near!
