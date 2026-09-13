@@ -138,10 +138,10 @@ This is because each topic has easier marks at the start. Your time is always be
 
 ---
 layout: default
-zoom: 1
+zoom: 0.95
 ---
 
-# Grade Distribution
+# Grade Distribution (From 2025)
 
 <table class="exam1">
   <caption>Grade Distribution: Exam 1</caption>
