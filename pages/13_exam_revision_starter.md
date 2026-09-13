@@ -322,3 +322,15 @@ zoom: 0.95
     background-color: #e0ffe0;
   }
 </style>
+
+---
+layout: center
+---
+
+# Revision Schedule for this week
+
+- **Today**: Stats from Exam 2
+- **Tomorrow**: Summary Book check
+- **Wednesday Double**: Full Exam 1 Practice
+
+First week of holidays: Exam 2. 
