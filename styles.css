@@ -97,3 +97,74 @@
 .slidev-layout td, .slidev-layout th {
     padding: 0px;
 }
+
+
+:where(.slidev-layout) {
+    --uno: 'font-body text-secondary';
+    line-height: 1.4;
+}
+
+:where(.slidev-layout) :where(h1, h2, h3, h4, h5, h6) {
+    --uno: 'font-heading text-brand';
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+:where(.slidev-layout) :where(small),
+.slidev-layout .text-small {
+    font-size: 14px;
+}
+
+.slidev-layout .text-label {
+    --uno: 'font-body text-accent';
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* --- Arrow bullets -------------------------------------------------
+   This is the most visible change to existing slides: every unordered
+   list loses its dot and gains a → . Delete this block to go back. */
+
+.slidev-layout ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.slidev-layout ul li {
+    padding-left: 24px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.slidev-layout ul li:before {
+    --uno: 'text-accent';
+    content: "→";
+    position: absolute;
+    left: 0;
+}
+
+/* ...but leave the built-in <Toc> component alone */
+.slidev-layout .slidev-toc ul {
+    padding-left: revert;
+}
+
+.slidev-layout .slidev-toc li {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.slidev-layout .slidev-toc li:before {
+    content: none;
+}
+
+/* --- Links --------------------------------------------------------- */
+
+:where(.slidev-layout) :where(a) {
+    --uno: 'text-accent';
+    text-decoration: none;
+}
+
+:where(.slidev-layout) :where(a):hover {
+    text-decoration: underline;
+}
