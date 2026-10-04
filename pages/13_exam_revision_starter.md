@@ -336,3 +336,4 @@ layout: center
 **First week of holidays: Exam 2.**
 
 *You **must** bring your summary notes and ClassPad to every lesson from now until we finish.* The end is near!
+

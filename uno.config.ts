@@ -48,7 +48,7 @@ export default defineConfig({
     fontFamily: {
       // Both are loaded by Slidev from the `fonts:` block in slides.md
       heading: '"Outfit", sans-serif',
-      body: '"Public Sans", sans-serif',
+      body: '"Outfit", sans-serif',
     },
   },
 })
