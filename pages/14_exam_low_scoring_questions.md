@@ -1,8 +1,9 @@
 ---
 layout: cover
+hideInToc: false
 ---
 
-# Low Scoring Questions on the Exams
+# Low Scoring Questions
 
 > ### Trends from 2024 to 2026
 
