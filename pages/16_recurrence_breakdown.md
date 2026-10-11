@@ -19,7 +19,7 @@ zoom: 1
 | Simple Interest (positive $d$) | Compound Interest ($R > 1$) | Annuity Investment ( positive $d$ and $R > 1$) |
 | Flat-rate or Unit Cost Depreciation (negative $d$) | Reducing Balance Depreciation ($R < 1$) | Reducing Balance Loan or Annuity (negative $d$ and $R > 1$) |
 
-Note: In the "Both" column, the **interest is always coming from $R$**, with the **$d$ term representing a payment or withdrawal**. 
+Note: In the "Both" column, the **interest is always coming from $R$**, with the **$d$ term representing a payment or withdrawal**.
 
 ---
 layout: center
@@ -58,8 +58,26 @@ After doing this enough times, you should be able to recognise the pattern and i
 - Recurrence Relation: $V_0 = 9000, V_{n+1} = 0.93 V_n$
   - Percentage Rate: $r = (0.95 - 1) \times 100\% = -5\%$ (so 5% reducing balance depreciation rate)
 - Recurrence Relation: $V_0 = 1000, V_{n+1} = 1.02 V_n + 200$  
-  - Percentage Rate: $r = (1.02 - 1) \times 100\% = 2\%$ (so 2% interest rate, with a $200$ payment each period) 
+  - Percentage Rate: $r = (1.02 - 1) \times 100\% = 2\%$ (so 2% interest rate, with a $200$ payment each period)
   
 </v-clicks>
 
 ---
+layout: center
+---
+
+# So what can we tell about these recurrence relations?
+
+**For each, identify the following:**
+
+- The type of recurrence relation (Arithmetic, Geometric, or Both)
+- Likely scenario (Simple Interest, Compound Interest, Flat-rate Depreciation, Reducing Balance Depreciation, Annuity Investment, or Reducing Balance Loan)
+- The percentage rate per compounding period
+- Percentage rate per annum
+
+1. $V_0 = 1 090, V_{n+1} = 1.07 V_n$. $n$ is annual.
+2. $V_0 = 3 122, V_{n+1} = V_n - 200$. $n$ is annual.
+3. $V_0 = 500 000, V_{n+1} = 1.004 V_n + 200$. $n$ is monthly.
+4. $V_0 = 9 500, V_{n+1} = 0.984 V_n$. $n$ is weekly.
+5. $V_0 = 8 000, V_{n+1} = V_n + 1 000$. $n$ is quarterly.
+6. $V_0 = 87 592, V_{n+1} = 1.002 V_n - 1 000$. $n$ is fortnightly.
