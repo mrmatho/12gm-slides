@@ -56,7 +56,7 @@ After doing this enough times, you should be able to recognise the pattern and i
 - Recurrence Relation: $V_0 = 1000, V_{n+1} = 1.05 V_n$  
   - Percentage Rate: $r = (1.05 - 1) \times 100\% = 5\%$
 - Recurrence Relation: $V_0 = 9000, V_{n+1} = 0.93 V_n$
-  - Percentage Rate: $r = (0.95 - 1) \times 100\% = -5\%$ (so 5% reducing balance depreciation rate)
+  - Percentage Rate: $r = (0.93 - 1) \times 100\% = -7\%$ (so 7% reducing balance depreciation rate)
 - Recurrence Relation: $V_0 = 1000, V_{n+1} = 1.02 V_n + 200$  
   - Percentage Rate: $r = (1.02 - 1) \times 100\% = 2\%$ (so 2% interest rate, with a $200$ payment each period)
   
